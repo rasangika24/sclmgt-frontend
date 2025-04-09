@@ -1,0 +1,395 @@
+<mat-tab-group>
+    <!-- Applicant Details Tab -->
+    <mat-tab label="Applicant Details">
+        <div class="form-container">
+
+            <div class="row">
+                <mat-form-field class="half-width">
+                    <mat-label>Application No</mat-label>
+                    <input matInput placeholder="Application No" value="" formControlName="" />
+                </mat-form-field>
+
+                <mat-form-field class="half-width">
+                    <mat-label>Name</mat-label>
+                    <input matInput placeholder="Applicant Name" value="" formControlName="" />
+                </mat-form-field>
+            </div>
+
+            <div class="row">
+                <mat-form-field class="half-width">
+                    <mat-label>Grade</mat-label>
+                    <mat-select>
+                        <mat-option value="grade_1">Grade 1</mat-option>
+                        <mat-option value="grade_6">Grade 6</mat-option>
+                        <mat-option value="grade_12">Grade 12</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="half-width">
+                    <mat-label>Gender</mat-label>
+                    <mat-select>
+                        <mat-option value="male">Male</mat-option>
+                        <mat-option value="female">Female</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="row">
+                <mat-form-field class="half-width">
+                    <mat-label>Date of Birth</mat-label>
+                    <input matInput [matDatepicker]="dob" placeholder="MM/DD/YYYY" />
+                    <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
+                    <mat-datepicker #dob></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field class="half-width">
+                    <mat-label>Address</mat-label>
+                    <input matInput placeholder="Address*" value="" />
+                </mat-form-field>
+            </div>
+
+            <div class="row">
+                <mat-form-field class="half-width">
+                    <mat-label>Status</mat-label>
+                    <mat-select>
+                        <mat-option value="selected">Selected</mat-option>
+                        <mat-option value="rejected">Rejected</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <div class="button">
+                    <button mat-raised-button color="primary">Add Student</button>
+                    <button mat-raised-button color="danger">Reset</button>
+                </div>
+            </div>
+        </div>
+
+        <!--- Tbale -->
+        <table mat-table [dataSource]="dataSource_applicant" class="mat-elevation-z8">
+
+            <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="applicant_no">
+                <th mat-header-cell *matHeaderCellDef> No. </th>
+                <td mat-cell *matCellDef="let element"> {{element.applicant_no}} </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Name </th>
+                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="grade">
+                <th mat-header-cell *matHeaderCellDef> Grade </th>
+                <td mat-cell *matCellDef="let element"> {{element.grade}} </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="gender">
+                <th mat-header-cell *matHeaderCellDef> Gender </th>
+                <td mat-cell *matCellDef="let element"> {{element.gender}} </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="date_of_birth">
+                <th mat-header-cell *matHeaderCellDef> Date of Birth </th>
+                <td mat-cell *matCellDef="let element"> {{element.date_of_birth}} </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="address">
+                <th mat-header-cell *matHeaderCellDef> Address </th>
+                <td mat-cell *matCellDef="let element"> {{element.address}} </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef> Status </th>
+                <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsApplicant"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumnsApplicant;"></tr>
+        </table>
+    </mat-tab>
+
+    <!-- Mother's Details Tab -->
+    <mat-tab label="Mother's Details">
+        <div class="form-container">
+            <div class="guardian">
+
+                <div class="row">
+                    <mat-form-field class="half-width">
+                        <mat-label>Mother's Name</mat-label>
+                        <input matInput placeholder="Mother's Name" value="" />
+                    </mat-form-field>
+
+                    <mat-form-field class="half-width">
+                        <mat-label>Address</mat-label>
+                        <input matInput placeholder="Address" value="" />
+                    </mat-form-field>
+                </div>
+
+                <div class="row">
+                    <mat-form-field class="half-width">
+                        <mat-label>Mother's Phone</mat-label>
+                        <input matInput placeholder="Mother's Phone" value="" />
+                    </mat-form-field>
+
+                    <mat-form-field class="half-width">
+                        <mat-label>Occupation</mat-label>
+                        <input matInput placeholder="Occupation" value="" />
+                    </mat-form-field>
+                </div>
+
+                <div class="row">
+                    <mat-form-field class="half-width">
+                        <mat-label>Income</mat-label>
+                        <input matInput placeholder="Income" value="" />
+                    </mat-form-field>
+                </div>
+
+            </div>
+
+            <div class="button">
+                <button mat-raised-button color="primary">Add Mother</button>
+                <button mat-raised-button color="danger">Reset</button>
+            </div>
+
+        </div>
+
+        <!--- Tbale -->
+        <table mat-table [dataSource]="dataSource_mother" class="mat-elevation-z8">
+
+            <!--- Note that these columns can be defined in any order.
+                      The actual rendered columns are set as a property on the row definition" -->
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="applicantName">
+                <th mat-header-cell *matHeaderCellDef> No. </th>
+                <td mat-cell *matCellDef="let element"> {{element.applicantName}} </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="mothersName">
+                <th mat-header-cell *matHeaderCellDef> Mother's Name </th>
+                <td mat-cell *matCellDef="let element"> {{element.mothersName}} </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="address">
+                <th mat-header-cell *matHeaderCellDef> Address </th>
+                <td mat-cell *matCellDef="let element"> {{element.address}} </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="mothersPhone">
+                <th mat-header-cell *matHeaderCellDef> Phone Number </th>
+                <td mat-cell *matCellDef="let element"> {{element.mothersPhone}}</td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="occupation">
+                <th mat-header-cell *matHeaderCellDef> Occupation </th>
+                <td mat-cell *matCellDef="let element"> {{element.occupation}} </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="income">
+                <th mat-header-cell *matHeaderCellDef> Income </th>
+                <td mat-cell *matCellDef="let element"> {{element.income}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsMother"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumnsMother;"></tr>
+        </table>
+    </mat-tab>
+
+    <!-- Father's Details Tab -->
+    <mat-tab label="Father's Details">
+        <div class="form-container">
+            <div class="guardian">
+
+                <div class="row">
+                    <mat-form-field class="half-width">
+                        <mat-label>Father's Name</mat-label>
+                        <input matInput placeholder="Father's Name" value="" />
+                    </mat-form-field>
+
+                    <mat-form-field class="half-width">
+                        <mat-label>Address</mat-label>
+                        <input matInput placeholder="Address" value="" />
+                    </mat-form-field>
+                </div>
+
+                <div class="row">
+                    <mat-form-field class="half-width">
+                        <mat-label>Father's Phone</mat-label>
+                        <input matInput placeholder="Father's Phone" value="" />
+                    </mat-form-field>
+
+                    <mat-form-field class="half-width">
+                        <mat-label>Occupation</mat-label>
+                        <input matInput placeholder="Occupation" value="" />
+                    </mat-form-field>
+                </div>
+
+                <div class="row">
+                    <mat-form-field class="half-width">
+                        <mat-label>Income</mat-label>
+                        <input matInput placeholder="Income" value="" />
+                    </mat-form-field>
+                </div>
+
+            </div>
+
+            <div class="button">
+                <button mat-raised-button color="primary">Add Father</button>
+                <button mat-raised-button color="danger">Reset</button>
+            </div>
+
+        </div>
+
+        <!--- Tbale -->
+        <table mat-table [dataSource]="dataSource_father" class="mat-elevation-z8">
+
+            <!--- Note that these columns can be defined in any order.
+                              The actual rendered columns are set as a property on the row definition" -->
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="applicantName">
+                <th mat-header-cell *matHeaderCellDef> No. </th>
+                <td mat-cell *matCellDef="let element"> {{element.applicantName}} </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="fathersName">
+                <th mat-header-cell *matHeaderCellDef> Father's Name </th>
+                <td mat-cell *matCellDef="let element"> {{element.fathersName}} </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="address">
+                <th mat-header-cell *matHeaderCellDef> Address </th>
+                <td mat-cell *matCellDef="let element"> {{element.address}} </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="fathersPhone">
+                <th mat-header-cell *matHeaderCellDef> Phone Number </th>
+                <td mat-cell *matCellDef="let element"> {{element.fathersPhone}}</td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="occupation">
+                <th mat-header-cell *matHeaderCellDef> Occupation </th>
+                <td mat-cell *matCellDef="let element"> {{element.occupation}} </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="income">
+                <th mat-header-cell *matHeaderCellDef> Income </th>
+                <td mat-cell *matCellDef="let element"> {{element.income}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsFather"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumnsFather;"></tr>
+        </table>
+    </mat-tab>
+
+    <!-- Guardian's Details Tab -->
+    <mat-tab label="Guardian's Details">
+        <div class="form-container">
+            <div class="guardian">
+
+                <div class="row">
+                    <mat-form-field class="half-width">
+                        <mat-label>Guardian's Name</mat-label>
+                        <input matInput placeholder="Mother's Name" value="" />
+                    </mat-form-field>
+
+                    <mat-form-field class="half-width">
+                        <mat-label>Address</mat-label>
+                        <input matInput placeholder="Address" value="" />
+                    </mat-form-field>
+                </div>
+
+                <div class="row">
+                    <mat-form-field class="half-width">
+                        <mat-label>Guardian's Phone</mat-label>
+                        <input matInput placeholder="Mother's Phone" value="" />
+                    </mat-form-field>
+
+                    <mat-form-field class="half-width">
+                        <mat-label>Occupation</mat-label>
+                        <input matInput placeholder="Occupation" value="" />
+                    </mat-form-field>
+                </div>
+
+                <div class="row">
+                    <mat-form-field class="half-width">
+                        <mat-label>Income</mat-label>
+                        <input matInput placeholder="Income" value="" />
+                    </mat-form-field>
+                </div>
+
+            </div>
+
+            <div class="button">
+                <button mat-raised-button color="primary">Add Guardian</button>
+                <button mat-raised-button color="danger">Reset</button>
+            </div>
+
+        </div>
+
+        <!--- Tbale -->
+        <table mat-table [dataSource]="dataSource_guardian" class="mat-elevation-z8">
+
+            <!--- Note that these columns can be defined in any order.
+                                      The actual rendered columns are set as a property on the row definition" -->
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="applicantName">
+                <th mat-header-cell *matHeaderCellDef> No. </th>
+                <td mat-cell *matCellDef="let element"> {{element.applicantName}} </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="guardiansName">
+                <th mat-header-cell *matHeaderCellDef> Guardian's Name </th>
+                <td mat-cell *matCellDef="let element"> {{element.guardiansName}} </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="address">
+                <th mat-header-cell *matHeaderCellDef> Address </th>
+                <td mat-cell *matCellDef="let element"> {{element.address}} </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="guardiansPhone">
+                <th mat-header-cell *matHeaderCellDef> Phone Number </th>
+                <td mat-cell *matCellDef="let element"> {{element.guardiansPhone}}</td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="occupation">
+                <th mat-header-cell *matHeaderCellDef> Occupation </th>
+                <td mat-cell *matCellDef="let element"> {{element.occupation}} </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="income">
+                <th mat-header-cell *matHeaderCellDef> Income </th>
+                <td mat-cell *matCellDef="let element"> {{element.income}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsGuardian"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumnsGuardian;"></tr>
+        </table>
+    </mat-tab>
+</mat-tab-group>

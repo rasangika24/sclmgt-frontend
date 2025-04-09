@@ -1,0 +1,36 @@
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+  }
+
+  .row {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .half-width {
+    width: 50%;
+  }
+
+  .guardian {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+  }
+  
+  mat-form-field {
+    width: 100%;
+  }
+  
+  button {
+    align-self: flex-start;
+  }
+  
+  .button {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+  }

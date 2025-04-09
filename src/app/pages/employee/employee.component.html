@@ -1,0 +1,177 @@
+<h2>Employee Registration Form</h2>
+<div class="container">
+    <div class="form-section">
+        <form [formGroup]="employee" class="example-form" (ngSubmit)="onSubmit()">
+            <mat-form-field class="full-width">
+                <mat-label>Employee Number</mat-label>
+                <input matInput placeholder="Employee Number*" value="" formControlName="empNo" />
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <mat-label>Employee Type</mat-label>
+                <mat-select formControlName="empType">
+                    <mat-option value="epf">epf</mat-option>
+                    <mat-option value="teacher service">Teacher Service</mat-option>
+                    <mat-option value="noneacc">Noneacc</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <mat-label>Full Name</mat-label>
+                <input matInput placeholder="Full Name*" value="" formControlName="fullName" />
+            </mat-form-field>
+            <mat-form-field class="full-width">
+                <mat-label>NIC</mat-label>
+                <input matInput placeholder="NIC*" value="" formControlName="nic" />
+            </mat-form-field>
+            <mat-form-field class="full-width">
+                <mat-label>Calling Name</mat-label>
+                <input matInput placeholder="Calling Name*" value="" formControlName="callingName" />
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <mat-label>Date of Birth</mat-label>
+                <input matInput [matDatepicker]="dob" placeholder="MM/DD/YYYY" formControlName="dob" />
+                <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
+                <mat-datepicker #dob></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <mat-label>Age</mat-label>
+                <input matInput placeholder="Age*" value="" formControlName="age" />
+            </mat-form-field>
+            <mat-form-field class="full-width">
+                <mat-label>Address</mat-label>
+                <input matInput placeholder="Address*" value="" formControlName="address" />
+            </mat-form-field>
+            <mat-form-field class="full-width">
+                <mat-label>Contact Number</mat-label>
+                <input matInput placeholder="Contact Number*" value="" formControlName="contactNo" />
+            </mat-form-field>
+
+            <mat-radio-group aria-label="Select an option" class="full-width" formControlName="civilStatus">
+                <mat-label>Civil Status</mat-label>
+                <mat-radio-button value="Single">Single</mat-radio-button>
+                <mat-radio-button value="married">Married</mat-radio-button>
+            </mat-radio-group>
+            <br />
+            <mat-radio-group aria-label="Select an option" class="full-width" formControlName="gender">
+                <mat-label>Gender</mat-label>
+                <mat-radio-button value="male">Male</mat-radio-button>
+                <mat-radio-button value="female">Female</mat-radio-button>
+            </mat-radio-group>
+            <br />
+
+            <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isDisabled">
+                {{registerButtonLabel}}
+            </button>
+            <button type="button" mat-raised-button color="secondary" (click)="resetData()" class="form-button">
+                Reset
+            </button>
+        </form>
+    </div>
+
+    <div class="table-section">
+          <!-- table filter-->
+    <div class="table-filter">
+        <mat-form-field>
+          <mat-label>Filter</mat-label>
+          <input matInput (keyup)="applyFilter($event)" placeholder="" #input />
+        </mat-form-field>
+  
+        <!-- refresh button-->
+        <div>
+          <button mat-icon-button (click)="refreshData()" class="refresh-button">
+            <mat-icon>refresh</mat-icon>
+          </button>
+        </div>
+      </div>
+
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+            <!--- Note that these columns can be defined in any order.
+                The actual rendered columns are set as a property on the row definition" -->
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="empNo">
+                <th mat-header-cell *matHeaderCellDef>No.</th>
+                <td mat-cell *matCellDef="let element">{{ element.empNo }}</td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="empType">
+                <th mat-header-cell *matHeaderCellDef>Employee Type</th>
+                <td mat-cell *matCellDef="let element">{{ element.empType }}</td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="nic">
+                <th mat-header-cell *matHeaderCellDef>NIC</th>
+                <td mat-cell *matCellDef="let element">{{ element.nic }}</td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="fullName">
+                <th mat-header-cell *matHeaderCellDef>Full Name</th>
+                <td mat-cell *matCellDef="let element">{{ element.fullName }}</td>
+            </ng-container>
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="callingName">
+                <th mat-header-cell *matHeaderCellDef>Calling Name</th>
+                <td mat-cell *matCellDef="let element">{{ element.callingName }}</td>
+            </ng-container>
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="dob">
+                <th mat-header-cell *matHeaderCellDef>Date of Birth</th>
+                <td mat-cell *matCellDef="let element">{{ element.dob }}</td>
+            </ng-container>
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="age">
+                <th mat-header-cell *matHeaderCellDef>Age</th>
+                <td mat-cell *matCellDef="let element">{{ element.age }}</td>
+            </ng-container>
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="address">
+                <th mat-header-cell *matHeaderCellDef>Address</th>
+                <td mat-cell *matCellDef="let element">{{ element.address }}</td>
+            </ng-container>
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="contactNo">
+                <th mat-header-cell *matHeaderCellDef>Contact Number</th>
+                <td mat-cell *matCellDef="let element">{{ element.contactNo }}</td>
+            </ng-container>
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="civilStatus">
+                <th mat-header-cell *matHeaderCellDef>Civil Status</th>
+                <td mat-cell *matCellDef="let element">{{ element.civilStatus }}</td>
+            </ng-container>
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="gender">
+                <th mat-header-cell *matHeaderCellDef>Gender</th>
+                <td mat-cell *matCellDef="let element">{{ element.gender }}</td>
+            </ng-container>
+
+            <!-- action Column -->
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>Actions</th>
+                <td mat-cell *matCellDef="let element">
+                    <div class="action-column">
+                        <button mat-icon-button color="warn" (click)="editData(element)" matTooltip="Edit">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button mat-icon-button color="warn" (click)="deleteData(element)" matTooltip="Delete">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </div>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+
+        <!-- pagination-->
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"
+            class="pagination"></mat-paginator>
+    </div>
+</div>
