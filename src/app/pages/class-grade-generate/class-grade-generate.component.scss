@@ -1,0 +1,31 @@
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+.left,
+.right {
+    flex: 1;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.left {
+    background-color: #f0f8ff;
+    position: relative;
+}
+
+.right {
+    background-color: #fff5f5;
+}
+
+.left-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.inputs label {
+    display: block;
+    margin-bottom: 10px;
+}

@@ -93,4 +93,16 @@ export const navItems: NavItem[] = [
     auth: authenticationEnum.Test,
     isVisible: false,
   },
+  {
+    navCap: 'System Setup',
+    auth: authenticationEnum.Test, // change this
+    isVisible: true,
+  },
+  {
+    displayName: 'Class Grade Generate',
+    iconName: 'layout-dashboard',
+    route: '/dashboard/class-grade-gen',
+    auth: authenticationEnum.Test,
+    isVisible: false,
+  },
 ];

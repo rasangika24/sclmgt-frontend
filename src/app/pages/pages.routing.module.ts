@@ -4,6 +4,7 @@ import { FormDemoComponent } from './form-demo/form-demo.component';
 import { EmployeeComponent } from './employee/employee.component';
 import { RecruitmentSelectionAdmissionComponent } from './recruitment-selection-admission/recruitment-selection-admission.component';
 import { SchedulerComponent } from './scheduler/scheduler.component';
+import { ClassGradeGenerateComponent } from './class-grade-generate/class-grade-generate.component';
 
 export const PagesRoutes: Routes = [
   {
@@ -38,5 +39,10 @@ export const PagesRoutes: Routes = [
     //set path of employee module
     path: 'time-table', // http://localhost:4200/dashboard/employee
     component: SchedulerComponent,
+  },
+  {
+    //set path of employee module
+    path: 'class-grade-gen', // http://localhost:4200/dashboard/employee
+    component: ClassGradeGenerateComponent,
   },
 ];

@@ -17,6 +17,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { RecruitmentSelectionAdmissionComponent } from './recruitment-selection-admission/recruitment-selection-admission.component';
 import { SchedulerComponent } from './scheduler/scheduler.component';
+import { ClassGradeGenerateComponent } from './class-grade-generate/class-grade-generate.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { SchedulerComponent } from './scheduler/scheduler.component';
     EmployeeComponent,
     RecruitmentSelectionAdmissionComponent,
     SchedulerComponent,
+    ClassGradeGenerateComponent,
   ],
   imports: [
     ReactiveFormsModule,
