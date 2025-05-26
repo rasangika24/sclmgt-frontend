@@ -16,10 +16,17 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { RecruitmentSelectionAdmissionComponent } from './recruitment-selection-admission/recruitment-selection-admission.component';
-
+import { SchedulerComponent } from './scheduler/scheduler.component';
 
 @NgModule({
-  declarations: [AppDashboardComponent, AddRemoveTableComponent,FormDemoComponent,EmployeeComponent, RecruitmentSelectionAdmissionComponent],
+  declarations: [
+    AppDashboardComponent,
+    AddRemoveTableComponent,
+    FormDemoComponent,
+    EmployeeComponent,
+    RecruitmentSelectionAdmissionComponent,
+    SchedulerComponent,
+  ],
   imports: [
     ReactiveFormsModule,
     CommonModule,
@@ -28,8 +35,10 @@ import { RecruitmentSelectionAdmissionComponent } from './recruitment-selection-
     NgApexchartsModule,
     RouterModule.forChild(PagesRoutes),
     TablerIconsModule.pick(TablerIcons),
-    MatFormFieldModule, MatInputModule, MatDatepickerModule
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
   ],
-  exports: []
+  exports: [],
 })
 export class PagesModule {}

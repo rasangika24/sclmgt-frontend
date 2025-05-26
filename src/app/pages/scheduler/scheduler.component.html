@@ -1,0 +1,215 @@
+<div class="sch-container">
+  <form [formGroup]="scheduleForm">
+    <mat-form-field style="width: 30%">
+      <mat-label>Select Teacher</mat-label>
+      <mat-select [(ngModel)]="selectedEmployee" formControlName="empNo">
+        <mat-form-field class="w-100">
+          <input
+            matInput
+            placeholder="Search for teacher..."
+            (keyup)="onKey($event.target)"
+          />
+        </mat-form-field>
+        <mat-option *ngFor="let emp of selectedEmployers" [value]="emp.id">{{
+          emp.name
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-icon-button color="primary" class="m-1" (click)="refreshData()">
+      <mat-icon>refresh</mat-icon>
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      [disabled]="noOfRows === 8"
+      (click)="saveData()"
+      class="m-1"
+    >
+      Save
+    </button>
+    <!-- <button mat-raised-button color="secondary" (click)="cancel()" class="m-1">Cancel</button> -->
+    <button mat-raised-button color="secondary" (click)="reset()" class="m-1">
+      Reset
+    </button>
+
+    <ng-container formArrayName="rowData">
+      <table
+        mat-table
+        [dataSource]="rowData.controls"
+        class="mat-elevation-z8"
+        #table
+      >
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef [hidden]="true">Id</th>
+          <td
+            mat-cell
+            *matCellDef="let element"
+            [formGroup]="element"
+            [hidden]="true"
+          >
+            <!-- <input [(ngModel)]="element.periodNo" /> -->
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Id" formControlName="id" />
+            </mat-form-field>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="periodNo">
+          <th mat-header-cell *matHeaderCellDef>Period No</th>
+          <td
+            mat-cell
+            *matCellDef="let element; let i = index"
+            [formGroup]="element"
+          >
+            <!-- <input [(ngModel)]="element.monday" /> -->
+            {{ i + 1 }}
+            <!-- <mat-form-field class="full-width">
+              <input matInput placeholder="Period No" />
+            </mat-form-field> -->
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="monday">
+          <th mat-header-cell *matHeaderCellDef>Monday</th>
+          <td
+            mat-cell
+            *matCellDef="let element; let i = index"
+            [formGroup]="element"
+          >
+            <!-- <input [(ngModel)]="element.periodNo" /> -->
+            <mat-form-field class="full-width">
+              <mat-label>Monday - Period {{ i + 1 }}</mat-label>
+              <input
+                matInput
+                placeholder="Monday - Period {{ i + 1 }}"
+                formControlName="monday"
+              />
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="tuesday">
+          <th mat-header-cell *matHeaderCellDef>Tuesday</th>
+          <td
+            mat-cell
+            *matCellDef="let element; let i = index"
+            [formGroup]="element"
+          >
+            <!-- <input [(ngModel)]="element.tuesday" /> -->
+            <mat-form-field class="full-width">
+              <mat-label>Tuesday - Period {{ i + 1 }}</mat-label>
+              <input
+                matInput
+                placeholder="Tuesday - Period {{ i + 1 }}"
+                formControlName="tuesday"
+              />
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="wednesday">
+          <th mat-header-cell *matHeaderCellDef>Wednesday</th>
+          <td
+            mat-cell
+            *matCellDef="let element; let i = index"
+            [formGroup]="element"
+          >
+            <!-- <input [(ngModel)]="element.wednesday" /> -->
+            <mat-form-field class="full-width">
+              <mat-label>Wednesday - Period {{ i + 1 }}</mat-label>
+              <input
+                matInput
+                placeholder="Wednesday - Period {{ i + 1 }}"
+                formControlName="wednesday"
+              />
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="thursday">
+          <th mat-header-cell *matHeaderCellDef>Thursday</th>
+          <td
+            mat-cell
+            *matCellDef="let element; let i = index"
+            [formGroup]="element"
+          >
+            <!-- <input [(ngModel)]="element.thursday" /> -->
+            <mat-form-field class="full-width">
+              <mat-label>Thursday - Period {{ i + 1 }}</mat-label>
+              <input
+                matInput
+                placeholder="Thursday - Period {{ i + 1 }}"
+                formControlName="thursday"
+              />
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="friday">
+          <th mat-header-cell *matHeaderCellDef>Friday</th>
+          <td
+            mat-cell
+            *matCellDef="let element; let i = index"
+            [formGroup]="element"
+          >
+            <!-- <input [(ngModel)]="element.friday" /> -->
+            <mat-form-field class="full-width">
+              <mat-label>Friday - Period {{ i + 1 }}</mat-label>
+              <input
+                matInput
+                placeholder="Friday - Period {{ i + 1 }}"
+                formControlName="friday"
+              />
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <!-- <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let element; let i = index">
+            <button mat-icon-button color="warn" (click)="deleteRow(i)">
+              <mat-icon>delete</mat-icon>
+            </button>
+            <button mat-icon-button color="primary" (click)="updateRow(i)">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </td>
+        </ng-container> -->
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </ng-container>
+  </form>
+</div>
+
+<!-- <div>
+  {{ scheduleForm.value | json }}
+</div> -->
+<!-- 
+<div class="container">
+  <button (click)="addRow()">+</button>
+  <table>
+    <thead>
+      <tr>
+        <th>Emp No</th>
+        <th>Period No</th>
+        <th>Monday</th>
+        <th>Tuesday</th>
+        <th>Wednesday</th>
+        <th>Thursday</th>
+        <th>Friday</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of rows">
+        <td><input [(ngModel)]="row.empNo" type="text" /></td>
+        <td><input [(ngModel)]="row.periodNo" type="text" /></td>
+        <td><input [(ngModel)]="row.monday" type="text" /></td>
+        <td><input [(ngModel)]="row.tuesday" type="text" /></td>
+        <td><input [(ngModel)]="row.wednesday" type="text" /></td>
+        <td><input [(ngModel)]="row.thursday" type="text" /></td>
+        <td><input [(ngModel)]="row.friday" type="text" /></td>
+      </tr>
+    </tbody>
+  </table>
+</div> -->

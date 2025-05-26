@@ -3,10 +3,11 @@ import { AppDashboardComponent } from './dashboard/dashboard.component';
 import { FormDemoComponent } from './form-demo/form-demo.component';
 import { EmployeeComponent } from './employee/employee.component';
 import { RecruitmentSelectionAdmissionComponent } from './recruitment-selection-admission/recruitment-selection-admission.component';
+import { SchedulerComponent } from './scheduler/scheduler.component';
 
 export const PagesRoutes: Routes = [
   {
-    path: '',  // http://localhost:4200/dashboard
+    path: '', // http://localhost:4200/dashboard
     component: AppDashboardComponent,
     data: {
       title: 'Starter Page',
@@ -22,16 +23,20 @@ export const PagesRoutes: Routes = [
   {
     path: 'form-demo', // http://localhost:4200/dashboard/form-demo
     component: FormDemoComponent,
-    
   },
-  {//set path of employee module
+  {
+    //set path of employee module
     path: 'employee', // http://localhost:4200/dashboard/employee
     component: EmployeeComponent,
-    
   },
-    {//set path of employee module
-      path: 'applicant', // http://localhost:4200/dashboard/employee
-      component: RecruitmentSelectionAdmissionComponent,
-      
-    },
+  {
+    //set path of employee module
+    path: 'applicant', // http://localhost:4200/dashboard/employee
+    component: RecruitmentSelectionAdmissionComponent,
+  },
+  {
+    //set path of employee module
+    path: 'time-table', // http://localhost:4200/dashboard/employee
+    component: SchedulerComponent,
+  },
 ];
