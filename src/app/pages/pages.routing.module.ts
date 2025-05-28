@@ -3,6 +3,9 @@ import { AppDashboardComponent } from './dashboard/dashboard.component';
 import { FormDemoComponent } from './form-demo/form-demo.component';
 import { EmployeeComponent } from './employee/employee.component';
 import { RecruitmentSelectionAdmissionComponent } from './recruitment-selection-admission/recruitment-selection-admission.component';
+import { LeavingComponent } from './leaving/leaving.component';
+import { CharacterComponent } from './character/character.component';
+import { StudentComponent } from './student/student.component';
 
 export const PagesRoutes: Routes = [
   {
@@ -34,4 +37,16 @@ export const PagesRoutes: Routes = [
       component: RecruitmentSelectionAdmissionComponent,
       
     },
+    {//set path to leaving certificates
+    path: 'leaving',  // http://localhost:4200/dashboard
+    component: LeavingComponent,
+  },
+    {//set path to character certificates
+    path: 'character',  // http://localhost:4200/dashboard
+    component: CharacterComponent,
+  },
+  {//set path to character certificates
+    path: 'student',  // http://localhost:4200/dashboard
+    component: StudentComponent,
+  },
 ];

@@ -16,10 +16,14 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { RecruitmentSelectionAdmissionComponent } from './recruitment-selection-admission/recruitment-selection-admission.component';
+import { LeavingComponent } from './leaving/leaving.component';
+import { CharacterComponent } from './character/character.component';
+import { StudentComponent } from './student/student.component';
+
 
 
 @NgModule({
-  declarations: [AppDashboardComponent, AddRemoveTableComponent,FormDemoComponent,EmployeeComponent, RecruitmentSelectionAdmissionComponent],
+  declarations: [AppDashboardComponent, AddRemoveTableComponent,FormDemoComponent,EmployeeComponent, RecruitmentSelectionAdmissionComponent, LeavingComponent, CharacterComponent,StudentComponent],
   imports: [
     ReactiveFormsModule,
     CommonModule,

@@ -72,20 +72,20 @@
     </div>
 
     <div class="table-section">
-          <!-- table filter-->
-    <div class="table-filter">
-        <mat-form-field>
-          <mat-label>Filter</mat-label>
-          <input matInput (keyup)="applyFilter($event)" placeholder="" #input />
-        </mat-form-field>
-  
-        <!-- refresh button-->
-        <div>
-          <button mat-icon-button (click)="refreshData()" class="refresh-button">
-            <mat-icon>refresh</mat-icon>
-          </button>
+        <!-- table filter-->
+        <div class="table-filter">
+            <mat-form-field>
+                <mat-label>Filter</mat-label>
+                <input matInput (keyup)="applyFilter($event)" placeholder="" #input />
+            </mat-form-field>
+
+            <!-- refresh button-->
+            <div>
+                <button mat-icon-button (click)="refreshData()" class="refresh-button">
+                    <mat-icon>refresh</mat-icon>
+                </button>
+            </div>
         </div>
-      </div>
 
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 

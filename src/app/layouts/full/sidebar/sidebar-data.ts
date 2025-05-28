@@ -45,18 +45,27 @@ export const navItems: NavItem[] = [
     auth: authenticationEnum.Test,
     isVisible: false
   },
-  // {
-  //   navCap: 'Form Demo',
-  //   auth: authenticationEnum.Test, // change this
-  //   isVisible: true,
-  // },
-  // {
-  //   displayName: 'Form Demo',
-  //   iconName: 'layout-dashboard',
-  //   route: '/dashboard/form-demo',
-  //   auth: authenticationEnum.Test,
-  //   isVisible: false,
-  // },
+
+  {
+    navCap: 'Issuing Certificates',
+    auth: authenticationEnum.Test, // change this
+    isVisible: true,
+  },
+  {
+    displayName: 'Leaving',
+    iconName: 'layout-dashboard',
+    route: '/dashboard/leaving',
+    auth: authenticationEnum.Test,
+    isVisible: false,
+  },
+  {
+    displayName: 'Character',
+    iconName: 'layout-dashboard',
+    route: '/dashboard/character',
+    auth: authenticationEnum.Test,
+    isVisible: false,
+  },
+
   {
     navCap: 'Employee',
     auth: authenticationEnum.Test, // change this
@@ -76,6 +85,18 @@ export const navItems: NavItem[] = [
   },
   {
     displayName: 'Applicant and Parent',
+    iconName: 'layout-dashboard',
+    route: '/dashboard/applicant',
+    auth: authenticationEnum.Test,
+    isVisible: false,
+  },
+  {
+    navCap: 'Student ',
+    auth: authenticationEnum.Test, // change this
+    isVisible: true,
+  },
+  {
+    displayName: 'Student ',
     iconName: 'layout-dashboard',
     route: '/dashboard/applicant',
     auth: authenticationEnum.Test,
