@@ -1,0 +1,393 @@
+<div class="container">
+  <h2>Academic Staff Details</h2>
+
+  <div class="table-section">
+
+  <div class="refresh-filter-section">
+        <div class="refresh-button">
+          <button mat-icon-button color="primary" (click)="refreshData()">
+            <mat-icon>refresh</mat-icon>
+          </button>
+        </div>
+
+        <mat-form-field class="filter">
+          <mat-label>Filter</mat-label>
+          <input matInput (keyup)="applyFilter($event)" placeholder="Type here to search.." #input />
+        </mat-form-field>
+      </div>
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+  <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef>ID</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.id }}
+          </td>
+        </ng-container>
+  
+        <!-- Position Column -->
+  <ng-container matColumnDef="teacherNumber">
+    <th mat-header-cell *matHeaderCellDef> Teacher Number </th>
+    <td mat-cell *matCellDef="let element"> {{element.teacherNumber}} </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="nameinFull">
+    <th mat-header-cell *matHeaderCellDef> nameinFull </th>
+    <td mat-cell *matCellDef="let element"> {{element.nameinFull}} </td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="nameWithInitials">
+    <th mat-header-cell *matHeaderCellDef> nameWithInitials </th>
+    <td mat-cell *matCellDef="let element"> {{element.nameWithInitials}} </td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="usingName">
+    <th mat-header-cell *matHeaderCellDef> usingName </th>
+    <td mat-cell *matCellDef="let element"> {{element.usingName}} </td>
+  </ng-container>
+
+  
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="appointmentDateAsTemperary">
+    <th mat-header-cell *matHeaderCellDef> appointmentDateAsTemperary </th>
+    <td mat-cell *matCellDef="let element"> {{element.appointmentDateAsTemperary}} </td>
+  </ng-container>
+  
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="appointmentDateAsEpf">
+    <th mat-header-cell *matHeaderCellDef> appointmentDateAsEpf </th>
+    <td mat-cell *matCellDef="let element"> {{element.appointmentDateAsEpf}} </td>
+  </ng-container>
+  
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="appointmentDateAsSlts">
+    <th mat-header-cell *matHeaderCellDef> appointmentDateAsSlts </th>
+    <td mat-cell *matCellDef="let element"> {{element.appointmentDateAsSlts}} </td>
+  </ng-container>
+  
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="gradeOfSlts">
+    <th mat-header-cell *matHeaderCellDef> gradeOfSlts </th>
+    <td mat-cell *matCellDef="let element"> {{element.gradeOfSlts}} </td>
+  </ng-container>
+  
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="dateOfBirth">
+    <th mat-header-cell *matHeaderCellDef> dateOfBirth </th>
+    <td mat-cell *matCellDef="let element"> {{element.dateOfBirth}} </td>
+  </ng-container>
+  
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="address">
+    <th mat-header-cell *matHeaderCellDef> address </th>
+    <td mat-cell *matCellDef="let element"> {{element.address}} </td>
+  </ng-container>
+  
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="telephone">
+    <th mat-header-cell *matHeaderCellDef> telephone </th>
+    <td mat-cell *matCellDef="let element"> {{element.telephone}} </td>
+  </ng-container>
+  
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="whatsapp">
+    <th mat-header-cell *matHeaderCellDef> whatsapp </th>
+    <td mat-cell *matCellDef="let element"> {{element.whatsapp}} </td>
+  </ng-container>
+  
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="emailAddress">
+    <th mat-header-cell *matHeaderCellDef> emailAddress </th>
+    <td mat-cell *matCellDef="let element"> {{element.emailAddress}} </td>
+  </ng-container>
+  
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="nic">
+    <th mat-header-cell *matHeaderCellDef> nic </th>
+    <td mat-cell *matCellDef="let element"> {{element.nic}} </td>
+  </ng-container>
+  
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="schoolStudied">
+    <th mat-header-cell *matHeaderCellDef> schoolStudied </th>
+    <td mat-cell *matCellDef="let element"> {{element.schoolStudied}} </td>
+  </ng-container>
+  
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="highestEducationQualification">
+    <th mat-header-cell *matHeaderCellDef> highestEducationQualification </th>
+    <td mat-cell *matCellDef="let element"> {{element.highestEducationQualification}} </td>
+  </ng-container>
+  
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="professionalQualification">
+    <th mat-header-cell *matHeaderCellDef> professionalQualification </th>
+    <td mat-cell *matCellDef="let element"> {{element.professionalQualification}} </td>
+  </ng-container>
+  
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="otherQualification">
+    <th mat-header-cell *matHeaderCellDef> otherQualification </th>
+    <td mat-cell *matCellDef="let element"> {{element.otherQualification}} </td>
+  </ng-container>
+  
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="extraCurricularActivities">
+    <th mat-header-cell *matHeaderCellDef> extraCurricularActivities </th>
+    <td mat-cell *matCellDef="let element"> {{element.extraCurricularActivities}} </td>
+  </ng-container>
+  
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="subjectTeaching1">
+    <th mat-header-cell *matHeaderCellDef> subjectTeaching1 </th>
+    <td mat-cell *matCellDef="let element"> {{element.subjectTeaching1}} </td>
+  </ng-container>
+  
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="marriedOrNot">
+    <th mat-header-cell *matHeaderCellDef> marriedOrNot </th>
+    <td mat-cell *matCellDef="let element"> {{element.marriedOrNot}} </td>
+  </ng-container>
+  
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="dateGotMarried">
+    <th mat-header-cell *matHeaderCellDef> dateGotMarried </th>
+    <td mat-cell *matCellDef="let element"> {{element.dateGotMarried}} </td>
+  </ng-container>
+  
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="statusOfMarriage">
+    <th mat-header-cell *matHeaderCellDef> statusOfMarriage </th>
+    <td mat-cell *matCellDef="let element"> {{element.statusOfMarriage}} </td>
+  </ng-container>
+  
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="nameOfTheSpouse">
+    <th mat-header-cell *matHeaderCellDef> nameOfTheSpouse </th>
+    <td mat-cell *matCellDef="let element"> {{element.nameOfTheSpouse}} </td>
+  </ng-container>
+    
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="spouseSchool">
+    <th mat-header-cell *matHeaderCellDef> spouseSchool </th>
+    <td mat-cell *matCellDef="let element"> {{element.spouseSchool}} </td>
+  </ng-container>
+    
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="spouseHighestEducationLevel">
+    <th mat-header-cell *matHeaderCellDef> spouseHighestEducationLevel </th>
+    <td mat-cell *matCellDef="let element"> {{element.spouseHighestEducationLevel}} </td>
+  </ng-container>
+    
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="contactNumber">
+    <th mat-header-cell *matHeaderCellDef> contactNumber </th>
+    <td mat-cell *matCellDef="let element"> {{element.contactNumber}} </td>
+  </ng-container>
+    
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="occupation">
+    <th mat-header-cell *matHeaderCellDef> occupation </th>
+    <td mat-cell *matCellDef="let element"> {{element.occupation}} </td>
+  </ng-container>
+    
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="numberOfChildren">
+    <th mat-header-cell *matHeaderCellDef> numberOfChildren </th>
+    <td mat-cell *matCellDef="let element"> {{element.numberOfChildren}} </td>
+  </ng-container>
+    
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="educationQualification">
+    <th mat-header-cell *matHeaderCellDef> educationQualification </th>
+    <td mat-cell *matCellDef="let element"> {{element.educationQualification}} </td>
+  </ng-container>
+    
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="universityOrInstitute">
+    <th mat-header-cell *matHeaderCellDef> universityOrInstitute </th>
+    <td mat-cell *matCellDef="let element"> {{element.universityOrInstitute}} </td>
+  </ng-container>
+    
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="year">
+    <th mat-header-cell *matHeaderCellDef> year </th>
+    <td mat-cell *matCellDef="let element"> {{element.year}} </td>
+  </ng-container>
+    
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="subject">
+    <th mat-header-cell *matHeaderCellDef> subject </th>
+    <td mat-cell *matCellDef="let element"> {{element.subject}} </td>
+  </ng-container>
+    
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="mothersName">
+    <th mat-header-cell *matHeaderCellDef> mothersName </th>
+    <td mat-cell *matCellDef="let element"> {{element.mothersName}} </td>
+  </ng-container>
+    
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="mothersSchool">
+    <th mat-header-cell *matHeaderCellDef> mothersSchool </th>
+    <td mat-cell *matCellDef="let element"> {{element.mothersSchool}} </td>
+  </ng-container>
+    
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="mothersEducationLevel">
+    <th mat-header-cell *matHeaderCellDef> mothersEducationLevel </th>
+    <td mat-cell *matCellDef="let element"> {{element.mothersEducationLevel}} </td>
+  </ng-container>
+    
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="mothersProfession">
+    <th mat-header-cell *matHeaderCellDef> mothersProfession </th>
+    <td mat-cell *matCellDef="let element"> {{element.mothersProfession}} </td>
+  </ng-container>
+    
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="mothersTelephone">
+    <th mat-header-cell *matHeaderCellDef> mothersTelephone </th>
+    <td mat-cell *matCellDef="let element"> {{element.mothersTelephone}} </td>
+  </ng-container>
+    
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="mothersWhatsapp">
+    <th mat-header-cell *matHeaderCellDef> mothersWhatsapp </th>
+    <td mat-cell *matCellDef="let element"> {{element.mothersWhatsapp}} </td>
+  </ng-container>
+    
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="fathersName">
+    <th mat-header-cell *matHeaderCellDef> fathersName </th>
+    <td mat-cell *matCellDef="let element"> {{element.fathersName}} </td>
+  </ng-container>
+      
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="fathersSchool">
+    <th mat-header-cell *matHeaderCellDef> fathersSchool </th>
+    <td mat-cell *matCellDef="let element"> {{element.fathersSchool}} </td>
+  </ng-container>
+      
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="fathersEducationLevel">
+    <th mat-header-cell *matHeaderCellDef> fathersEducationLevel </th>
+    <td mat-cell *matCellDef="let element"> {{element.fathersEducationLevel}} </td>
+  </ng-container>
+      
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="fathersProfession">
+    <th mat-header-cell *matHeaderCellDef> fathersProfession </th>
+    <td mat-cell *matCellDef="let element"> {{element.fathersProfession}} </td>
+  </ng-container>
+      
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="fathersTelephone">
+    <th mat-header-cell *matHeaderCellDef> fathersTelephone </th>
+    <td mat-cell *matCellDef="let element"> {{element.fathersTelephone}} </td>
+  </ng-container>
+      
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="fathersWhatsapp">
+    <th mat-header-cell *matHeaderCellDef> fathersWhatsapp </th>
+    <td mat-cell *matCellDef="let element"> {{element.fathersWhatsapp}} </td>
+  </ng-container>
+      
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="smothersName">
+    <th mat-header-cell *matHeaderCellDef> smothersName </th>
+    <td mat-cell *matCellDef="let element"> {{element.smothersName}} </td>
+  </ng-container>
+      
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="smothersSchool">
+    <th mat-header-cell *matHeaderCellDef> smothersSchool </th>
+    <td mat-cell *matCellDef="let element"> {{element.smothersSchool}} </td>
+  </ng-container>
+      
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="smothersEducationLevel">
+    <th mat-header-cell *matHeaderCellDef> smothersEducationLevel </th>
+    <td mat-cell *matCellDef="let element"> {{element.smothersEducationLevel}} </td>
+  </ng-container>
+      
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="smothersProfession">
+    <th mat-header-cell *matHeaderCellDef> smothersProfession </th>
+    <td mat-cell *matCellDef="let element"> {{element.smothersProfession}} </td>
+  </ng-container>
+      
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="smothersTelephone">
+    <th mat-header-cell *matHeaderCellDef> smothersTelephone </th>
+    <td mat-cell *matCellDef="let element"> {{element.smothersTelephone}} </td>
+  </ng-container>
+      
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="smothersWhatsapp">
+    <th mat-header-cell *matHeaderCellDef> smothersWhatsapp </th>
+    <td mat-cell *matCellDef="let element"> {{element.smothersWhatsapp}} </td>
+  </ng-container>
+      
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="sfathersName">
+    <th mat-header-cell *matHeaderCellDef> sfathersName </th>
+    <td mat-cell *matCellDef="let element"> {{element.sfathersName}} </td>
+  </ng-container>
+      
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="sfathersSchool">
+    <th mat-header-cell *matHeaderCellDef> sfathersSchool </th>
+    <td mat-cell *matCellDef="let element"> {{element.sfathersSchool}} </td>
+  </ng-container>
+      
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="sfathersEducationLevel">
+    <th mat-header-cell *matHeaderCellDef> sfathersEducationLevel </th>
+    <td mat-cell *matCellDef="let element"> {{element.sfathersEducationLevel}} </td>
+  </ng-container>
+      
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="sfathersProfession">
+    <th mat-header-cell *matHeaderCellDef> sfathersProfession </th>
+    <td mat-cell *matCellDef="let element"> {{element.sfathersProfession}} </td>
+  </ng-container>
+      
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="sfathersTelephone">
+    <th mat-header-cell *matHeaderCellDef> sfathersTelephone </th>
+    <td mat-cell *matCellDef="let element"> {{element.sfathersTelephone}} </td>
+  </ng-container>
+      
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="sfathersWhatsapp">
+    <th mat-header-cell *matHeaderCellDef> sfathersWhatsapp </th>
+    <td mat-cell *matCellDef="let element"> {{element.sfathersWhatsapp}} </td>
+  </ng-container>
+
+  <!--
+  <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button color="primary" (click)="editData(element)" matTooltip="edit">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="deleteData(element)" matTooltip="delete">
+              <mat-icon>delete</mat-icon>
+            </button>
+               <button mat-icon-buttoncolor="warn"(click)="editData()" matTooltip="edit"><mat-icon>edit</mat-icon></button> 
+          </td>
+        </ng-container> -->
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+</div>

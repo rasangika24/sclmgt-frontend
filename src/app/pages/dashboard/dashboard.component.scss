@@ -1,0 +1,25 @@
+.datetime-container {
+  background-color: white;
+  color: #1976d2; /* Angular Material Blue 700 */
+  padding: 20px;
+  border-radius: 8px;
+  width: 98%;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.date {
+  font-size: 6rem;
+  font-weight: 500;
+  margin-bottom: 100px;
+  margin-top: 50px;
+}
+
+.time {
+  font-size: 4rem;
+  font-weight: 500;
+  margin-bottom: 50px;
+  margin-top: 50px;
+  color: #0B74FF;
+}

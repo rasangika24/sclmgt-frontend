@@ -6,6 +6,18 @@ import { RecruitmentSelectionAdmissionComponent } from './recruitment-selection-
 import { LeavingComponent } from './leaving/leaving.component';
 import { CharacterComponent } from './character/character.component';
 import { StudentComponent } from './student/student.component';
+import { NoneAcademicStaffComponent } from './none-academic-staff/none-academic-staff.component';
+import { ApplicationToStaffComponent } from './application-to-staff/application-to-staff.component';
+import { TimetableComponent } from './timetable/timetable.component';
+import { AcademicStaffComponent } from './academic-staff/academic-staff.component';
+import { ReliefPeriodManagementComponent } from './relief-period-management/relief-period-management.component';
+import { SbamarksComponent } from './sbamarks/sbamarks.component';
+import { ClassmanagementComponent } from './classmanagement/classmanagement.component';
+import { TermtestmarksComponent } from './termtestmarks/termtestmarks.component';
+import { StudentDetailsComponent } from './student-details/student-details.component';
+import { CreateExamComponent } from './create-exam/create-exam.component';
+import { AcademicStaffDetailsComponent } from './academic-staff-details/academic-staff-details.component';
+import { NoneAcademicStaffDetailsComponent } from './none-academic-staff-details/none-academic-staff-details.component';
 
 export const PagesRoutes: Routes = [
   {
@@ -27,6 +39,14 @@ export const PagesRoutes: Routes = [
     component: FormDemoComponent,
     
   },
+  {//set path to character certificates
+    path: 'student',  // http://localhost:4200/dashboard
+    component: StudentComponent,
+  },
+  {//set path to student details
+    path: 'student-details',  // http://localhost:4200/dashboard/student-details
+    component: StudentDetailsComponent,
+  },
   {//set path of employee module
     path: 'employee', // http://localhost:4200/dashboard/employee
     component: EmployeeComponent,
@@ -45,8 +65,49 @@ export const PagesRoutes: Routes = [
     path: 'character',  // http://localhost:4200/dashboard
     component: CharacterComponent,
   },
-  {//set path to character certificates
-    path: 'student',  // http://localhost:4200/dashboard
-    component: StudentComponent,
+  {//set path to noneAcademicStaffCompone
+    path: 'academic-staff',  // http://localhost:4200/dashboard
+    component: AcademicStaffComponent,
+  },
+  
+  {//set path to noneAcademicStaffCompone
+    path: 'none-academic-staff',  // http://localhost:4200/dashboard
+    component: NoneAcademicStaffComponent,
+  },
+   {//set path to application to staff
+    path: 'application-to-staff',  // http://localhost:4200/dashboard
+    component: ApplicationToStaffComponent,
+  },
+  {//set path to application to time table
+    path: 'timetable',  // http://localhost:4200/dashboard
+    component: TimetableComponent,
+  },
+  {//set path to application to time table
+    path: 'relief-period-management',  // http://localhost:4200/dashboard
+    component: ReliefPeriodManagementComponent,
+  },
+  {//set path to application to time table
+    path: 'sbamarks',  // http://localhost:4200/dashboard
+    component: SbamarksComponent,
+  },
+   {//set path to application to time table
+    path: 'classmanagement',  // http://localhost:4200/dashboard
+    component: ClassmanagementComponent,
+  },
+   {//set path to application to time table
+    path: 'termtestmarks',  // http://localhost:4200/dashboard
+    component: TermtestmarksComponent,
+  },
+   {//set path to application to time table
+    path: 'exam-create',  // http://localhost:4200/dashboard
+    component: CreateExamComponent,
+  },
+   {//set path to application to time table
+    path: 'view-academic-staff-details',  // http://localhost:4200/dashboard
+    component: AcademicStaffDetailsComponent,
+  },
+   {//set path to application to time table
+    path: 'view-none-academic-staff-details',  // http://localhost:4200/dashboard
+    component: NoneAcademicStaffDetailsComponent,
   },
 ];

@@ -44,7 +44,7 @@
 
                     <mat-form-field class="half-width">
                         <mat-label>Address</mat-label>
-                        <input matInput placeholder="Address*" value="" formControlName="address"/>
+                        <input matInput placeholder="Address*" value="" formControlName="address" />
                     </mat-form-field>
                 </div>
 
@@ -58,7 +58,9 @@
                     </mat-form-field>
 
                     <div class="button">
-                        <button type="submit" mat-raised-button color="primary">Add Applicant</button>
+                        <button type="submit" mat-raised-button color="primary">
+                            Add Applicant
+                        </button>
                         <button mat-raised-button color="danger">Reset</button>
                     </div>
                 </div>
@@ -67,61 +69,59 @@
 
         <!--- Tbale -->
         <table mat-table [dataSource]="dataSource_applicant" class="mat-elevation-z8">
-
             <!--- Note that these columns can be defined in any order.
               The actual rendered columns are set as a property on the row definition" -->
 
             <!-- Position Column -->
             <ng-container matColumnDef="applicant_no">
-                <th mat-header-cell *matHeaderCellDef> No. </th>
-                <td mat-cell *matCellDef="let element"> {{element.applicant_no}} </td>
+                <th mat-header-cell *matHeaderCellDef>No.</th>
+                <td mat-cell *matCellDef="let element">{{ element.applicant_no }}</td>
             </ng-container>
 
             <!-- Name Column -->
             <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef> Name </th>
-                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                <th mat-header-cell *matHeaderCellDef>Name</th>
+                <td mat-cell *matCellDef="let element">{{ element.name }}</td>
             </ng-container>
 
             <!-- Weight Column -->
             <ng-container matColumnDef="grade">
-                <th mat-header-cell *matHeaderCellDef> Grade </th>
-                <td mat-cell *matCellDef="let element"> {{element.grade}} </td>
+                <th mat-header-cell *matHeaderCellDef>Grade</th>
+                <td mat-cell *matCellDef="let element">{{ element.grade }}</td>
             </ng-container>
 
             <!-- Symbol Column -->
             <ng-container matColumnDef="gender">
-                <th mat-header-cell *matHeaderCellDef> Gender </th>
-                <td mat-cell *matCellDef="let element"> {{element.gender}} </td>
+                <th mat-header-cell *matHeaderCellDef>Gender</th>
+                <td mat-cell *matCellDef="let element">{{ element.gender }}</td>
             </ng-container>
 
             <!-- Symbol Column -->
             <ng-container matColumnDef="date_of_birth">
-                <th mat-header-cell *matHeaderCellDef> Date of Birth </th>
-                <td mat-cell *matCellDef="let element"> {{element.date_of_birth}} </td>
+                <th mat-header-cell *matHeaderCellDef>Date of Birth</th>
+                <td mat-cell *matCellDef="let element">{{ element.date_of_birth }}</td>
             </ng-container>
 
             <!-- Symbol Column -->
             <ng-container matColumnDef="address">
-                <th mat-header-cell *matHeaderCellDef> Address </th>
-                <td mat-cell *matCellDef="let element"> {{element.address}} </td>
+                <th mat-header-cell *matHeaderCellDef>Address</th>
+                <td mat-cell *matCellDef="let element">{{ element.address }}</td>
             </ng-container>
 
             <!-- Symbol Column -->
             <ng-container matColumnDef="status">
-                <th mat-header-cell *matHeaderCellDef> Status </th>
-                <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+                <th mat-header-cell *matHeaderCellDef>Status</th>
+                <td mat-cell *matCellDef="let element">{{ element.status }}</td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumnsApplicant"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumnsApplicant;"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumnsApplicant"></tr>
         </table>
     </mat-tab>
 
     <!-- Mother's Details Tab -->
     <mat-tab label="Mother's Details">
         <div class="form-container">
-
             <form action="">
                 <div class="row">
                     <mat-form-field class="half-width">
@@ -159,62 +159,57 @@
                     <button mat-raised-button color="danger">Reset</button>
                 </div>
             </form>
-
         </div>
-
-
 
         <!--- Tbale -->
         <table mat-table [dataSource]="dataSource_mother" class="mat-elevation-z8">
-
             <!--- Note that these columns can be defined in any order.
                       The actual rendered columns are set as a property on the row definition" -->
 
             <!-- Position Column -->
             <ng-container matColumnDef="applicantName">
-                <th mat-header-cell *matHeaderCellDef> No. </th>
-                <td mat-cell *matCellDef="let element"> {{element.applicantName}} </td>
+                <th mat-header-cell *matHeaderCellDef>No.</th>
+                <td mat-cell *matCellDef="let element">{{ element.applicantName }}</td>
             </ng-container>
 
             <!-- Name Column -->
             <ng-container matColumnDef="mothersName">
-                <th mat-header-cell *matHeaderCellDef> Mother's Name </th>
-                <td mat-cell *matCellDef="let element"> {{element.mothersName}} </td>
+                <th mat-header-cell *matHeaderCellDef>Mother's Name</th>
+                <td mat-cell *matCellDef="let element">{{ element.mothersName }}</td>
             </ng-container>
 
             <!-- Weight Column -->
             <ng-container matColumnDef="address">
-                <th mat-header-cell *matHeaderCellDef> Address </th>
-                <td mat-cell *matCellDef="let element"> {{element.address}} </td>
+                <th mat-header-cell *matHeaderCellDef>Address</th>
+                <td mat-cell *matCellDef="let element">{{ element.address }}</td>
             </ng-container>
 
             <!-- Symbol Column -->
             <ng-container matColumnDef="mothersPhone">
-                <th mat-header-cell *matHeaderCellDef> Phone Number </th>
-                <td mat-cell *matCellDef="let element"> {{element.mothersPhone}}</td>
+                <th mat-header-cell *matHeaderCellDef>Phone Number</th>
+                <td mat-cell *matCellDef="let element">{{ element.mothersPhone }}</td>
             </ng-container>
 
             <!-- Symbol Column -->
             <ng-container matColumnDef="occupation">
-                <th mat-header-cell *matHeaderCellDef> Occupation </th>
-                <td mat-cell *matCellDef="let element"> {{element.occupation}} </td>
+                <th mat-header-cell *matHeaderCellDef>Occupation</th>
+                <td mat-cell *matCellDef="let element">{{ element.occupation }}</td>
             </ng-container>
 
             <!-- Symbol Column -->
             <ng-container matColumnDef="income">
-                <th mat-header-cell *matHeaderCellDef> Income </th>
-                <td mat-cell *matCellDef="let element"> {{element.income}} </td>
+                <th mat-header-cell *matHeaderCellDef>Income</th>
+                <td mat-cell *matCellDef="let element">{{ element.income }}</td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumnsMother"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumnsMother;"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumnsMother"></tr>
         </table>
     </mat-tab>
 
     <!-- Father's Details Tab -->
     <mat-tab label="Father's Details">
         <div class="form-container">
-
             <form action="">
                 <div class="row">
                     <mat-form-field class="half-width">
@@ -247,67 +242,62 @@
                     </mat-form-field>
                 </div>
 
-
-
                 <div class="button">
                     <button mat-raised-button color="primary">Add Father</button>
                     <button mat-raised-button color="danger">Reset</button>
                 </div>
             </form>
-
         </div>
 
         <!--- Tbale -->
         <table mat-table [dataSource]="dataSource_father" class="mat-elevation-z8">
-
             <!--- Note that these columns can be defined in any order.
                               The actual rendered columns are set as a property on the row definition" -->
 
             <!-- Position Column -->
             <ng-container matColumnDef="applicantName">
-                <th mat-header-cell *matHeaderCellDef> No. </th>
-                <td mat-cell *matCellDef="let element"> {{element.applicantName}} </td>
+                <th mat-header-cell *matHeaderCellDef>No.</th>
+                <td mat-cell *matCellDef="let element">{{ element.applicantName }}</td>
             </ng-container>
 
             <!-- Name Column -->
             <ng-container matColumnDef="fathersName">
-                <th mat-header-cell *matHeaderCellDef> Father's Name </th>
-                <td mat-cell *matCellDef="let element"> {{element.fathersName}} </td>
+                <th mat-header-cell *matHeaderCellDef>Father's Name</th>
+                <td mat-cell *matCellDef="let element">{{ element.fathersName }}</td>
             </ng-container>
 
             <!-- Weight Column -->
             <ng-container matColumnDef="address">
-                <th mat-header-cell *matHeaderCellDef> Address </th>
-                <td mat-cell *matCellDef="let element"> {{element.address}} </td>
+                <th mat-header-cell *matHeaderCellDef>Address</th>
+                <td mat-cell *matCellDef="let element">{{ element.address }}</td>
             </ng-container>
 
             <!-- Symbol Column -->
             <ng-container matColumnDef="fathersPhone">
-                <th mat-header-cell *matHeaderCellDef> Phone Number </th>
-                <td mat-cell *matCellDef="let element"> {{element.fathersPhone}}</td>
+                <th mat-header-cell *matHeaderCellDef>Phone Number</th>
+                <td mat-cell *matCellDef="let element">{{ element.fathersPhone }}</td>
             </ng-container>
 
             <!-- Symbol Column -->
             <ng-container matColumnDef="occupation">
-                <th mat-header-cell *matHeaderCellDef> Occupation </th>
-                <td mat-cell *matCellDef="let element"> {{element.occupation}} </td>
+                <th mat-header-cell *matHeaderCellDef>Occupation</th>
+                <td mat-cell *matCellDef="let element">{{ element.occupation }}</td>
             </ng-container>
 
             <!-- Symbol Column -->
             <ng-container matColumnDef="income">
-                <th mat-header-cell *matHeaderCellDef> Income </th>
-                <td mat-cell *matCellDef="let element"> {{element.income}} </td>
+                <th mat-header-cell *matHeaderCellDef>Income</th>
+                <td mat-cell *matCellDef="let element">{{ element.income }}</td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumnsFather"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumnsFather;"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumnsFather"></tr>
         </table>
     </mat-tab>
 
     <!-- Guardian's Details Tab -->
     <mat-tab label="Guardian's Details">
         <div class="form-container">
-
             <form action="">
                 <div class="row">
                     <mat-form-field class="half-width">
@@ -345,53 +335,51 @@
                     <button mat-raised-button color="danger">Reset</button>
                 </div>
             </form>
-
         </div>
 
         <!--- Tbale -->
         <table mat-table [dataSource]="dataSource_guardian" class="mat-elevation-z8">
-
             <!--- Note that these columns can be defined in any order.
                                       The actual rendered columns are set as a property on the row definition" -->
 
             <!-- Position Column -->
             <ng-container matColumnDef="applicantName">
-                <th mat-header-cell *matHeaderCellDef> No. </th>
-                <td mat-cell *matCellDef="let element"> {{element.applicantName}} </td>
+                <th mat-header-cell *matHeaderCellDef>No.</th>
+                <td mat-cell *matCellDef="let element">{{ element.applicantName }}</td>
             </ng-container>
 
             <!-- Name Column -->
             <ng-container matColumnDef="guardiansName">
-                <th mat-header-cell *matHeaderCellDef> Guardian's Name </th>
-                <td mat-cell *matCellDef="let element"> {{element.guardiansName}} </td>
+                <th mat-header-cell *matHeaderCellDef>Guardian's Name</th>
+                <td mat-cell *matCellDef="let element">{{ element.guardiansName }}</td>
             </ng-container>
 
             <!-- Weight Column -->
             <ng-container matColumnDef="address">
-                <th mat-header-cell *matHeaderCellDef> Address </th>
-                <td mat-cell *matCellDef="let element"> {{element.address}} </td>
+                <th mat-header-cell *matHeaderCellDef>Address</th>
+                <td mat-cell *matCellDef="let element">{{ element.address }}</td>
             </ng-container>
 
             <!-- Symbol Column -->
             <ng-container matColumnDef="guardiansPhone">
-                <th mat-header-cell *matHeaderCellDef> Phone Number </th>
-                <td mat-cell *matCellDef="let element"> {{element.guardiansPhone}}</td>
+                <th mat-header-cell *matHeaderCellDef>Phone Number</th>
+                <td mat-cell *matCellDef="let element">{{ element.guardiansPhone }}</td>
             </ng-container>
 
             <!-- Symbol Column -->
             <ng-container matColumnDef="occupation">
-                <th mat-header-cell *matHeaderCellDef> Occupation </th>
-                <td mat-cell *matCellDef="let element"> {{element.occupation}} </td>
+                <th mat-header-cell *matHeaderCellDef>Occupation</th>
+                <td mat-cell *matCellDef="let element">{{ element.occupation }}</td>
             </ng-container>
 
             <!-- Symbol Column -->
             <ng-container matColumnDef="income">
-                <th mat-header-cell *matHeaderCellDef> Income </th>
-                <td mat-cell *matCellDef="let element"> {{element.income}} </td>
+                <th mat-header-cell *matHeaderCellDef>Income</th>
+                <td mat-cell *matCellDef="let element">{{ element.income }}</td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumnsGuardian"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumnsGuardian;"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumnsGuardian"></tr>
         </table>
     </mat-tab>
 </mat-tab-group>

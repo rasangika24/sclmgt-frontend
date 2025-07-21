@@ -1,0 +1,89 @@
+<div class="container">
+    <h2>Term Test Marks Management</h2>
+    <div class="form-container">
+        <form [formGroup]="termTestForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <mat-form-field class="half-width">
+                    <mat-label>Year</mat-label>
+                    <mat-select formControlName="year">
+                        <mat-option value="sample">2020</mat-option>
+                        <mat-option value="sample">2021</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="half-width">
+                    <mat-label>Term</mat-label>
+                    <mat-select formControlName="exam">
+                        <mat-option value="first">First</mat-option>
+                        <mat-option value="second">Second</mat-option>
+                        <mat-option value="third">Third</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="row">
+                <mat-form-field class="half-width">
+                    <mat-label>Admission Number</mat-label>
+                    <input matInput placeholder="Enter Admission Number" value="" formControlName="admissionNumber" />
+                </mat-form-field>
+
+                <mat-form-field class="half-width">
+                    <mat-label>Marks</mat-label>
+                    <input matInput placeholder="Enter Marks" value="" formControlName="marks" />
+                </mat-form-field>
+            </div>
+
+            <div class="row">
+                <div class="button">
+                    <button type="submit" mat-raised-button color="primary">
+                        Add Marks
+                    </button>
+                    <input type="file">
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="table-section">
+
+            <div class="row" style="margin-bottom: 10px; margin-left: 5px;">
+                <div class="button">
+                    <button type="submit" mat-raised-button color="primary" (click)="createExam()">
+                        Create Exam
+                    </button>
+                </div>
+            </div>
+
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="examCo">
+                <th mat-header-cell *matHeaderCellDef>Exam co.</th>
+                <td mat-cell *matCellDef="let element">{{ element.examCo }}</td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="exam">
+                <th mat-header-cell *matHeaderCellDef>Exam</th>
+                <td mat-cell *matCellDef="let element">{{ element.exam }}</td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="year">
+                <th mat-header-cell *matHeaderCellDef>Year</th>
+                <td mat-cell *matCellDef="let element">{{ element.year }}</td>
+            </ng-container>
+           
+            <!-- Weight Column -->
+            <ng-container matColumnDef="by">
+                <th mat-header-cell *matHeaderCellDef>By</th>
+                <td mat-cell *matCellDef="let element">{{ element.by }}</td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+    </div>
+</div>

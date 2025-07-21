@@ -1,0 +1,60 @@
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 20px;
+}
+
+h2 {
+  text-align: center;
+  margin: 20px 0;
+  color: #3f51b5;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.half-width {
+  width: 50%;
+}
+
+.quater-width {
+  flex: 1;
+  width: 375px;
+}
+
+.guardian {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 20px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+button {
+  align-self: flex-start;
+}
+
+.button {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+}
+
+.refresh-filter-section {
+  display: flex;
+  flex-direction: row;
+}
+
+.refresh-button {
+  margin: 1%;
+}
+
+.filter {
+  width: 100%;
+}

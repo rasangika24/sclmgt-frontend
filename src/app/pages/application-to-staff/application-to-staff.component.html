@@ -1,0 +1,433 @@
+<div class="container">
+  <h2>Teacher Application Form</h2>
+  <!-- <form [formGroup]="academicstaffForm">
+    <div>
+      <mat-form-field appearance="fill" class="half-width">
+        <mat-label>Qualification</mat-label>
+        <mat-select multiple formControlName="highestEducationQualification">
+          <mat-option value="A/L">Vegetarian</mat-option>
+          <mat-option value="Dipoloma">Vegan</mat-option>
+          <mat-option value="Degree">Pescatarian</mat-option>
+          <mat-option value="PGD">Keto</mat-option>
+          <mat-option value="MA/MSC">None</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </form> -->
+
+  <div class="form-container">
+
+    <form [formGroup]="noneAcademicStaffForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <mat-form-field class="half-width">
+          <mat-label>Teacher Number </mat-label>
+          <input matInput placeholder="Enter Teacher Number" value="" formControlName="teacherNumber" />
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>First Appoint Date </mat-label>
+          <input matInput placeholder="Enter First Appoint Date" value="" formControlName="firstAppointDate" />
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <mat-form-field class="half-width">
+          <mat-label>Name in Full</mat-label>
+          <input matInput placeholder="Enter Full name" value="" formControlName="nameInFull" />
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>Name with Initials </mat-label>
+          <input matInput placeholder="Enter Name with Initials" value="" formControlName="nameWithInitials" />
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field class="half-width">
+          <mat-label>Using Name </mat-label>
+          <input matInput placeholder="Enter Using Name" value="" formControlName="usingName" />
+        </mat-form-field>
+
+        <mat-form-field class="quater-width">
+          <mat-label>Appointment Date As Temperary</mat-label>
+          <input matInput [matDatepicker]="adt" placeholder="MM/DD/YYYY" formControlName="appointmentDateAsTemperary" />
+          <mat-datepicker-toggle matSuffix [for]="adt"></mat-datepicker-toggle>
+          <mat-datepicker #adt></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <mat-form-field class="quater-width">
+          <mat-label>Appointment Date As Epf</mat-label>
+          <input matInput [matDatepicker]="ade" placeholder="MM/DD/YYYY" formControlName="appointmentDateAsEpf" />
+          <mat-datepicker-toggle matSuffix [for]="ade"></mat-datepicker-toggle>
+          <mat-datepicker #ade></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="quater-width">
+          <mat-label>Date of Birth</mat-label>
+          <input matInput [matDatepicker]="dob" placeholder="MM/DD/YYYY" formControlName="dateOfBirth" />
+          <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
+          <mat-datepicker #dob></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <!-- <div class="row">
+
+        <mat-form-field class="quater-width">
+          <mat-label>Appointment Date As Slts</mat-label>
+          <input matInput [matDatepicker]="ads" placeholder="MM/DD/YYYY" formControlName="appointmentDateAsSlts" />
+          <mat-datepicker-toggle matSuffix [for]="ads"></mat-datepicker-toggle>
+          <mat-datepicker #ads></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>Grade Of Slts </mat-label>
+          <input matInput placeholder="Enter the Grade Of Slts" value="" formControlName="gradeOfSlts" />
+        </mat-form-field>
+      </div> -->
+
+      <div class="row">
+        <mat-form-field class="half-width">
+          <mat-label>Address </mat-label>
+          <input matInput placeholder="Enter the Address" value="" formControlName="address" />
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>Telephone </mat-label>
+          <input matInput placeholder="Enter the Telephone" value="" formControlName="telephone" />
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field class="half-width">
+          <mat-label>Whatsapp </mat-label>
+          <input matInput placeholder="Enter the Whatsapp" value="" formControlName="whatsapp" />
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>Email </mat-label>
+          <input matInput placeholder="Enter the Email Address" value="" formControlName="emailAddress" />
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field class="half-width">
+          <mat-label>NIC </mat-label>
+          <input matInput placeholder="Enter the NIC" value="" formControlName="nic" />
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>School Studied </mat-label>
+          <input matInput placeholder="Enter the School Studied" value="" formControlName="schoolStudied" />
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field class="quater-width">
+          <mat-label>Highest Education Qualification</mat-label>
+          <mat-select formControlName="highestEducationQualification">
+            <mat-option value="a/l">A/L</mat-option>
+            <mat-option value="diploma">Diploma</mat-option>
+            <mat-option value="hnd">HND</mat-option>
+            <mat-option value="degree">Degree</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label> Professional Qualification </mat-label>
+          <input matInput placeholder="Enter the Professional Qualification" value=""
+            formControlName="professionalQualification" />
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field class="half-width">
+          <mat-label>Other Qualification </mat-label>
+          <input matInput placeholder="Enter the Other Qualification" value="" formControlName="otherQualification" />
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>Extra Curricular Activities </mat-label>
+          <input matInput placeholder="Enter the Extra Curricular Activities" value=""
+            formControlName="extraCurricularActivities" />
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field class="half-width">
+          <mat-label>Subject Teaching </mat-label>
+          <input matInput placeholder="Enter the Subject Teaching" value="" formControlName="subjectTeaching1" />
+        </mat-form-field>
+
+        <mat-radio-group aria-label="Select an option" formControlName="marriedOrNot" class="half-width">
+          <mat-label>Married Or Not:</mat-label>
+          <mat-radio-button value="married">Married</mat-radio-button>
+          <mat-radio-button value="unmarried">Unmarried</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      <!--spouse section-->
+      <div class="row">
+        <mat-form-field class="quater-width">
+          <mat-label>Date Got Married</mat-label>
+          <input matInput [matDatepicker]="dom" placeholder="MM/DD/YYYY" formControlName="dateGotMarried" />
+          <mat-datepicker-toggle matSuffix [for]="dom"></mat-datepicker-toggle>
+          <mat-datepicker #dom></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="quater-width">
+          <mat-label>Status of Marriage</mat-label>
+          <mat-select formControlName="statusOfMarriage">
+            <mat-option value="not-applicable">Not Applicable</mat-option>
+            <mat-option value="continuing">Continuing</mat-option>
+            <mat-option value="divorced">Divorced</mat-option>
+            <mat-option value="windwoed">Windwoed</mat-option>
+            <mat-option value="living-together">Living Together</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <mat-form-field class="half-width">
+          <mat-label>Spouse Name </mat-label>
+          <input matInput placeholder="Enter the Spouse's name" value="" formControlName="nameOfTheSpouse" />
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>Spouse School </mat-label>
+          <input matInput placeholder="Enter the Spouse's School" value="" formControlName="spouseSchool" />
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <mat-form-field class="quater-width">
+          <mat-label>Spouse's Level of Education</mat-label>
+          <mat-select formControlName="spouseHighestEducationLevel">
+            <mat-option value="a/l">A/L</mat-option>
+            <mat-option value="diploma">Diploma</mat-option>
+            <mat-option value="hnd">HND</mat-option>
+            <mat-option value="degree">Degree</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>Spouse's Contact Number </mat-label>
+          <input matInput placeholder="Enter the Spouse's Contact Number" value="" formControlName="contactNumber" />
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <mat-form-field class="half-width">
+          <mat-label>Spouse's Occupation </mat-label>
+          <input matInput placeholder="Enter the Spouse's Occupation" value="" formControlName="occupation" />
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>Number Of Children </mat-label>
+          <input matInput placeholder="Enter the Number Of Children" value="" formControlName="numberOfChildren" />
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field class="half-width">
+          <mat-label>Education Qualification </mat-label>
+          <input matInput placeholder="Enter the Education Qualification" value=""
+            formControlName="educationQualification" />
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>University Or Institute </mat-label>
+          <input matInput placeholder="Enter the University Or Institute" value=""
+            formControlName="universityOrInstitute" />
+        </mat-form-field>
+      </div>
+
+      <!--- Mothers details-->
+      <div class="row">
+        <mat-form-field class="half-width">
+          <mat-label>Year </mat-label>
+          <input matInput placeholder="Enter the Year" value="" formControlName="year" />
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>Subject </mat-label>
+          <input matInput placeholder="Enter the Subject" value="" formControlName="subject" />
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field class="half-width">
+          <mat-label>Mother's Name </mat-label>
+          <input matInput placeholder="Enter the Father's Name" value="" formControlName="mothersName" />
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>Mother's Profession </mat-label>
+          <input matInput placeholder="Enter the Father's School" value="" formControlName="mothersSchool" />
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <mat-form-field class="quater-width">
+          <mat-label>Mother's Level of Education</mat-label>
+          <mat-select formControlName="mothersEducationLevel">
+            <mat-option value="primary">Primary</mat-option>
+            <mat-option value="secondary">Secondary</mat-option>
+            <mat-option value="university">University</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>Mother's Profession </mat-label>
+          <input matInput placeholder="Enter the Mother's Profession" value="" formControlName="mothersProfession" />
+        </mat-form-field>
+      </div>
+
+      <!--- Fathers details-->
+      <div class="row">
+        <mat-form-field class="half-width">
+          <mat-label>Mother's Telephone </mat-label>
+          <input matInput placeholder="Enter the Mother's Telephone Number" value=""
+            formControlName="mothersTelephone" />
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>Mother's Whatsapp </mat-label>
+          <input matInput placeholder="Enter the Mother's Whatsapp Number" value="" formControlName="mothersWhatsapp" />
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field class="half-width">
+          <mat-label>Father's Name </mat-label>
+          <input matInput placeholder="Enter the Father's Name" value="" formControlName="fathersName" />
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>Father's School </mat-label>
+          <input matInput placeholder="Enter the Father's School" value="" formControlName="fathersSchool" />
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <mat-form-field class="quater-width">
+          <mat-label>Father's Level of Education</mat-label>
+          <mat-select formControlName="fathersEducationLevel">
+            <mat-option value="primary">Primary</mat-option>
+            <mat-option value="secondary">Secondary</mat-option>
+            <mat-option value="university">University</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>Father's Profession </mat-label>
+          <input matInput placeholder="Enter the Father's Profession" value="" formControlName="fathersProfession" />
+        </mat-form-field>
+      </div>
+
+      <!-- spouse mother Section -->
+
+      <div class="row">
+        <mat-form-field class="half-width">
+          <mat-label>Father's Telephone </mat-label>
+          <input matInput placeholder="Enter the Father's Telephone Number" value=""
+            formControlName="fathersTelephone" />
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>Father's Whatsapp </mat-label>
+          <input matInput placeholder="Enter the Father's Whatsapp Number" value="" formControlName="fathersWhatsapp" />
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <mat-form-field class="half-width">
+          <mat-label>Spouse Mother's Name </mat-label>
+          <input matInput placeholder="Enter the Spouse Mother's  name" value="" formControlName="smothersName" />
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>Spouse Mother's School </mat-label>
+          <input matInput placeholder="Enter the Spouse Mother's  School" value="" formControlName="smothersSchool" />
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <mat-form-field class="quater-width">
+          <mat-label>Spouse Mother's Level of Education</mat-label>
+          <mat-select formControlName="smothersEducationLevel">
+            <mat-option value="primary">Primary</mat-option>
+            <mat-option value="secondary">Secondary</mat-option>
+            <mat-option value="university">University</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>Spouse Mother's Profession </mat-label>
+          <input matInput placeholder="Enter the Spouse Mother's  Profession" value=""
+            formControlName="smothersProfession" />
+        </mat-form-field>
+      </div>
+
+      <!-- spouse father Section -->
+
+      <div class="row">
+        <mat-form-field class="half-width">
+          <mat-label>Spouse Mother's Telephone </mat-label>
+          <input matInput placeholder="Enter the Spouse Mother's  Telephone Number" value=""
+            formControlName="smothersTelephone" />
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>Spouse Mother's Whatsapp </mat-label>
+          <input matInput placeholder="Enter the Spouse Mother's  Whatsapp Number" value=""
+            formControlName="smothersWhatsapp" />
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <mat-form-field class="half-width">
+          <mat-label>Spouse Father's Name </mat-label>
+          <input matInput placeholder="Enter the Spouse Father's  name" value="" formControlName="sfathersName" />
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>Spouse Father's School </mat-label>
+          <input matInput placeholder="Enter the Spouse Father's  School" value="" formControlName="sfathersSchool" />
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <mat-form-field class="quater-width">
+          <mat-label>Spouse Father's Level of Education</mat-label>
+          <mat-select formControlName="sfathersEducationLevel">
+            <mat-option value="primary">Primary</mat-option>
+            <mat-option value="secondary">Secondary</mat-option>
+            <mat-option value="university">University</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>Spouse Father's Profession </mat-label>
+          <input matInput placeholder="Enter the Spouse Father's  Profession" value=""
+            formControlName="sfathersProfession" />
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <mat-form-field class="half-width">
+          <mat-label>Spouse Father's Telephone </mat-label>
+          <input matInput placeholder="Enter the Spouse Father's  Telephone Number" value=""
+            formControlName="sfathersTelephone" />
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>Spouse Father's Whatsapp </mat-label>
+          <input matInput placeholder="Enter the Spouse Father's  Whatsap Number" value=""
+            formControlName="sfathersWhatsapp" />
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <div class="button">
+          <button type="submit" mat-raised-button color="primary">
+            Send Request
+          </button>
+          <button mat-raised-button color="danger">Reset</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

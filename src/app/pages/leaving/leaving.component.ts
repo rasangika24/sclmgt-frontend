@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder,FormGroup,FormControl } from '@angular/forms';
+import { LeavingServiceService } from 'src/app/services/leaving/leaving-service.service';
 
 
 @Component({
@@ -15,7 +16,9 @@ export class LeavingComponent {
   progress in acadamic field / Sports ability and leadership / special skills */
 
   leavingForm:FormGroup;
-  constructor(private fb: FormBuilder){
+  constructor(private fb: FormBuilder,
+            private leavingService: LeavingServiceService
+  ){
     this.leavingForm=this.fb.group({
       pupilsName:new FormControl(''),
       indexNo:new FormControl(''),
@@ -25,16 +28,19 @@ export class LeavingComponent {
       addressofthefatherGardian:new FormControl(''),
       dateofAdmission:new FormControl(''),
       causeLeaving:new FormControl(''),
-      thelastgradePassed:new FormControl(''),
+      lastgradePassed:new FormControl(''),
       subjectstudiedinthepresentClass:new FormControl(''),
       progressinacademicField:new FormControl(''),
       sportsabilityandLeadership:new FormControl(''),
       specialSkills:new FormControl(''),
+    });
+  }
 
 
+  onSubmit () {
+    console.log("form Submitted"); //for check function call
+    console.log(this.leavingForm.value); // for check formControllName
 
-
-
-    })
+    this.leavingService.serviceCall(this.leavingForm.value);
   }
 }

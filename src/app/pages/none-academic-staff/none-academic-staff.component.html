@@ -1,0 +1,893 @@
+<div class="container">
+  <h2>None Academic Staff Form</h2>
+  <!-- <form [formGroup]="academicstaffForm">
+    <div>
+      <mat-form-field appearance="fill" class="half-width">
+        <mat-label>Qualification</mat-label>
+        <mat-select multiple formControlName="highestEducationQualification">
+          <mat-option value="A/L">Vegetarian</mat-option>
+          <mat-option value="Dipoloma">Vegan</mat-option>
+          <mat-option value="Degree">Pescatarian</mat-option>
+          <mat-option value="PGD">Keto</mat-option>
+          <mat-option value="MA/MSC">None</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </form> -->
+
+  <div class="form-container">
+    <div class="form-section">
+    <div class="row">
+      <div class="button flex-end">
+        <button type="submit" mat-raised-button color="primary" (click)="viewDetails()">
+          <mat-icon>visibility</mat-icon>
+          View None Academic Staff Details
+        </button>
+      </div>
+    </div>
+
+    <form [formGroup]="noneAcademicStaffForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <mat-form-field class="half-width">
+          <mat-label>Teacher Number </mat-label>
+          <input matInput placeholder="Enter Teacher Number" value="" formControlName="teacherNumber" />
+          <span class="text-danger" 
+              *ngIf="noneAcademicStaffForm.get('teacherNumber')?.hasError('required') && noneAcademicStaffForm.get('teacherNumber')?.touched">Teacher Number is requerd..!
+              </span>
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>First Appoint Date </mat-label>
+          <input matInput placeholder="Enter First Appoint Date" value="" formControlName="firstAppointDate" />
+          <span class="text-danger" 
+              *ngIf="noneAcademicStaffForm.get('firstAppointDate')?.hasError('required') && noneAcademicStaffForm.get('firstAppointDate')?.touched">First Appoint Date is requerd..!
+              </span>
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <mat-form-field class="half-width">
+          <mat-label>Name in Full</mat-label>
+          <input matInput placeholder="Enter Full name" value="" formControlName="nameInFull" />
+          <span class="text-danger" 
+              *ngIf="noneAcademicStaffForm.get('nameInFull')?.hasError('required') && noneAcademicStaffForm.get('nameInFull')?.touched">Name in Full is requerd..!
+              </span>
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>Name with Initials </mat-label>
+          <input matInput placeholder="Enter Name with Initials" value="" formControlName="nameWithInitials" />
+          <span class="text-danger" 
+              *ngIf="noneAcademicStaffForm.get('nameWithInitials')?.hasError('required') && noneAcademicStaffForm.get('nameWithInitials')?.touched">Initial name is requerd..!
+              </span>
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field class="half-width">
+          <mat-label>Using Name </mat-label>
+          <input matInput placeholder="Enter Using Name" value="" formControlName="usingName" />
+        </mat-form-field>
+
+        <mat-form-field class="quater-width">
+          <mat-label>Appointment Date As Temperary</mat-label>
+          <input matInput [matDatepicker]="adt" placeholder="MM/DD/YYYY" formControlName="appointmentDateAsTemperary" />
+          <mat-datepicker-toggle matSuffix [for]="adt"></mat-datepicker-toggle>
+          <mat-datepicker #adt></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <mat-form-field class="quater-width">
+          <mat-label>Appointment Date As Epf</mat-label>
+          <input matInput [matDatepicker]="ade" placeholder="MM/DD/YYYY" formControlName="appointmentDateAsEpf" />
+          <mat-datepicker-toggle matSuffix [for]="ade"></mat-datepicker-toggle>
+          <mat-datepicker #ade></mat-datepicker>
+          <span class="text-danger" 
+              *ngIf="noneAcademicStaffForm.get('appointmentDateAsEpf')?.hasError('required') && noneAcademicStaffForm.get('appointmentDateAsEpf')?.touched">Appointment Date As Epf is requerd..!
+              </span>
+        </mat-form-field>
+
+        <mat-form-field class="quater-width">
+          <mat-label>Date of Birth</mat-label>
+          <input matInput [matDatepicker]="dob" placeholder="MM/DD/YYYY" formControlName="dateOfBirth" />
+          <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
+          <mat-datepicker #dob></mat-datepicker>
+          <span class="text-danger" 
+              *ngIf="noneAcademicStaffForm.get('dateOfBirth')?.hasError('required') && noneAcademicStaffForm.get('dateOfBirth')?.touched">Appointment Date As Epf is requerd..!
+              </span>
+
+        </mat-form-field>
+      </div>
+
+      <!-- <div class="row">
+
+        <mat-form-field class="quater-width">
+          <mat-label>Appointment Date As Slts</mat-label>
+          <input matInput [matDatepicker]="ads" placeholder="MM/DD/YYYY" formControlName="appointmentDateAsSlts" />
+          <mat-datepicker-toggle matSuffix [for]="ads"></mat-datepicker-toggle>
+          <mat-datepicker #ads></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>Grade Of Slts </mat-label>
+          <input matInput placeholder="Enter the Grade Of Slts" value="" formControlName="gradeOfSlts" />
+        </mat-form-field>
+      </div> -->
+
+      <div class="row">
+        <mat-form-field class="half-width">
+          <mat-label>Address </mat-label>
+          <input matInput placeholder="Enter the Address" value="" formControlName="address" />
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>Telephone </mat-label>
+          <input matInput placeholder="Enter the Telephone" value="" formControlName="telephone" />
+          <span class="text-danger" 
+              *ngIf="noneAcademicStaffForm.get('telephone')?.hasError('minlength') && noneAcademicStaffForm.get('telephone')?.touched">Invalid Phone Number..!
+              </span>
+              <span class="text-danger" 
+              *ngIf="noneAcademicStaffForm.get('telephone')?.hasError('maxlength') && noneAcademicStaffForm.get('telephone')?.touched">Invalid Phone Number..!
+              </span>
+              <span class="text-danger"
+              *ngIf="noneAcademicStaffForm.get('telephone')?.hasError('pattern') && noneAcademicStaffForm.get('telephone')?.touched">Only numbers are allowed..!
+              </span>
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field class="half-width">
+          <mat-label>Whatsapp </mat-label>
+          <input matInput placeholder="Enter the Whatsapp" value="" formControlName="whatsapp" />
+           <span class="text-danger" 
+              *ngIf="noneAcademicStaffForm.get('whatsapp')?.hasError('minlength') && noneAcademicStaffForm.get('whatsapp')?.touched">Invalid Phone Number..!
+              </span>
+              <span class="text-danger" 
+              *ngIf="noneAcademicStaffForm.get('whatsapp')?.hasError('maxlength') && noneAcademicStaffForm.get('whatsapp')?.touched">Invalid Phone Number..!
+              </span>
+              <span class="text-danger"
+              *ngIf="noneAcademicStaffForm.get('whatsapp')?.hasError('pattern') && noneAcademicStaffForm.get('whatsapp')?.touched">Only numbers are allowed..!
+              </span>
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>Email </mat-label>
+          <input matInput placeholder="Enter the Email Address" value="" formControlName="emailAddress" />
+           
+              <span class="text-danger" *ngIf="noneAcademicStaffForm.get('emailAddress')?.hasError('email') && noneAcademicStaffForm.get('emailAddress')?.touched">Please enter a valid email address.
+              </span>
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field class="half-width">
+          <mat-label>NIC </mat-label>
+           <input matInput placeholder="Enter the NIC" value="" formControlName="nic" (input)="onNicChange()"/>
+              <span class="text-danger" 
+              *ngIf="noneAcademicStaffForm.get('nic')?.hasError('nicExists')">NIC already exists..!
+              </span>
+          <span class="text-danger" 
+              *ngIf="noneAcademicStaffForm.get('nic')?.hasError('required') && noneAcademicStaffForm.get('nic')?.touched">NIC is requerd..!
+              </span>
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>School Studied </mat-label>
+          <input matInput placeholder="Enter the School Studied" value="" formControlName="schoolStudied" />
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field class="quater-width">
+          <mat-label>Highest Education Qualification</mat-label>
+          <mat-select formControlName="highestEducationQualification">
+            <mat-option value="a/l">A/L</mat-option>
+            <mat-option value="diploma">Diploma</mat-option>
+            <mat-option value="hnd">HND</mat-option>
+            <mat-option value="degree">Degree</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label> Professional Qualification </mat-label>
+          <input matInput placeholder="Enter the Professional Qualification" value=""
+            formControlName="professionalQualification" />
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field class="half-width">
+          <mat-label>Other Qualification </mat-label>
+          <input matInput placeholder="Enter the Other Qualification" value="" formControlName="otherQualification" />
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>Extra Curricular Activities </mat-label>
+          <input matInput placeholder="Enter the Extra Curricular Activities" value=""
+            formControlName="extraCurricularActivities" />
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field class="half-width">
+          <mat-label>Subject Teaching </mat-label>
+          <input matInput placeholder="Enter the Subject Teaching" value="" formControlName="subjectTeaching1" />
+        </mat-form-field>
+
+        <mat-form-field class="quater-width">
+          <mat-label>Married Or Not</mat-label>
+          <mat-select formControlName="marriedOrNot">
+            <mat-option value="married">Married</mat-option>
+            <mat-option value="unmarried">Un-married</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <!--spouse section-->
+      <div class="row">
+        <mat-form-field class="quater-width">
+          <mat-label>Date Got Married</mat-label>
+          <input matInput [matDatepicker]="dom" placeholder="MM/DD/YYYY" formControlName="dateGotMarried" />
+          <mat-datepicker-toggle matSuffix [for]="dom"></mat-datepicker-toggle>
+          <mat-datepicker #dom></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="quater-width">
+          <mat-label>Status of Marriage</mat-label>
+          <mat-select formControlName="statusOfMarriage">
+            <mat-option value="not-applicable">Not Applicable</mat-option>
+            <mat-option value="continuing">Continuing</mat-option>
+            <mat-option value="divorced">Divorced</mat-option>
+            <mat-option value="windwoed">Windwoed</mat-option>
+            <mat-option value="living-together">Living Together</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <mat-form-field class="half-width">
+          <mat-label>Spouse Name </mat-label>
+          <input matInput placeholder="Enter the Spouse's name" value="" formControlName="nameOfTheSpouse" />
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>Spouse School </mat-label>
+          <input matInput placeholder="Enter the Spouse's School" value="" formControlName="spouseSchool" />
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <mat-form-field class="quater-width">
+          <mat-label>Spouse's Level of Education</mat-label>
+          <mat-select formControlName="spouseHighestEducationLevel">
+            <mat-option value="a/l">A/L</mat-option>
+            <mat-option value="diploma">Diploma</mat-option>
+            <mat-option value="hnd">HND</mat-option>
+            <mat-option value="degree">Degree</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>Spouse's Contact Number </mat-label>
+          <input matInput placeholder="Enter the Spouse's Contact Number" value="" formControlName="contactNumber" />
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <mat-form-field class="half-width">
+          <mat-label>Spouse's Occupation </mat-label>
+          <input matInput placeholder="Enter the Spouse's Occupation" value="" formControlName="occupation" />
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>Number Of Children </mat-label>
+          <input matInput placeholder="Enter the Number Of Children" value="" formControlName="numberOfChildren" />
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field class="half-width">
+          <mat-label>Education Qualification </mat-label>
+          <input matInput placeholder="Enter the Education Qualification" value=""
+            formControlName="educationQualification" />
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>University Or Institute </mat-label>
+          <input matInput placeholder="Enter the University Or Institute" value=""
+            formControlName="universityOrInstitute" />
+        </mat-form-field>
+      </div>
+
+      <!--- Mothers details-->
+      <div class="row">
+        <mat-form-field class="half-width">
+          <mat-label>Year </mat-label>
+          <input matInput placeholder="Enter the Year" value="" formControlName="year" />
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>Subject </mat-label>
+          <input matInput placeholder="Enter the Subject" value="" formControlName="subject" />
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field class="half-width">
+          <mat-label>Mother's Name </mat-label>
+          <input matInput placeholder="Enter the Father's Name" value="" formControlName="mothersName" />
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>Mother's Profession </mat-label>
+          <input matInput placeholder="Enter the Father's School" value="" formControlName="mothersSchool" />
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <mat-form-field class="quater-width">
+          <mat-label>Mother's Level of Education</mat-label>
+          <mat-select formControlName="mothersEducationLevel">
+            <mat-option value="primary">Primary</mat-option>
+            <mat-option value="secondary">Secondary</mat-option>
+            <mat-option value="university">University</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>Mother's Profession </mat-label>
+          <input matInput placeholder="Enter the Mother's Profession" value="" formControlName="mothersProfession" />
+        </mat-form-field>
+      </div>
+
+      <!--- Fathers details-->
+      <div class="row">
+        <mat-form-field class="half-width">
+          <mat-label>Mother's Telephone </mat-label>
+          <input matInput placeholder="Enter the Mother's Telephone Number" value=""
+            formControlName="mothersTelephone" />
+            <span class="text-danger" 
+              *ngIf="noneAcademicStaffForm.get('mothersTelephone')?.hasError('minlength') && noneAcademicStaffForm.get('mothersTelephone')?.touched">Invalid Phone Number..!
+              </span>
+              <span class="text-danger" 
+              *ngIf="noneAcademicStaffForm.get('mothersTelephone')?.hasError('maxlength') && noneAcademicStaffForm.get('mothersTelephone')?.touched">Invalid Phone Number..!
+              </span>
+              <span class="text-danger"
+              *ngIf="noneAcademicStaffForm.get('mothersTelephone')?.hasError('pattern') && noneAcademicStaffForm.get('mothersTelephone')?.touched">Only numbers are allowed..!
+              </span>
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>Mother's Whatsapp </mat-label>
+          <input matInput placeholder="Enter the Mother's Whatsapp Number" value="" formControlName="mothersWhatsapp" />
+          <span class="text-danger" 
+              *ngIf="noneAcademicStaffForm.get('mothersWhatsapp')?.hasError('minlength') && noneAcademicStaffForm.get('mothersWhatsapp')?.touched">Invalid Phone Number..!
+              </span>
+              <span class="text-danger" 
+              *ngIf="noneAcademicStaffForm.get('mothersWhatsapp')?.hasError('maxlength') && noneAcademicStaffForm.get('mothersWhatsapp')?.touched">Invalid Phone Number..!
+              </span>
+              <span class="text-danger"
+              *ngIf="noneAcademicStaffForm.get('mothersWhatsapp')?.hasError('pattern') && noneAcademicStaffForm.get('mothersWhatsapp')?.touched">Only numbers are allowed..!
+              </span>
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field class="half-width">
+          <mat-label>Father's Name </mat-label>
+          <input matInput placeholder="Enter the Father's Name" value="" formControlName="fathersName" />
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>Father's School </mat-label>
+          <input matInput placeholder="Enter the Father's School" value="" formControlName="fathersSchool" />
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <mat-form-field class="quater-width">
+          <mat-label>Father's Level of Education</mat-label>
+          <mat-select formControlName="fathersEducationLevel">
+            <mat-option value="primary">Primary</mat-option>
+            <mat-option value="secondary">Secondary</mat-option>
+            <mat-option value="university">University</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>Father's Profession </mat-label>
+          <input matInput placeholder="Enter the Father's Profession" value="" formControlName="fathersProfession" />
+        </mat-form-field>
+      </div>
+
+      <!-- spouse mother Section -->
+
+      <div class="row">
+        <mat-form-field class="half-width">
+          <mat-label>Father's Telephone </mat-label>
+          <input matInput placeholder="Enter the Father's Telephone Number" value=""
+            formControlName="fathersTelephone" />
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>Father's Whatsapp </mat-label>
+          <input matInput placeholder="Enter the Father's Whatsapp Number" value="" formControlName="fathersWhatsapp" />
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <mat-form-field class="half-width">
+          <mat-label>Spouse Mother's Name </mat-label>
+          <input matInput placeholder="Enter the Spouse Mother's  name" value="" formControlName="smothersName" />
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>Spouse Mother's School </mat-label>
+          <input matInput placeholder="Enter the Spouse Mother's  School" value="" formControlName="smothersSchool" />
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <mat-form-field class="quater-width">
+          <mat-label>Spouse Mother's Level of Education</mat-label>
+          <mat-select formControlName="smothersEducationLevel">
+            <mat-option value="primary">Primary</mat-option>
+            <mat-option value="secondary">Secondary</mat-option>
+            <mat-option value="university">University</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>Spouse Mother's Profession </mat-label>
+          <input matInput placeholder="Enter the Spouse Mother's  Profession" value=""
+            formControlName="smothersProfession" />
+        </mat-form-field>
+      </div>
+
+      <!-- spouse father Section -->
+
+      <div class="row">
+        <mat-form-field class="half-width">
+          <mat-label>Spouse Mother's Telephone </mat-label>
+          <input matInput placeholder="Enter the Spouse Mother's  Telephone Number" value=""
+            formControlName="smothersTelephone" />
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>Spouse Mother's Whatsapp </mat-label>
+          <input matInput placeholder="Enter the Spouse Mother's  Whatsapp Number" value=""
+            formControlName="smothersWhatsapp" />
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <mat-form-field class="half-width">
+          <mat-label>Spouse Father's Name </mat-label>
+          <input matInput placeholder="Enter the Spouse Father's  name" value="" formControlName="sfathersName" />
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>Spouse Father's School </mat-label>
+          <input matInput placeholder="Enter the Spouse Father's  School" value="" formControlName="sfathersSchool" />
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <mat-form-field class="quater-width">
+          <mat-label>Spouse Father's Level of Education</mat-label>
+          <mat-select formControlName="sfathersEducationLevel">
+            <mat-option value="primary">Primary</mat-option>
+            <mat-option value="secondary">Secondary</mat-option>
+            <mat-option value="university">University</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>Spouse Father's Profession </mat-label>
+          <input matInput placeholder="Enter the Spouse Father's  Profession" value=""
+            formControlName="sfathersProfession" />
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <mat-form-field class="half-width">
+          <mat-label>Spouse Father's Telephone </mat-label>
+          <input matInput placeholder="Enter the Spouse Father's  Telephone Number" value=""
+            formControlName="sfathersTelephone" />
+        </mat-form-field>
+
+        <mat-form-field class="half-width">
+          <mat-label>Spouse Father's Whatsapp </mat-label>
+          <input matInput placeholder="Enter the Spouse Father's  Whatsap Number" value=""
+            formControlName="sfathersWhatsapp" />
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <div class="button">
+          <button class="form-button" type="submit" mat-raised-button color="primary" [disabled]="isButtonDisabled">{{saveButtonLabel}}</button>
+          <button class="form-button" type="button" mat-raised-button color="warn" (click)="clearFields()">Reset</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+</div>
+<div class="table-section">
+
+  <div class="refresh-filter-section">
+        <div class="refresh-button">
+          <button mat-icon-button color="primary" (click)="refreshData()">
+            <mat-icon>refresh</mat-icon>
+          </button>
+        </div>
+
+        <mat-form-field class="filter">
+          <mat-label>Filter</mat-label>
+          <input matInput (keyup)="applyFilter($event)" placeholder="Type here to search.." #input />
+        </mat-form-field>
+      </div>
+
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+  <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef>ID</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.id }}
+          </td>
+        </ng-container>
+
+  <!-- Position Column -->
+  <ng-container matColumnDef="teacherNumber">
+    <th mat-header-cell *matHeaderCellDef> Teacher Number </th>
+    <td mat-cell *matCellDef="let element"> {{element.teacherNumber}} </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="firstAppointDate">
+    <th mat-header-cell *matHeaderCellDef> firstAppointDate </th>
+    <td mat-cell *matCellDef="let element"> {{element.firstAppointDate}} </td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="nameInFull">
+    <th mat-header-cell *matHeaderCellDef> nameInFull </th>
+    <td mat-cell *matCellDef="let element"> {{element.nameInFull}} </td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="nameWithInitials">
+    <th mat-header-cell *matHeaderCellDef> nameWithInitials </th>
+    <td mat-cell *matCellDef="let element"> {{element.nameWithInitials}} </td>
+  </ng-container>
+
+  
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="usingName">
+    <th mat-header-cell *matHeaderCellDef> usingName </th>
+    <td mat-cell *matCellDef="let element"> {{element.usingName}} </td>
+  </ng-container>
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="appointmentDateAsTemperary">
+    <th mat-header-cell *matHeaderCellDef> appointmentDateAsTemperary </th>
+    <td mat-cell *matCellDef="let element"> {{element.appointmentDateAsTemperary}} </td>
+  </ng-container>
+  
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="appointmentDateAsEpf">
+    <th mat-header-cell *matHeaderCellDef> appointmentDateAsEpf </th>
+    <td mat-cell *matCellDef="let element"> {{element.appointmentDateAsEpf}} </td>
+  </ng-container>
+  
+  
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="dateOfBirth">
+    <th mat-header-cell *matHeaderCellDef> dateOfBirth </th>
+    <td mat-cell *matCellDef="let element"> {{element.dateOfBirth}} </td>
+  </ng-container>
+  
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="address">
+    <th mat-header-cell *matHeaderCellDef> address </th>
+    <td mat-cell *matCellDef="let element"> {{element.address}} </td>
+  </ng-container>
+  
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="telephone">
+    <th mat-header-cell *matHeaderCellDef> telephone </th>
+    <td mat-cell *matCellDef="let element"> {{element.telephone}} </td>
+  </ng-container>
+  
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="whatsapp">
+    <th mat-header-cell *matHeaderCellDef> whatsapp </th>
+    <td mat-cell *matCellDef="let element"> {{element.whatsapp}} </td>
+  </ng-container>
+  
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="emailAddress">
+    <th mat-header-cell *matHeaderCellDef> emailAddress </th>
+    <td mat-cell *matCellDef="let element"> {{element.emailAddress}} </td>
+  </ng-container>
+  
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="nic">
+    <th mat-header-cell *matHeaderCellDef> nic </th>
+    <td mat-cell *matCellDef="let element"> {{element.nic}} </td>
+  </ng-container>
+  
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="schoolStudied">
+    <th mat-header-cell *matHeaderCellDef> schoolStudied </th>
+    <td mat-cell *matCellDef="let element"> {{element.schoolStudied}} </td>
+  </ng-container>
+  
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="highestEducationQualification">
+    <th mat-header-cell *matHeaderCellDef> highestEducationQualification </th>
+    <td mat-cell *matCellDef="let element"> {{element.highestEducationQualification}} </td>
+  </ng-container>
+  
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="professionalQualification">
+    <th mat-header-cell *matHeaderCellDef> professionalQualification </th>
+    <td mat-cell *matCellDef="let element"> {{element.professionalQualification}} </td>
+  </ng-container>
+  
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="otherQualification">
+    <th mat-header-cell *matHeaderCellDef> otherQualification </th>
+    <td mat-cell *matCellDef="let element"> {{element.otherQualification}} </td>
+  </ng-container>
+  
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="extraCurricularActivities">
+    <th mat-header-cell *matHeaderCellDef> extraCurricularActivities </th>
+    <td mat-cell *matCellDef="let element"> {{element.extraCurricularActivities}} </td>
+  </ng-container>
+  
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="subjectTeaching1">
+    <th mat-header-cell *matHeaderCellDef> subjectTeaching1 </th>
+    <td mat-cell *matCellDef="let element"> {{element.subjectTeaching1}} </td>
+  </ng-container>
+    
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="marriedOrNot">
+    <th mat-header-cell *matHeaderCellDef> marriedOrNot </th>
+    <td mat-cell *matCellDef="let element"> {{element.marriedOrNot}} </td>
+  </ng-container>
+
+   <!-- Symbol Column -->
+  <ng-container matColumnDef="dateGotMarried">
+    <th mat-header-cell *matHeaderCellDef> dateGotMarried </th>
+    <td mat-cell *matCellDef="let element"> {{element.dateGotMarried}} </td>
+  </ng-container>
+  
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="statusOfMarriage">
+    <th mat-header-cell *matHeaderCellDef> statusOfMarriage </th>
+    <td mat-cell *matCellDef="let element"> {{element.statusOfMarriage}} </td>
+  </ng-container>
+  
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="nameOfTheSpouse">
+    <th mat-header-cell *matHeaderCellDef> nameOfTheSpouse </th>
+    <td mat-cell *matCellDef="let element"> {{element.nameOfTheSpouse}} </td>
+  </ng-container>
+    
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="spouseSchool">
+    <th mat-header-cell *matHeaderCellDef> spouseSchool </th>
+    <td mat-cell *matCellDef="let element"> {{element.spouseSchool}} </td>
+  </ng-container>
+    
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="spouseHighestEducationLevel">
+    <th mat-header-cell *matHeaderCellDef> spouseHighestEducationLevel </th>
+    <td mat-cell *matCellDef="let element"> {{element.spouseHighestEducationLevel}} </td>
+  </ng-container>
+    
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="contactNumber">
+    <th mat-header-cell *matHeaderCellDef> contactNumber </th>
+    <td mat-cell *matCellDef="let element"> {{element.contactNumber}} </td>
+  </ng-container>
+    
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="occupation">
+    <th mat-header-cell *matHeaderCellDef> occupation </th>
+    <td mat-cell *matCellDef="let element"> {{element.occupation}} </td>
+  </ng-container>
+    
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="numberOfChildren">
+    <th mat-header-cell *matHeaderCellDef> numberOfChildren </th>
+    <td mat-cell *matCellDef="let element"> {{element.numberOfChildren}} </td>
+  </ng-container>
+    
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="educationQualification">
+    <th mat-header-cell *matHeaderCellDef> educationQualification </th>
+    <td mat-cell *matCellDef="let element"> {{element.educationQualification}} </td>
+  </ng-container>
+    
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="universityOrInstitute">
+    <th mat-header-cell *matHeaderCellDef> universityOrInstitute </th>
+    <td mat-cell *matCellDef="let element"> {{element.universityOrInstitute}} </td>
+  </ng-container>
+    
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="year">
+    <th mat-header-cell *matHeaderCellDef> year </th>
+    <td mat-cell *matCellDef="let element"> {{element.year}} </td>
+  </ng-container>
+    
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="subject">
+    <th mat-header-cell *matHeaderCellDef> subject </th>
+    <td mat-cell *matCellDef="let element"> {{element.subject}} </td>
+  </ng-container>
+    
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="mothersName">
+    <th mat-header-cell *matHeaderCellDef> mothersName </th>
+    <td mat-cell *matCellDef="let element"> {{element.mothersName}} </td>
+  </ng-container>
+    
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="mothersSchool">
+    <th mat-header-cell *matHeaderCellDef> mothersSchool </th>
+    <td mat-cell *matCellDef="let element"> {{element.mothersSchool}} </td>
+  </ng-container>
+    
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="mothersEducationLevel">
+    <th mat-header-cell *matHeaderCellDef> mothersEducationLevel </th>
+    <td mat-cell *matCellDef="let element"> {{element.mothersEducationLevel}} </td>
+  </ng-container>
+    
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="mothersProfession">
+    <th mat-header-cell *matHeaderCellDef> mothersProfession </th>
+    <td mat-cell *matCellDef="let element"> {{element.mothersProfession}} </td>
+  </ng-container>
+    
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="mothersTelephone">
+    <th mat-header-cell *matHeaderCellDef> mothersTelephone </th>
+    <td mat-cell *matCellDef="let element"> {{element.mothersTelephone}} </td>
+  </ng-container>
+    
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="mothersWhatsapp">
+    <th mat-header-cell *matHeaderCellDef> mothersWhatsapp </th>
+    <td mat-cell *matCellDef="let element"> {{element.mothersWhatsapp}} </td>
+  </ng-container>
+    
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="fathersName">
+    <th mat-header-cell *matHeaderCellDef> fathersName </th>
+    <td mat-cell *matCellDef="let element"> {{element.fathersName}} </td>
+  </ng-container>
+      
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="fathersSchool">
+    <th mat-header-cell *matHeaderCellDef> fathersSchool </th>
+    <td mat-cell *matCellDef="let element"> {{element.fathersSchool}} </td>
+  </ng-container>
+      
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="fathersEducationLevel">
+    <th mat-header-cell *matHeaderCellDef> fathersEducationLevel </th>
+    <td mat-cell *matCellDef="let element"> {{element.fathersEducationLevel}} </td>
+  </ng-container>
+      
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="fathersProfession">
+    <th mat-header-cell *matHeaderCellDef> fathersProfession </th>
+    <td mat-cell *matCellDef="let element"> {{element.fathersProfession}} </td>
+  </ng-container>
+      
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="fathersTelephone">
+    <th mat-header-cell *matHeaderCellDef> fathersTelephone </th>
+    <td mat-cell *matCellDef="let element"> {{element.fathersTelephone}} </td>
+  </ng-container>
+      
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="fathersWhatsapp">
+    <th mat-header-cell *matHeaderCellDef> fathersWhatsapp </th>
+    <td mat-cell *matCellDef="let element"> {{element.fathersWhatsapp}} </td>
+  </ng-container>
+      
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="smothersName">
+    <th mat-header-cell *matHeaderCellDef> smothersName </th>
+    <td mat-cell *matCellDef="let element"> {{element.smothersName}} </td>
+  </ng-container>
+      
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="smothersSchool">
+    <th mat-header-cell *matHeaderCellDef> smothersSchool </th>
+    <td mat-cell *matCellDef="let element"> {{element.smothersSchool}} </td>
+  </ng-container>
+      
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="smothersEducationLevel">
+    <th mat-header-cell *matHeaderCellDef> smothersEducationLevel </th>
+    <td mat-cell *matCellDef="let element"> {{element.smothersEducationLevel}} </td>
+  </ng-container>
+      
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="smothersProfession">
+    <th mat-header-cell *matHeaderCellDef> smothersProfession </th>
+    <td mat-cell *matCellDef="let element"> {{element.smothersProfession}} </td>
+  </ng-container>
+      
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="smothersTelephone">
+    <th mat-header-cell *matHeaderCellDef> smothersTelephone </th>
+    <td mat-cell *matCellDef="let element"> {{element.smothersTelephone}} </td>
+  </ng-container>
+      
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="smothersWhatsapp">
+    <th mat-header-cell *matHeaderCellDef> smothersWhatsapp </th>
+    <td mat-cell *matCellDef="let element"> {{element.smothersWhatsapp}} </td>
+  </ng-container>
+      
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="sfathersName">
+    <th mat-header-cell *matHeaderCellDef> sfathersName </th>
+    <td mat-cell *matCellDef="let element"> {{element.sfathersName}} </td>
+  </ng-container>
+      
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="sfathersSchool">
+    <th mat-header-cell *matHeaderCellDef> sfathersSchool </th>
+    <td mat-cell *matCellDef="let element"> {{element.sfathersSchool}} </td>
+  </ng-container>
+      
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="sfathersEducationLevel">
+    <th mat-header-cell *matHeaderCellDef> sfathersEducationLevel </th>
+    <td mat-cell *matCellDef="let element"> {{element.sfathersEducationLevel}} </td>
+  </ng-container>
+      
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="sfathersProfession">
+    <th mat-header-cell *matHeaderCellDef> sfathersProfession </th>
+    <td mat-cell *matCellDef="let element"> {{element.sfathersProfession}} </td>
+  </ng-container>
+      
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="sfathersTelephone">
+    <th mat-header-cell *matHeaderCellDef> sfathersTelephone </th>
+    <td mat-cell *matCellDef="let element"> {{element.sfathersTelephone}} </td>
+  </ng-container>
+      
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="sfathersWhatsapp">
+    <th mat-header-cell *matHeaderCellDef> sfathersWhatsapp </th>
+    <td mat-cell *matCellDef="let element"> {{element.sfathersWhatsapp}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button color="primary" (click)="editData(element)" matTooltip="edit">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="deleteData(element)" matTooltip="delete">
+              <mat-icon>delete</mat-icon>
+            </button>
+            <!--   <button mat-icon-buttoncolor="warn"(click)="editData()" matTooltip="edit"><mat-icon>edit</mat-icon></button> -->
+          </td>
+        </ng-container>
+
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+
+</div>

@@ -1,0 +1,40 @@
+<div class="container">
+    <h2>Create Exam</h2>
+          <!-- Back Button -->
+    <button mat-button class="back-button" (click)="back()"><mat-icon>arrow_back</mat-icon> Back</button>
+    <div class="form-container">
+        <form [formGroup]="createExamForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <mat-form-field class="half-width">
+                    <mat-label>Exam Co.</mat-label>
+                    <input matInput placeholder="Enter Exam Co." value="" formControlName="examCo" />
+                </mat-form-field>
+
+                <mat-form-field class="half-width">
+                    <mat-label>Exam Name</mat-label>
+                    <input matInput placeholder="Enter Exam Name" value="" formControlName="examName" />
+                </mat-form-field>
+            </div>
+
+            <div class="row">
+                <mat-form-field class="half-width">
+                    <mat-label>Year</mat-label>
+                    <input matInput placeholder="Enter Year" value="" formControlName="year" />
+                </mat-form-field>
+
+                <mat-form-field class="half-width">
+                    <mat-label>By</mat-label>
+                    <input matInput placeholder="Enter By" value="" formControlName="by" />
+                </mat-form-field>
+            </div>
+
+            <div class="row">
+                <div class="button">
+                    <button type="submit" mat-raised-button color="primary">
+                        create Exam
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,1 +1,537 @@
-<p>student works!</p>
+<div>
+  <div>
+    <div class="container">
+      <h2>Student Registration</h2>
+      <div class="form-container">
+        <form [formGroup]="studentForm" (ngSubmit)="onSubmit()">
+          <div class="row">
+            <mat-form-field class="half-width">
+              <mat-label>Admission Number</mat-label>
+              <input matInput placeholder="Enter Admission Number" value="" formControlName="admissionNumber"/>
+              <span class="text-danger" 
+              *ngIf="studentForm.get('admissionNumber')?.hasError('required') && studentForm.get('admissionNumber')?.touched">Admission number is requerd..!
+              </span>
+            </mat-form-field>
+            <mat-form-field class="half-width">
+              <mat-label>Name in Full</mat-label>
+              <input matInput placeholder="Enter Name Full Name" value="" formControlName="nameinFull" />
+               <span class="text-danger" 
+              *ngIf="studentForm.get('nameinFull')?.hasError('required') && studentForm.get('nameinFull')?.touched">Initial name is requerd..!
+              </span>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="half-width">
+              <mat-label>Name with Initials</mat-label>
+              <input matInput placeholder="Enter Name with Initials" value="" formControlName="nameWithInitials" />
+               <span class="text-danger" 
+              *ngIf="studentForm.get('nameWithInitials')?.hasError('required') && studentForm.get('nameWithInitials')?.touched">Initial name is requerd..!
+              </span>
+            </mat-form-field>
+            <mat-form-field class="quater-width">
+              <mat-label>Date of Birth</mat-label>
+              <input matInput [matDatepicker]="dob" placeholder="MM/DD/YYYY" formControlName="dateOfBirth" />
+              <span class="text-danger" 
+              *ngIf="studentForm.get('dateOfBirth')?.hasError('required') && studentForm.get('dateOfBirth')?.touched">DoB is requerd..!
+              </span>
+              <span class="text-danger" *ngIf="studentForm.get('dateOfBirth')?.hasError('invalidDate') && studentForm.get('dateOfBirth')?.touched">
+                Please enter a valid date.
+              </span>
+              <span class="text-danger" *ngIf="studentForm.get('dateOfBirth')?.hasError('futureDate') && studentForm.get('dateOfBirth')?.touched">DoB must be in the past.
+              </span>
+              <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
+              <mat-datepicker #dob></mat-datepicker>
+              </mat-form-field>
+          </div>
+
+          <div class="row">
+            <mat-form-field class="half-width">
+              <mat-label>Address </mat-label>
+              <input matInput placeholder="Enter the address" value="" formControlName="address" />
+              <span class="text-danger" 
+              *ngIf="studentForm.get('address')?.hasError('required') && studentForm.get('address')?.touched">Address is requerd..!
+              </span>
+              
+            </mat-form-field>
+
+            <mat-form-field class="half-width">
+              <mat-label>Telephone </mat-label>
+              <input matInput placeholder="Enter the Telephone" value="" formControlName="telephone" />
+              <span class="text-danger" 
+              *ngIf="studentForm.get('telephone')?.hasError('minlength') && studentForm.get('telephone')?.touched">Invalid Phone Number..!
+              </span>
+              <span class="text-danger" 
+              *ngIf="studentForm.get('telephone')?.hasError('maxlength') && studentForm.get('telephone')?.touched">Invalid Phone Number..!
+              </span>
+              <span class="text-danger"
+              *ngIf="studentForm.get('telephone')?.hasError('pattern') && studentForm.get('telephone')?.touched">Only numbers are allowed..!
+              </span>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="half-width">
+              <mat-label>Whatsapp </mat-label>
+              <input matInput placeholder="Enter the Whatsapp number" value="" formControlName="whatsapp" />
+              <span class="text-danger" 
+              *ngIf="studentForm.get('whatsapp')?.hasError('minlength') && studentForm.get('whatsapp')?.touched">Invalid Phone Number..!
+              </span>
+              <span class="text-danger" 
+              *ngIf="studentForm.get('whatsapp')?.hasError('maxlength') && studentForm.get('whatsapp')?.touched">Invalid Phone Number..!
+              </span>
+              <span class="text-danger"
+              *ngIf="studentForm.get('whatsapp')?.hasError('pattern') && studentForm.get('whatsapp')?.touched">Only numbers are allowed..!
+              </span>
+            </mat-form-field>
+
+            <mat-form-field class="half-width">
+              <mat-label>E-mail Address </mat-label>
+              <input matInput placeholder="Enter the Email Address" value="" formControlName="emailAddress" />
+              <!-- Invalid format error -->
+              <span class="text-danger" *ngIf="studentForm.get('emailAddress')?.hasError('email') && studentForm.get('emailAddress')?.touched">Please enter a valid email address.
+              </span>
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <mat-form-field class="half-width">
+              <mat-label>NIC </mat-label>
+              <input matInput placeholder="Enter the NIC" value="" formControlName="nic" (input)="onNicChange()"/>
+              <span class="text-danger" 
+              *ngIf="studentForm.get('nic')?.hasError('nicExists')">NIC already exists..!
+              </span>
+              <span class="text-danger" 
+              *ngIf="studentForm.get('nic')?.hasError('minlength') && studentForm.get('nic')?.touched">Invalid NIC Number..!
+              </span>
+              <span class="text-danger" 
+              *ngIf="studentForm.get('nic')?.hasError('maxlength') && studentForm.get('nic')?.touched">Invalid NIC Number..!
+              </span>
+            </mat-form-field>
+
+            <mat-form-field class="half-width">
+              <mat-label>School Studied </mat-label>
+              <input matInput placeholder="Enter the School Studied" value="" formControlName="schoolStudied" />
+            </mat-form-field>
+          </div>
+
+          <!--mothers section-->
+          <div class="row">
+            <mat-form-field class="half-width">
+              <mat-label>Mothers Name </mat-label>
+              <input matInput placeholder="Enter the mother's name" value="" formControlName="mothersName" />
+            </mat-form-field>
+
+            <mat-form-field class="half-width">
+              <mat-label>Mothers School </mat-label>
+              <input matInput placeholder="Enter the mother's School" value="" formControlName="mothersSchool" />
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <mat-form-field class="quater-width">
+              <mat-label>Mother's Level of Education</mat-label>
+              <mat-select formControlName="mothersEducationLevel">
+                <mat-option value="primary">Primary</mat-option>
+                <mat-option value="secondary">Secondary</mat-option>
+                <mat-option value="university">University</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="half-width">
+              <mat-label>Mother's Profession </mat-label>
+              <input matInput placeholder="Enter the mother's Profession" value=""
+                formControlName="mothersProfession" />
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <mat-form-field class="half-width">
+              <mat-label>Mother's Telephone </mat-label>
+              <input matInput placeholder="Enter the mother's Telephone Number" value=""
+                formControlName="mothersTelephone" />
+                <span class="text-danger" 
+              *ngIf="studentForm.get('mothersTelephone')?.hasError('minlength') && studentForm.get('mothersTelephone')?.touched">Invalid Phone Number..!
+              </span>
+              <span class="text-danger" 
+              *ngIf="studentForm.get('mothersTelephone')?.hasError('maxlength') && studentForm.get('mothersTelephone')?.touched">Invalid Phone Number..!
+              </span>
+              <span class="text-danger"
+              *ngIf="studentForm.get('mothersTelephone')?.hasError('pattern') && studentForm.get('mothersTelephone')?.touched">Only numbers are allowed..!
+              </span>
+            </mat-form-field>
+
+            <mat-form-field class="half-width">
+              <mat-label>Mother's Whatsapp </mat-label>
+              <input matInput placeholder="Enter the mother's Whatsap Number" value=""
+                formControlName="mothersWhatsapp" />
+                              <span class="text-danger" 
+              *ngIf="studentForm.get('mothersWhatsapp')?.hasError('minlength') && studentForm.get('mothersWhatsapp')?.touched">Invalid Phone Number..!
+              </span>
+              <span class="text-danger" 
+              *ngIf="studentForm.get('mothersWhatsapp')?.hasError('maxlength') && studentForm.get('mothersWhatsapp')?.touched">Invalid Phone Number..!
+              </span>
+              <span class="text-danger"
+              *ngIf="studentForm.get('mothersWhatsapp')?.hasError('pattern') && studentForm.get('mothersWhatsapp')?.touched">Only numbers are allowed..!
+              </span>
+            </mat-form-field>
+          </div>
+
+          <!--fathers section -->
+
+          <div class="row">
+            <mat-form-field class="half-width">
+              <mat-label>Father's Name </mat-label>
+              <input matInput placeholder="Enter the Father's name" value="" formControlName="fathersName" />
+            </mat-form-field>
+
+            <mat-form-field class="half-width">
+              <mat-label>Father's School </mat-label>
+              <input matInput placeholder="Enter the Father's School" value="" formControlName="fathersSchool" />
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <mat-form-field class="quater-width">
+              <mat-label>Father's Level of Education</mat-label>
+              <mat-select formControlName="fathersEducationLevel">
+                <mat-option value="primary">Primary</mat-option>
+                <mat-option value="secondary">Secondary</mat-option>
+                <mat-option value="university">University</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="half-width">
+              <mat-label>Father's Profession </mat-label>
+              <input matInput placeholder="Enter the Father's Profession" value=""
+                formControlName="fathersProfession" />
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <mat-form-field class="half-width">
+              <mat-label>Father's Telephone </mat-label>
+              <input matInput placeholder="Enter the Father's Telephone Number" value=""
+                formControlName="fathersTelephone" />
+                <span class="text-danger" 
+              *ngIf="studentForm.get('fathersTelephone')?.hasError('minlength') && studentForm.get('fathersTelephone')?.touched">Invalid Phone Number..!
+              </span>
+              <span class="text-danger" 
+              *ngIf="studentForm.get('fathersTelephone')?.hasError('maxlength') && studentForm.get('fathersTelephone')?.touched">Invalid Phone Number..!
+              </span>
+              <span class="text-danger"
+              *ngIf="studentForm.get('fathersTelephone')?.hasError('pattern') && studentForm.get('fathersTelephone')?.touched">Only numbers are allowed..!
+              </span>
+            </mat-form-field>
+
+            <mat-form-field class="half-width">
+              <mat-label>Father's Whatsapp </mat-label>
+              <input matInput placeholder="Enter the Father's Whatsap Number" value=""
+                formControlName="fathersWhatsapp" />
+                              <span class="text-danger" 
+              *ngIf="studentForm.get('fathersWhatsapp')?.hasError('minlength') && studentForm.get('fathersWhatsapp')?.touched">Invalid Phone Number..!
+              </span>
+              <span class="text-danger" 
+              *ngIf="studentForm.get('fathersWhatsapp')?.hasError('maxlength') && studentForm.get('fathersWhatsapp')?.touched">Invalid Phone Number..!
+              </span>
+              <span class="text-danger"
+              *ngIf="studentForm.get('fathersWhatsapp')?.hasError('pattern') && studentForm.get('fathersWhatsapp')?.touched">Only numbers are allowed..!
+              </span>
+            </mat-form-field>
+          </div>
+
+          <!-- Gardian Section -->
+
+          <div class="row">
+            <mat-form-field class="half-width">
+              <mat-label>Guardian's Name </mat-label>
+              <input matInput placeholder="Enter the Guardian's  name" value="" formControlName="guardiansName" />
+            </mat-form-field>
+
+            <mat-form-field class="half-width">
+              <mat-label>Guardian's School </mat-label>
+              <input matInput placeholder="Enter the Guardian's  School" value="" formControlName="guardiansSchool" />
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <mat-form-field class="quater-width">
+              <mat-label>Guardian's Level of Education</mat-label>
+              <mat-select formControlName="guardiansEducationLevel">
+                <mat-option value="primary">Primary</mat-option>
+                <mat-option value="secondary">Secondary</mat-option>
+                <mat-option value="university">University</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="half-width">
+              <mat-label>Guardian's Profession </mat-label>
+              <input matInput placeholder="Enter the Guardian's  Profession" value=""
+                formControlName="guardiansProfession" />
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <mat-form-field class="half-width">
+              <mat-label>Guardian's Telephone </mat-label>
+              <input matInput placeholder="Enter the Guardian's  Telephone Number" value=""
+                formControlName="guardiansTelephone" />
+                <span class="text-danger" 
+              *ngIf="studentForm.get('guardiansTelephone')?.hasError('minlength') && studentForm.get('guardiansTelephone')?.touched">Invalid Phone Number..!
+              </span>
+              <span class="text-danger" 
+              *ngIf="studentForm.get('guardiansTelephone')?.hasError('maxlength') && studentForm.get('guardiansTelephone')?.touched">Invalid Phone Number..!
+              </span>
+              <span class="text-danger"
+              *ngIf="studentForm.get('guardiansTelephone')?.hasError('pattern') && studentForm.get('guardiansTelephone')?.touched">Only numbers are allowed..!
+              </span>
+            </mat-form-field>
+
+            <mat-form-field class="half-width">
+              <mat-label>Guardian's Whatsapp </mat-label>
+              <input matInput placeholder="Enter the Guardian's  Whatsap Number" value=""
+                formControlName="guardiansWhatsapp" />
+                              <span class="text-danger" 
+              *ngIf="studentForm.get('guardiansWhatsapp')?.hasError('minlength') && studentForm.get('guardiansWhatsapp')?.touched">Invalid Phone Number..!
+              </span>
+              <span class="text-danger" 
+              *ngIf="studentForm.get('guardiansWhatsapp')?.hasError('maxlength') && studentForm.get('guardiansWhatsapp')?.touched">Invalid Phone Number..!
+              </span>
+              <span class="text-danger"
+              *ngIf="studentForm.get('guardiansWhatsapp')?.hasError('pattern') && studentForm.get('guardiansWhatsapp')?.touched">Only numbers are allowed..!
+              </span>
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <div class="button">
+              <button type="submit" mat-raised-button color="primary" [disabled]="isButtonDisabled">{{ saveButtonLabel }}</button>
+              <button type="reset" mat-raised-button color="warn" (click)="clearFeild()">Reset</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="table section">
+      <div class="refresh-filter-section">
+        <div class="refresh-button">
+          <button mat-icon-button color="primary" (click)="refreshData()">
+            <mat-icon>refresh</mat-icon>
+          </button>
+        </div>
+
+        <mat-form-field class="filter">
+          <mat-label>Filter</mat-label>
+          <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input />
+        </mat-form-field>
+      </div>
+
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
+        <!-- Position Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef>ID</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.id }}
+          </td>
+        </ng-container>
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="admissionNumber">
+          <th mat-header-cell *matHeaderCellDef>Admission Number</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.admissionNumber }}
+          </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="nameinFull">
+          <th mat-header-cell *matHeaderCellDef>F Name</th>
+          <td mat-cell *matCellDef="let element">{{ element.nameinFull }}</td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="nameWithInitials">
+          <th mat-header-cell *matHeaderCellDef>I Name</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.nameWithInitials }}
+          </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="dateOfBirth">
+          <th mat-header-cell *matHeaderCellDef>DOB</th>
+          <td mat-cell *matCellDef="let element">{{ element.dateOfBirth }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="address">
+          <th mat-header-cell *matHeaderCellDef>Address</th>
+          <td mat-cell *matCellDef="let element">{{ element.address }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="telephone">whatsapp
+          <th mat-header-cell *matHeaderCellDef>Telephone</th>
+          <td mat-cell *matCellDef="let element">{{ element.telephone }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="whatsapp">
+          <th mat-header-cell *matHeaderCellDef>Whatsapp</th>
+          <td mat-cell *matCellDef="let element">{{ element.whatsapp }}</td>
+        </ng-container>
+        <ng-container matColumnDef="emailAddress">
+          <th mat-header-cell *matHeaderCellDef>Email</th>
+          <td mat-cell *matCellDef="let element">{{ element.emailAddress }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="nic">
+          <th mat-header-cell *matHeaderCellDef>NIC</th>
+          <td mat-cell *matCellDef="let element">{{ element.nic }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="schoolStudied">
+          <th mat-header-cell *matHeaderCellDef>School</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.schoolStudied }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="mothersName">
+          <th mat-header-cell *matHeaderCellDef>Mothers Name</th>
+          <td mat-cell *matCellDef="let element">{{ element.mothersName }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="mothersSchool">
+          <th mat-header-cell *matHeaderCellDef>Mothers School</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.mothersSchool }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="mothersEducationLevel">
+          <th mat-header-cell *matHeaderCellDef>Mothers EL</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.mothersEducationLevel }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="mothersProfession">
+          <th mat-header-cell *matHeaderCellDef>Mothers Profession</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.mothersProfession }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="mothersTelephone">
+          <th mat-header-cell *matHeaderCellDef>Mothers Telephone</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.mothersTelephone }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="mothersWhatsapp">
+          <th mat-header-cell *matHeaderCellDef>Mothers Whatsapp</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.mothersWhatsapp }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="fathersName">
+          <th mat-header-cell *matHeaderCellDef>Fathers Name</th>
+          <td mat-cell *matCellDef="let element">{{ element.fathersName }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="fathersSchool">
+          <th mat-header-cell *matHeaderCellDef>Fathers School</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.fathersSchool }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="fathersEducationLevel">
+          <th mat-header-cell *matHeaderCellDef>Fathers EL</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.fathersEducationLevel }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="fathersProfession">
+          <th mat-header-cell *matHeaderCellDef>Fathers Profession</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.fathersProfession }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="fathersTelephone">
+          <th mat-header-cell *matHeaderCellDef>Fathers Telephone</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.fathersTelephone }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="fathersWhatsapp">
+          <th mat-header-cell *matHeaderCellDef>Fathers Whatsapp</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.fathersWhatsapp }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="guardiansName">
+          <th mat-header-cell *matHeaderCellDef>Guardians Name</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.guardiansName }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="guardiansSchool">
+          <th mat-header-cell *matHeaderCellDef>Guardians School</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.guardiansSchool }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="guardiansEducationLevel">
+          <th mat-header-cell *matHeaderCellDef>Guardians EL</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.guardiansEducationLevel }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="guardiansProfession">
+          <th mat-header-cell *matHeaderCellDef>Guardians Profession</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.guardiansProfession }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="guardiansTelephone">
+          <th mat-header-cell *matHeaderCellDef>Guardians Telephone</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.guardiansTelephone }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="guardiansWhatsapp">
+          <th mat-header-cell *matHeaderCellDef>Guardians Whatsapp</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.guardiansWhatsapp }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button color="warn" (click)="editData(element)" matTooltip="edit">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="deleteData(element)" matTooltip="delete">
+              <mat-icon>delete</mat-icon>
+            </button>
+            <!--   <button mat-icon-buttoncolor="warn"(click)="editData()" matTooltip="edit"><mat-icon>edit</mat-icon></button> -->
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+    </div>
+  </div>
+</div>

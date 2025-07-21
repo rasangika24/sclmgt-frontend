@@ -1,4 +1,4 @@
-import {Component, ViewEncapsulation, ViewChild, OnInit} from '@angular/core';
+import {Component, ViewEncapsulation, ViewChild, OnInit, OnDestroy} from '@angular/core';
 import {
   ApexChart,
   ChartComponent,
@@ -130,9 +130,14 @@ const ELEMENT_DATA: productsData[] = [
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
+  styleUrl: './dashboard.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class AppDashboardComponent implements OnInit {
+export class AppDashboardComponent implements OnInit, OnDestroy{
+
+  currentTime: Date = new Date();
+  private timer: any;
+
   @ViewChild('chart') chart: ChartComponent = Object.create(null);
 
   public salesOverviewChart!: Partial<salesOverviewChart> | any;
@@ -409,6 +414,11 @@ export class AppDashboardComponent implements OnInit {
   ngOnInit(): void {
     try {
       this.checkAuthorization();
+
+      this.timer = setInterval(() => {
+      this.currentTime = new Date();
+    }, 1000);
+
     } catch (error) {
       console.log(error);
     }
@@ -420,6 +430,12 @@ export class AppDashboardComponent implements OnInit {
     );
     if (!this.display) {
       return;
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.timer) {
+      clearInterval(this.timer);
     }
   }
 }

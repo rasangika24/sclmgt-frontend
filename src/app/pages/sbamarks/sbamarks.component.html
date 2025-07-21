@@ -1,0 +1,288 @@
+<div class="container">
+    <h2>SBA Marks Management</h2>
+    <div class="form-container">
+        <form [formGroup]="sbaForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <mat-form-field class="half-width">
+                    <mat-label>File Number</mat-label>
+                    <input matInput placeholder="Enter File Number" value="" formControlName="fileNumber" />
+                    </mat-form-field>
+
+                <mat-form-field class="half-width">
+                    <mat-label>Exam</mat-label>
+                    <mat-select formControlName="exam">
+                        <mat-option value="o/l">O/L</mat-option>
+                        <mat-option value="a/l">A/L</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="row">
+                <mat-form-field class="half-width">
+                    <mat-label>Admission Number</mat-label>
+                    <input matInput placeholder="Enter Admission Number" value="" formControlName="admissionNumber" />
+                </mat-form-field>
+                <mat-form-field class="half-width">
+                    <mat-label>Year</mat-label>
+                    <input matInput placeholder="Enter Year" value="" formControlName="year" />
+                </mat-form-field>
+            </div>
+
+            <div class="row">
+                 <mat-form-field class="half-width">
+                    <mat-label>Religion</mat-label>
+                    <input matInput placeholder="Enter Marks" value="" formControlName="subject1" />
+                </mat-form-field>
+                <mat-form-field class="half-width">
+                    <mat-label>Language</mat-label>
+                    <input matInput placeholder="Enter Marks" value="" formControlName="subject2" />
+                </mat-form-field>
+            </div>
+             <div class="row">
+                 <mat-form-field class="half-width">
+                    <mat-label>Mathematics</mat-label>
+                    <input matInput placeholder="Enter Marks" value="" formControlName="subject3" />
+                </mat-form-field>
+                <mat-form-field class="half-width">
+                    <mat-label>Science</mat-label>
+                    <input matInput placeholder="Enter Marks" value="" formControlName="subject4" />
+                </mat-form-field>
+            </div>
+             <div class="row">
+                 <mat-form-field class="half-width">
+                    <mat-label>History</mat-label>
+                    <input matInput placeholder="Enter Marks" value="" formControlName="subject5" />
+                </mat-form-field>
+                <mat-form-field class="half-width">
+                    <mat-label>English</mat-label>
+                    <input matInput placeholder="Enter Marks" value="" formControlName="subject6" />
+                </mat-form-field>
+            </div>
+             <div class="row">
+                 <mat-form-field class="half-width">
+                    <mat-label>Category i</mat-label>
+                    <input matInput placeholder="Enter Marks" value="" formControlName="subject7" />
+                </mat-form-field>
+                <mat-form-field class="half-width">
+                    <mat-label>Category ii</mat-label>
+                    <input matInput placeholder="Enter Marks" value="" formControlName="subject8" />
+                </mat-form-field>
+            </div>
+             <div class="row">
+                 <mat-form-field class="half-width">
+                    <mat-label>Category iii</mat-label>
+                    <input matInput placeholder="Enter Marks" value="" formControlName="subject9" />
+                </mat-form-field>
+                <mat-form-field class="half-width">
+                    <mat-label>Subject 10</mat-label>
+                    <input matInput placeholder="Enter Marks" value="" formControlName="subject10" />
+                </mat-form-field>
+             </div>    
+           
+              <div class="row">
+            <div class="button">
+              <button type="submit" mat-raised-button color="primary" [disabled]="isButtonDisabled">{{ saveButtonLabel }}</button>
+              <button type="reset" mat-raised-button color="warn" (click)="clearFeild()">Reset</button>
+            </div>
+          </div>
+        </form>
+    </div>
+
+    <mat-tab-group>
+        <mat-tab label="O/L">
+
+            <div class="refresh-filter-section">
+        <div class="refresh-button">
+          <button mat-icon-button color="primary" (click)="refreshData()">
+            <mat-icon>refresh</mat-icon>
+          </button>
+        </div>
+
+        <mat-form-field class="filter">
+          <mat-label>Filter</mat-label>
+          <input matInput (keyup)="applyFilter($event)" placeholder="Type here to search..!" #input />
+        </mat-form-field>
+      </div>
+
+            <table mat-table [dataSource]="dataSource_ol" class="mat-elevation-z8">
+                <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+
+              <!-- Position Column -->
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef>ID</th>
+                    <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+                </ng-container>
+
+                <!-- Position Column -->
+                <ng-container matColumnDef="fileNumber">
+                    <th mat-header-cell *matHeaderCellDef>File Number</th>
+                    <td mat-cell *matCellDef="let element">{{ element.fileNumber }}</td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="exam">
+                    <th mat-header-cell *matHeaderCellDef>Exam</th>
+                    <td mat-cell *matCellDef="let element">{{ element.exam }}</td>
+                </ng-container>
+
+                <!-- Weight Column -->
+                <ng-container matColumnDef="admissionNumber">
+                    <th mat-header-cell *matHeaderCellDef>Admission Number</th>
+                    <td mat-cell *matCellDef="let element">{{ element.admissionNumber }}</td>
+                </ng-container>
+                
+                <ng-container matColumnDef="year">
+                    <th mat-header-cell *matHeaderCellDef>Year</th>
+                    <td mat-cell *matCellDef="let element">{{ element.year }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="subject1">
+                    <th mat-header-cell *matHeaderCellDef>Religion</th>
+                    <td mat-cell *matCellDef="let element">{{ element.subject1 }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="subject2">
+                    <th mat-header-cell *matHeaderCellDef>Language</th>
+                    <td mat-cell *matCellDef="let element">{{ element.subject2 }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="subject3">
+                    <th mat-header-cell *matHeaderCellDef>Mathematics</th>
+                    <td mat-cell *matCellDef="let element">{{ element.subject3 }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="subject4">
+                    <th mat-header-cell *matHeaderCellDef>Science</th>
+                    <td mat-cell *matCellDef="let element">{{ element.subject4 }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="subject5">
+                    <th mat-header-cell *matHeaderCellDef>History</th>
+                    <td mat-cell *matCellDef="let element">{{ element.subject5 }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="subject6">
+                    <th mat-header-cell *matHeaderCellDef>English</th>
+                    <td mat-cell *matCellDef="let element">{{ element.subject6 }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="subject7">
+                    <th mat-header-cell *matHeaderCellDef>Category i</th>
+                    <td mat-cell *matCellDef="let element">{{ element.subject7 }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="subject8">
+                    <th mat-header-cell *matHeaderCellDef>Category ii</th>
+                    <td mat-cell *matCellDef="let element">{{ element.subject8 }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="subject9">
+                    <th mat-header-cell *matHeaderCellDef>Category iii</th>
+                    <td mat-cell *matCellDef="let element">{{ element.subject9 }}</td>
+                </ng-container>
+                <ng-container matColumnDef="subject10">
+                    <th mat-header-cell *matHeaderCellDef>Subject 10</th>
+                    <td mat-cell *matCellDef="let element">{{ element.subject10 }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button color="warn" (click)="editData(element)" matTooltip="edit">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="deleteData(element)" matTooltip="delete">
+              <mat-icon>delete</mat-icon>
+            </button>
+            
+          </td>
+        </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsOl"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumnsOl"></tr>
+            </table>
+              <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+        </mat-tab>
+       
+        <!--
+
+        <mat-tab label="A/L">
+            <table mat-table [dataSource]="dataSource_al" class="mat-elevation-z8"> -->
+                <!-- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+
+               <!-- Position Column 
+                <ng-container matColumnDef="fileNumber">
+                    <th mat-header-cell *matHeaderCellDef>File Number</th>
+                    <td mat-cell *matCellDef="let element">{{ element.fileNumber }}</td>
+                </ng-container>
+
+                
+                <ng-container matColumnDef="exam">
+                    <th mat-header-cell *matHeaderCellDef>Exam</th>
+                    <td mat-cell *matCellDef="let element">{{ element.exam }}</td>
+                </ng-container>
+
+                
+                <ng-container matColumnDef="admissionNumber">
+                    <th mat-header-cell *matHeaderCellDef>Admission Number</th>
+                    <td mat-cell *matCellDef="let element">{{ element.admissionNumber }}</td>
+                </ng-container>
+                
+                <ng-container matColumnDef="subject1">
+                    <th mat-header-cell *matHeaderCellDef>Subject 1</th>
+                    <td mat-cell *matCellDef="let element">{{ element.subject1 }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="subject2">
+                    <th mat-header-cell *matHeaderCellDef>Subject 2</th>
+                    <td mat-cell *matCellDef="let element">{{ element.subject2 }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="subject3">
+                    <th mat-header-cell *matHeaderCellDef>Subject 3</th>
+                    <td mat-cell *matCellDef="let element">{{ element.subject3 }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="subject4">
+                    <th mat-header-cell *matHeaderCellDef>Subject 4</th>
+                    <td mat-cell *matCellDef="let element">{{ element.subject4 }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="subject5">
+                    <th mat-header-cell *matHeaderCellDef>Subject 5</th>
+                    <td mat-cell *matCellDef="let element">{{ element.subject5 }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="subject6">
+                    <th mat-header-cell *matHeaderCellDef>Subject 6</th>
+                    <td mat-cell *matCellDef="let element">{{ element.subject6 }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="subject7">
+                    <th mat-header-cell *matHeaderCellDef>Subject 7</th>
+                    <td mat-cell *matCellDef="let element">{{ element.subject7 }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="subject8">
+                    <th mat-header-cell *matHeaderCellDef>Subject 8</th>
+                    <td mat-cell *matCellDef="let element">{{ element.subject8 }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="subject9">
+                    <th mat-header-cell *matHeaderCellDef>Subject 9</th>
+                    <td mat-cell *matCellDef="let element">{{ element.subject9 }}</td>
+                </ng-container>
+                <ng-container matColumnDef="subject10">
+                    <th mat-header-cell *matHeaderCellDef>Subject 10</th>
+                    <td mat-cell *matCellDef="let element">{{ element.subject10 }}</td>
+                </ng-container>
+            </table> 
+        
+             
+        </mat-tab> -->
+
+    </mat-tab-group>
+
+</div>

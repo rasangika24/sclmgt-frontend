@@ -19,11 +19,42 @@ import { RecruitmentSelectionAdmissionComponent } from './recruitment-selection-
 import { LeavingComponent } from './leaving/leaving.component';
 import { CharacterComponent } from './character/character.component';
 import { StudentComponent } from './student/student.component';
-
-
+import { NoneAcademicStaffComponent } from './none-academic-staff/none-academic-staff.component';
+import { ApplicationToStaffComponent } from './application-to-staff/application-to-staff.component';
+import { TimetableComponent } from './timetable/timetable.component';
+import { ReliefPeriodManagementComponent } from './relief-period-management/relief-period-management.component';
+import { AcademicStaffComponent } from './academic-staff/academic-staff.component';
+import { SbamarksComponent } from './sbamarks/sbamarks.component';
+import { ClassmanagementComponent } from './classmanagement/classmanagement.component';
+import { TermtestmarksComponent } from './termtestmarks/termtestmarks.component';
+import { StudentDetailsComponent } from './student-details/student-details.component';
+import { CreateExamComponent } from './create-exam/create-exam.component';
+import { AcademicStaffDetailsComponent } from './academic-staff-details/academic-staff-details.component';
+import { NoneAcademicStaffDetailsComponent } from './none-academic-staff-details/none-academic-staff-details.component';
 
 @NgModule({
-  declarations: [AppDashboardComponent, AddRemoveTableComponent,FormDemoComponent,EmployeeComponent, RecruitmentSelectionAdmissionComponent, LeavingComponent, CharacterComponent,StudentComponent],
+  declarations: [
+    AppDashboardComponent,
+    AddRemoveTableComponent,
+    FormDemoComponent,
+    EmployeeComponent,
+    RecruitmentSelectionAdmissionComponent,
+    LeavingComponent,
+    CharacterComponent,
+    StudentComponent,
+    NoneAcademicStaffComponent,
+    ApplicationToStaffComponent,
+    TimetableComponent,
+    ReliefPeriodManagementComponent,
+    AcademicStaffComponent,
+    SbamarksComponent,
+    ClassmanagementComponent,
+    TermtestmarksComponent,
+    StudentDetailsComponent,
+    CreateExamComponent,
+    AcademicStaffDetailsComponent,
+    NoneAcademicStaffDetailsComponent,
+  ],
   imports: [
     ReactiveFormsModule,
     CommonModule,
@@ -32,8 +63,10 @@ import { StudentComponent } from './student/student.component';
     NgApexchartsModule,
     RouterModule.forChild(PagesRoutes),
     TablerIconsModule.pick(TablerIcons),
-    MatFormFieldModule, MatInputModule, MatDatepickerModule
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
   ],
-  exports: []
+  exports: [],
 })
 export class PagesModule {}

@@ -1,16 +1,16 @@
 <div class="container">
     <h2>Leaving Form Creator</h2>
     <div class="form-container">
-        <form>
+        <form [formGroup]="leavingForm" (ngSubmit)="onSubmit()">
             <div class="row">
                 <mat-form-field class="half-width">
                     <mat-label>Pupils Name </mat-label>
-                    <input matInput placeholder="Application No" value="" />
+                    <input matInput placeholder="Application No" value="" formControlName="pupilsName" />
                 </mat-form-field>
 
                 <mat-form-field class="half-width">
                     <mat-label>Index No</mat-label>
-                    <input matInput placeholder="Applicant Name" value="" />
+                    <input matInput placeholder="Applicant Name" value="" formControlName="indexNo" />
                 </mat-form-field>
 
             </div>
@@ -18,14 +18,14 @@
             <div class="row">
                 <mat-form-field class="quater-width">
                     <mat-label>Date of Birth</mat-label>
-                    <input matInput [matDatepicker]="dob" placeholder="MM/DD/YYYY" />
+                    <input matInput [matDatepicker]="dob" placeholder="MM/DD/YYYY" formControlName="dateofBirth" />
                     <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
                     <mat-datepicker #dob></mat-datepicker>
                 </mat-form-field>
 
                 <mat-form-field class="quater-width">
                     <mat-label>Religion</mat-label>
-                    <mat-select>
+                    <mat-select formControlName="religion">
                         <mat-option value="buddhism">Buddhism</mat-option>
                         <mat-option value="hindu">Hindu</mat-option>
                         <mat-option value="islam">Islam</mat-option>
@@ -34,9 +34,9 @@
                 </mat-form-field>
                 <mat-form-field class="quater-width">
                     <mat-label>Date of Admission</mat-label>
-                    <input matInput [matDatepicker]="dob" placeholder="MM/DD/YYYY" />
-                    <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
-                    <mat-datepicker #dob></mat-datepicker>
+                    <input matInput [matDatepicker]="doa" placeholder="MM/DD/YYYY" formControlName="dateofAdmission" />
+                    <mat-datepicker-toggle matSuffix [for]="doa"></mat-datepicker-toggle>
+                    <mat-datepicker #doa></mat-datepicker>
                 </mat-form-field>
             </div>
 
@@ -44,11 +44,12 @@
 
                 <mat-form-field class="half-width">
                     <mat-label>Full name of the Father</mat-label>
-                    <input matInput placeholder="Address*" value="" />
+                    <input matInput placeholder="Address*" value="" formControlName="fullnameofthefatherGardian" />
                 </mat-form-field>
                 <mat-form-field class="half-width">
                     <mat-label>Address of the father</mat-label>
-                    <textarea matInput rows="1" maxlength="1000" placeholder="Enter Remarks"></textarea>
+                    <textarea matInput rows="1" maxlength="1000" placeholder="Enter Remarks"
+                        formControlName="addressofthefatherGardian"></textarea>
                 </mat-form-field>
 
             </div>
@@ -58,22 +59,24 @@
 
                 <mat-form-field class="half-width">
                     <mat-label>Cause of Leaving</mat-label>
-                    <input matInput placeholder="Applicant Name" value="" />
+                    <input matInput placeholder="Applicant Name" value="" formControlName="causeLeaving" />
                 </mat-form-field>
                 <mat-form-field class="half-width">
                     <mat-label>Current Class subjects</mat-label>
-                    <input matInput placeholder="Applicant Name" value="" type="" />
+                    <input matInput placeholder="Applicant Name" value="" type=""
+                        formControlName="subjectstudiedinthepresentClass" />
                 </mat-form-field>
             </div>
             <div class="row">
                 <mat-form-field class="half-width">
                     <mat-label>Last Grade Passed</mat-label>
                     <input matInput placeholder="Applicant Name" value="" type="number" min="1" max="12"
-                        oninput="this.value = Math.min(Math.max(this.value, 1), 13)" />
+                        oninput="this.value = Math.min(Math.max(this.value, 1), 13)"
+                        formControlName="lastgradePassed" />
                 </mat-form-field>
                 <mat-form-field class="half-width">
                     <mat-label>Progress of academic Field</mat-label>
-                    <mat-select>
+                    <mat-select formControlName="progressinacademicField">
                         <mat-option value="veryGood">Very Good</mat-option>
                         <mat-option value="good">Good</mat-option>
                         <mat-option value="moderate">Moderate</mat-option>
@@ -82,15 +85,16 @@
                 </mat-form-field>
 
             </div>
-            
+
             <div class="row">
                 <mat-form-field class="half-width">
                     <mat-label>Sports Ability / leadership </mat-label>
-                    <input matInput placeholder="Applicant Name" value="" />
+                    <input matInput placeholder="Applicant Name" value=""
+                        formControlName="sportsabilityandLeadership" />
                 </mat-form-field>
                 <mat-form-field class="half-width">
                     <mat-label>Special Skills </mat-label>
-                    <input matInput placeholder="Applicant Name" value="" />
+                    <input matInput placeholder="Applicant Name" value="" formControlName="specialSkills" />
                 </mat-form-field>
             </div>
 
@@ -98,7 +102,7 @@
 
 
                 <div class="button">
-                    <button type="submit" mat-raised-button color="primary">Add Applicant</button>
+                    <button type="submit" mat-raised-button color="primary">Send Request</button>
                     <button mat-raised-button color="danger">Reset</button>
                 </div>
             </div>
