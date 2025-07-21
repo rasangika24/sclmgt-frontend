@@ -16,6 +16,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { RecruitmentSelectionAdmissionComponent } from './recruitment-selection-admission/recruitment-selection-admission.component';
+import { SchedulerComponent } from './scheduler/scheduler.component';
+import { ClassGradeGenerateComponent } from './class-grade-generate/class-grade-generate.component';
 import { LeavingComponent } from './leaving/leaving.component';
 import { CharacterComponent } from './character/character.component';
 import { StudentComponent } from './student/student.component';
@@ -33,28 +35,7 @@ import { AcademicStaffDetailsComponent } from './academic-staff-details/academic
 import { NoneAcademicStaffDetailsComponent } from './none-academic-staff-details/none-academic-staff-details.component';
 
 @NgModule({
-  declarations: [
-    AppDashboardComponent,
-    AddRemoveTableComponent,
-    FormDemoComponent,
-    EmployeeComponent,
-    RecruitmentSelectionAdmissionComponent,
-    LeavingComponent,
-    CharacterComponent,
-    StudentComponent,
-    NoneAcademicStaffComponent,
-    ApplicationToStaffComponent,
-    TimetableComponent,
-    ReliefPeriodManagementComponent,
-    AcademicStaffComponent,
-    SbamarksComponent,
-    ClassmanagementComponent,
-    TermtestmarksComponent,
-    StudentDetailsComponent,
-    CreateExamComponent,
-    AcademicStaffDetailsComponent,
-    NoneAcademicStaffDetailsComponent,
-  ],
+  declarations: [AppDashboardComponent, AddRemoveTableComponent,FormDemoComponent,EmployeeComponent, RecruitmentSelectionAdmissionComponent],
   imports: [
     ReactiveFormsModule,
     CommonModule,

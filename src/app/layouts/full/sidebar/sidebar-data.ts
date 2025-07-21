@@ -190,7 +190,67 @@ export const navItems: NavItem[] = [
     iconName: 'layout-dashboard',
     route: '/privileges/system-test',
     auth: authenticationEnum.Test,
-    isVisible: false
+    isVisible: false,
+  },
+  // {
+  //   navCap: 'Form Demo',
+  //   auth: authenticationEnum.Test, // change this
+  //   isVisible: true,
+  // },
+  // {
+  //   displayName: 'Form Demo',
+  //   iconName: 'layout-dashboard',
+  //   route: '/dashboard/form-demo',
+  //   auth: authenticationEnum.Test,
+  //   isVisible: false,
+  // },
+  {
+    navCap: 'Employee',
+    auth: authenticationEnum.Test, // change this
+    isVisible: true,
+  },
+  {
+    displayName: 'Employee',
+    iconName: 'layout-dashboard',
+    route: '/dashboard/employee',
+    auth: authenticationEnum.Test,
+    isVisible: false,
+  },
+  {
+    navCap: 'Recruitment Selection and Admission',
+    auth: authenticationEnum.Test, // change this
+    isVisible: true,
+  },
+  {
+    displayName: 'Applicant and Parent',
+    iconName: 'layout-dashboard',
+    route: '/dashboard/applicant',
+    auth: authenticationEnum.Test,
+    isVisible: false,
+  },
+  {
+    navCap: 'Time Table Managment',
+    auth: authenticationEnum.Test, // change this
+    isVisible: true,
+  },
+  {
+    displayName: 'Time Table',
+    iconName: 'layout-dashboard',
+    route: '/dashboard/time-table',
+    auth: authenticationEnum.Test,
+    isVisible: false,
+  },
+  {
+    navCap: 'System Setup',
+    auth: authenticationEnum.Test, // change this
+    isVisible: true,
+  },
+  {
+    displayName: 'Class Grade Generate',
+    iconName: 'layout-dashboard',
+    route: '/dashboard/class-grade-gen',
+    auth: authenticationEnum.Test,
+    isVisible: false,
   },
 
   

@@ -18,10 +18,12 @@ import { StudentDetailsComponent } from './student-details/student-details.compo
 import { CreateExamComponent } from './create-exam/create-exam.component';
 import { AcademicStaffDetailsComponent } from './academic-staff-details/academic-staff-details.component';
 import { NoneAcademicStaffDetailsComponent } from './none-academic-staff-details/none-academic-staff-details.component';
+import { SchedulerComponent } from './scheduler/scheduler.component';
+import { ClassGradeGenerateComponent } from './class-grade-generate/class-grade-generate.component';
 
 export const PagesRoutes: Routes = [
   {
-    path: '',  // http://localhost:4200/dashboard
+    path: '', // http://localhost:4200/dashboard
     component: AppDashboardComponent,
     data: {
       title: 'Starter Page',
@@ -37,7 +39,6 @@ export const PagesRoutes: Routes = [
   {
     path: 'form-demo', // http://localhost:4200/dashboard/form-demo
     component: FormDemoComponent,
-    
   },
   {//set path to character certificates
     path: 'student',  // http://localhost:4200/dashboard
@@ -47,10 +48,10 @@ export const PagesRoutes: Routes = [
     path: 'student-details',  // http://localhost:4200/dashboard/student-details
     component: StudentDetailsComponent,
   },
-  {//set path of employee module
+  {
+    //set path of employee module
     path: 'employee', // http://localhost:4200/dashboard/employee
     component: EmployeeComponent,
-    
   },
     {//set path of employee module
       path: 'applicant', // http://localhost:4200/dashboard/employee
@@ -106,8 +107,23 @@ export const PagesRoutes: Routes = [
     path: 'view-academic-staff-details',  // http://localhost:4200/dashboard
     component: AcademicStaffDetailsComponent,
   },
-   {//set path to application to time table
+  {//set path to application to time table
     path: 'view-none-academic-staff-details',  // http://localhost:4200/dashboard
     component: NoneAcademicStaffDetailsComponent,
+  },
+  {
+    //set path of employee module
+    path: 'applicant', // http://localhost:4200/dashboard/employee
+    component: RecruitmentSelectionAdmissionComponent,
+  },
+  {
+    //set path of employee module
+    path: 'time-table', // http://localhost:4200/dashboard/employee
+    component: SchedulerComponent,
+  },
+  {
+    //set path of employee module
+    path: 'class-grade-gen', // http://localhost:4200/dashboard/employee
+    component: ClassGradeGenerateComponent,
   },
 ];
