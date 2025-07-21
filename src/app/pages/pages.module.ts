@@ -35,7 +35,29 @@ import { AcademicStaffDetailsComponent } from './academic-staff-details/academic
 import { NoneAcademicStaffDetailsComponent } from './none-academic-staff-details/none-academic-staff-details.component';
 
 @NgModule({
-  declarations: [AppDashboardComponent, AddRemoveTableComponent,FormDemoComponent,EmployeeComponent, RecruitmentSelectionAdmissionComponent],
+  declarations: [AppDashboardComponent,
+    AddRemoveTableComponent,
+    FormDemoComponent,
+    EmployeeComponent,
+    RecruitmentSelectionAdmissionComponent,
+    TermtestmarksComponent,
+    SchedulerComponent,
+    ClassGradeGenerateComponent,
+    LeavingComponent,
+    CharacterComponent,
+    StudentComponent,
+    NoneAcademicStaffComponent,
+    ApplicationToStaffComponent,
+    TimetableComponent,
+    ReliefPeriodManagementComponent,
+    AcademicStaffComponent,
+    SbamarksComponent,
+    ClassmanagementComponent,
+    StudentDetailsComponent,
+    CreateExamComponent,
+    AcademicStaffDetailsComponent,
+    NoneAcademicStaffDetailsComponent
+  ],
   imports: [
     ReactiveFormsModule,
     CommonModule,
@@ -46,8 +68,8 @@ import { NoneAcademicStaffDetailsComponent } from './none-academic-staff-details
     TablerIconsModule.pick(TablerIcons),
     MatFormFieldModule,
     MatInputModule,
-    MatDatepickerModule,
+    MatDatepickerModule
   ],
   exports: [],
 })
-export class PagesModule {}
+export class PagesModule { }
