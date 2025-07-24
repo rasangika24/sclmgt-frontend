@@ -1,0 +1,64 @@
+
+<div class="container">
+    <h2>Extra Activities</h2>
+    <div class="form-container">
+        <form [formGroup]="extraform" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <mat-form-field class="half-width">
+                    <mat-label>Index No</mat-label>
+                    <input matInput placeholder="Index Number" formControlName="indexNo" />
+                </mat-form-field>
+                <mat-form-field class="half-width">
+                    <mat-label>Name With Initials</mat-label>
+                    <input matInput placeholder="Name with Initials" value="" formControlName="namewithInitials" />
+                </mat-form-field>
+
+            </div>
+            <div class="row">
+                <mat-form-field class="half-width">
+                    <mat-label>Extra Curricular Activities</mat-label>
+                    <input matInput placeholder="Extra Curricular Activities" value="" formControlName="extracurricularActivities" />
+                </mat-form-field>
+
+                <mat-form-field class="half-width">
+                    <mat-label>Special Achievements</mat-label>
+                    <input matInput placeholder="Special Achievements" value="" formControlName="specialAchievements" />
+                </mat-form-field>
+
+            </div>
+            <div class="row">
+                <mat-form-field class="half-width">
+                    <mat-label>Leadership Skills</mat-label>
+                    <input matInput placeholder="Leadership Skills" value="" formControlName="leadershipSkills" />
+                </mat-form-field>
+
+                <mat-form-field class="half-width">
+                    <mat-label>Medical Records</mat-label>
+                    <input matInput placeholder="Medical Records" value="" formControlName="medicalRecords" />
+                </mat-form-field>
+
+            </div>
+            <div class="row">
+                <mat-form-field class="half-width">
+                    <mat-label>Malbehavior </mat-label>
+                    <input matInput placeholder="Malbehaviour" value="" formControlName="malBehavior" />
+                </mat-form-field>
+
+                <mat-form-field class="half-width">
+                    <mat-label>Good Behaviour</mat-label>
+                    <input matInput placeholder="Good Behaviour" value="" formControlName="goodBehaviour" />
+                </mat-form-field>
+
+            </div>
+
+            <div class="row">
+
+
+                <div class="button">
+                    <button type="submit" mat-raised-button color="primary">Submit</button>
+                    <button mat-raised-button color="danger">Reset</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

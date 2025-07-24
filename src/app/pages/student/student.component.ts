@@ -65,6 +65,8 @@ export class StudentComponent implements OnInit {
     'nameinFull',
     'nameWithInitials',
     'dateOfBirth',
+    'dateofAdmission',
+    'gender',
     'address',
     'telephone',
     'whatsapp',
@@ -105,6 +107,8 @@ export class StudentComponent implements OnInit {
 
 
 
+
+
   constructor(
     private fb: FormBuilder,
     private studentService: StudentServiceService,
@@ -115,6 +119,8 @@ export class StudentComponent implements OnInit {
       admissionNumber: new FormControl('', [Validators.required]),
       nameinFull: new FormControl(''),
       nameWithInitials: new FormControl('', [Validators.required]),
+      dateofAdmission:new FormControl(''),
+      gender:new FormControl(''),
       dateOfBirth: new FormControl('',[Validators.required, this.pastDateValidator]),
       address: new FormControl('',[Validators.required]),
       telephone: new FormControl('',[Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]*$')]),

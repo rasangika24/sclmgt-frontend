@@ -35,6 +35,13 @@ export const navItems: NavItem[] = [
     isVisible: false,
   },
   {
+    displayName: 'Payment Details',
+    iconName: 'layout-dashboard',
+    route: '/dashboard/payments',
+    auth: authenticationEnum.Test,
+    isVisible: false,
+  },
+  {
     navCap: 'Staff',
     auth: authenticationEnum.Test, // change this
     isVisible: true,
@@ -85,6 +92,20 @@ export const navItems: NavItem[] = [
     displayName: 'Character',
     iconName: 'layout-dashboard',
     route: '/dashboard/character',
+    auth: authenticationEnum.Test,
+    isVisible: false,
+  },
+   {
+    displayName: 'Request Certificate',
+    iconName: 'layout-dashboard',
+    route: '/dashboard/request-certificate',
+    auth: authenticationEnum.Test,
+    isVisible: true,
+  },
+  {
+    displayName: 'Extra Activities',
+    iconName: 'layout-dashboard',
+    route: '/dashboard/extra',
     auth: authenticationEnum.Test,
     isVisible: false,
   },

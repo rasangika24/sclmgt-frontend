@@ -20,6 +20,9 @@ import { AcademicStaffDetailsComponent } from './academic-staff-details/academic
 import { NoneAcademicStaffDetailsComponent } from './none-academic-staff-details/none-academic-staff-details.component';
 import { SchedulerComponent } from './scheduler/scheduler.component';
 import { ClassGradeGenerateComponent } from './class-grade-generate/class-grade-generate.component';
+import { ExtraComponent } from './extra/extra.component';
+import { RequestcertificateComponent } from './requestcertificate/requestcertificate.component';
+import { PaymentsComponent } from './payments/payments.component';
 
 export const PagesRoutes: Routes = [
   {
@@ -126,4 +129,20 @@ export const PagesRoutes: Routes = [
     path: 'class-grade-gen', // http://localhost:4200/dashboard/employee
     component: ClassGradeGenerateComponent,
   },
+  {
+    //set path of extra module
+    path: 'extra', // http://localhost:4200/dashboard/employee
+    component: ExtraComponent,
+  },
+  {
+    //set path of request certificate module
+    path: 'request-certificate', // http://localhost:4200/dashboard/employee
+    component :RequestcertificateComponent ,
+  },
+  {
+    //set path of payments module
+    path: 'payments', // http://localhost:4200/dashboard/employee
+    component : PaymentsComponent ,
+  },
+
 ];

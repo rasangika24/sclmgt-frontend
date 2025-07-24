@@ -7,16 +7,18 @@
           <div class="row">
             <mat-form-field class="half-width">
               <mat-label>Admission Number</mat-label>
-              <input matInput placeholder="Enter Admission Number" value="" formControlName="admissionNumber"/>
-              <span class="text-danger" 
-              *ngIf="studentForm.get('admissionNumber')?.hasError('required') && studentForm.get('admissionNumber')?.touched">Admission number is requerd..!
+              <input matInput placeholder="Enter Admission Number" value="" formControlName="admissionNumber" />
+              <span class="text-danger"
+                *ngIf="studentForm.get('admissionNumber')?.hasError('required') && studentForm.get('admissionNumber')?.touched">Admission
+                number is requerd..!
               </span>
             </mat-form-field>
             <mat-form-field class="half-width">
               <mat-label>Name in Full</mat-label>
               <input matInput placeholder="Enter Name Full Name" value="" formControlName="nameinFull" />
-               <span class="text-danger" 
-              *ngIf="studentForm.get('nameinFull')?.hasError('required') && studentForm.get('nameinFull')?.touched">Initial name is requerd..!
+              <span class="text-danger"
+                *ngIf="studentForm.get('nameinFull')?.hasError('required') && studentForm.get('nameinFull')?.touched">Initial
+                name is requerd..!
               </span>
             </mat-form-field>
           </div>
@@ -24,47 +26,80 @@
             <mat-form-field class="half-width">
               <mat-label>Name with Initials</mat-label>
               <input matInput placeholder="Enter Name with Initials" value="" formControlName="nameWithInitials" />
-               <span class="text-danger" 
-              *ngIf="studentForm.get('nameWithInitials')?.hasError('required') && studentForm.get('nameWithInitials')?.touched">Initial name is requerd..!
+              <span class="text-danger"
+                *ngIf="studentForm.get('nameWithInitials')?.hasError('required') && studentForm.get('nameWithInitials')?.touched">Initial
+                name is requerd..!
               </span>
             </mat-form-field>
             <mat-form-field class="quater-width">
               <mat-label>Date of Birth</mat-label>
               <input matInput [matDatepicker]="dob" placeholder="MM/DD/YYYY" formControlName="dateOfBirth" />
-              <span class="text-danger" 
-              *ngIf="studentForm.get('dateOfBirth')?.hasError('required') && studentForm.get('dateOfBirth')?.touched">DoB is requerd..!
+              <span class="text-danger"
+                *ngIf="studentForm.get('dateOfBirth')?.hasError('required') && studentForm.get('dateOfBirth')?.touched">DoB
+                is requerd..!
+              </span>
+              <span class="text-danger"
+                *ngIf="studentForm.get('dateOfBirth')?.hasError('invalidDate') && studentForm.get('dateOfBirth')?.touched">
+                Please enter a valid date.
+              </span>
+              <span class="text-danger"
+                *ngIf="studentForm.get('dateOfBirth')?.hasError('futureDate') && studentForm.get('dateOfBirth')?.touched">DoB
+                must be in the past.
+              </span>
+              <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
+              <mat-datepicker #dob></mat-datepicker>
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <mat-form-field class="half-width">
+              <mat-label>Date Admission</mat-label>
+              <input matInput [matDatepicker]="doa" placeholder="MM/DD/YYYY" formControlName="dateofAdmission" />
+              <!-- <span class="text-danger" 
+              *ngIf="studentForm.get('dateofAdmission')?.hasError('required') && studentForm.get('dateOfBirth')?.touched">DoB is requerd..!
               </span>
               <span class="text-danger" *ngIf="studentForm.get('dateOfBirth')?.hasError('invalidDate') && studentForm.get('dateOfBirth')?.touched">
                 Please enter a valid date.
               </span>
               <span class="text-danger" *ngIf="studentForm.get('dateOfBirth')?.hasError('futureDate') && studentForm.get('dateOfBirth')?.touched">DoB must be in the past.
-              </span>
-              <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
-              <mat-datepicker #dob></mat-datepicker>
-              </mat-form-field>
+              </span> -->
+              <mat-datepicker-toggle matSuffix [for]="doa"></mat-datepicker-toggle>
+              <mat-datepicker #doa></mat-datepicker>
+            </mat-form-field>
+
+            <label>Gender :</label>
+            <mat-radio-group class="radio-options half-width" formControlName="gender">
+              <mat-radio-button value="male" class="yes">Male</mat-radio-button>
+              <mat-radio-button value="female" class="no">Female</mat-radio-button>
+            </mat-radio-group>
+
           </div>
 
           <div class="row">
             <mat-form-field class="half-width">
               <mat-label>Address </mat-label>
               <input matInput placeholder="Enter the address" value="" formControlName="address" />
-              <span class="text-danger" 
-              *ngIf="studentForm.get('address')?.hasError('required') && studentForm.get('address')?.touched">Address is requerd..!
+              <span class="text-danger"
+                *ngIf="studentForm.get('address')?.hasError('required') && studentForm.get('address')?.touched">Address
+                is requerd..!>
               </span>
-              
+
             </mat-form-field>
 
             <mat-form-field class="half-width">
               <mat-label>Telephone </mat-label>
               <input matInput placeholder="Enter the Telephone" value="" formControlName="telephone" />
-              <span class="text-danger" 
-              *ngIf="studentForm.get('telephone')?.hasError('minlength') && studentForm.get('telephone')?.touched">Invalid Phone Number..!
-              </span>
-              <span class="text-danger" 
-              *ngIf="studentForm.get('telephone')?.hasError('maxlength') && studentForm.get('telephone')?.touched">Invalid Phone Number..!
+              <span class="text-danger"
+                *ngIf="studentForm.get('telephone')?.hasError('minlength') && studentForm.get('telephone')?.touched">Invalid
+                Phone Number..!
               </span>
               <span class="text-danger"
-              *ngIf="studentForm.get('telephone')?.hasError('pattern') && studentForm.get('telephone')?.touched">Only numbers are allowed..!
+                *ngIf="studentForm.get('telephone')?.hasError('maxlength') && studentForm.get('telephone')?.touched">Invalid
+                Phone Number..!
+              </span>
+              <span class="text-danger"
+                *ngIf="studentForm.get('telephone')?.hasError('pattern') && studentForm.get('telephone')?.touched">Only
+                numbers are allowed..!
               </span>
             </mat-form-field>
           </div>
@@ -72,14 +107,17 @@
             <mat-form-field class="half-width">
               <mat-label>Whatsapp </mat-label>
               <input matInput placeholder="Enter the Whatsapp number" value="" formControlName="whatsapp" />
-              <span class="text-danger" 
-              *ngIf="studentForm.get('whatsapp')?.hasError('minlength') && studentForm.get('whatsapp')?.touched">Invalid Phone Number..!
-              </span>
-              <span class="text-danger" 
-              *ngIf="studentForm.get('whatsapp')?.hasError('maxlength') && studentForm.get('whatsapp')?.touched">Invalid Phone Number..!
+              <span class="text-danger"
+                *ngIf="studentForm.get('whatsapp')?.hasError('minlength') && studentForm.get('whatsapp')?.touched">Invalid
+                Phone Number..!
               </span>
               <span class="text-danger"
-              *ngIf="studentForm.get('whatsapp')?.hasError('pattern') && studentForm.get('whatsapp')?.touched">Only numbers are allowed..!
+                *ngIf="studentForm.get('whatsapp')?.hasError('maxlength') && studentForm.get('whatsapp')?.touched">Invalid
+                Phone Number..!
+              </span>
+              <span class="text-danger"
+                *ngIf="studentForm.get('whatsapp')?.hasError('pattern') && studentForm.get('whatsapp')?.touched">Only
+                numbers are allowed..!
               </span>
             </mat-form-field>
 
@@ -87,7 +125,9 @@
               <mat-label>E-mail Address </mat-label>
               <input matInput placeholder="Enter the Email Address" value="" formControlName="emailAddress" />
               <!-- Invalid format error -->
-              <span class="text-danger" *ngIf="studentForm.get('emailAddress')?.hasError('email') && studentForm.get('emailAddress')?.touched">Please enter a valid email address.
+              <span class="text-danger"
+                *ngIf="studentForm.get('emailAddress')?.hasError('email') && studentForm.get('emailAddress')?.touched">Please
+                enter a valid email address.
               </span>
             </mat-form-field>
           </div>
@@ -95,15 +135,16 @@
           <div class="row">
             <mat-form-field class="half-width">
               <mat-label>NIC </mat-label>
-              <input matInput placeholder="Enter the NIC" value="" formControlName="nic" (input)="onNicChange()"/>
-              <span class="text-danger" 
-              *ngIf="studentForm.get('nic')?.hasError('nicExists')">NIC already exists..!
+              <input matInput placeholder="Enter the NIC" value="" formControlName="nic" (input)="onNicChange()" />
+              <span class="text-danger" *ngIf="studentForm.get('nic')?.hasError('nicExists')">NIC already exists..!
               </span>
-              <span class="text-danger" 
-              *ngIf="studentForm.get('nic')?.hasError('minlength') && studentForm.get('nic')?.touched">Invalid NIC Number..!
+              <span class="text-danger"
+                *ngIf="studentForm.get('nic')?.hasError('minlength') && studentForm.get('nic')?.touched">Invalid NIC
+                Number..!
               </span>
-              <span class="text-danger" 
-              *ngIf="studentForm.get('nic')?.hasError('maxlength') && studentForm.get('nic')?.touched">Invalid NIC Number..!
+              <span class="text-danger"
+                *ngIf="studentForm.get('nic')?.hasError('maxlength') && studentForm.get('nic')?.touched">Invalid NIC
+                Number..!
               </span>
             </mat-form-field>
 
@@ -148,14 +189,17 @@
               <mat-label>Mother's Telephone </mat-label>
               <input matInput placeholder="Enter the mother's Telephone Number" value=""
                 formControlName="mothersTelephone" />
-                <span class="text-danger" 
-              *ngIf="studentForm.get('mothersTelephone')?.hasError('minlength') && studentForm.get('mothersTelephone')?.touched">Invalid Phone Number..!
-              </span>
-              <span class="text-danger" 
-              *ngIf="studentForm.get('mothersTelephone')?.hasError('maxlength') && studentForm.get('mothersTelephone')?.touched">Invalid Phone Number..!
+              <span class="text-danger"
+                *ngIf="studentForm.get('mothersTelephone')?.hasError('minlength') && studentForm.get('mothersTelephone')?.touched">Invalid
+                Phone Number..!
               </span>
               <span class="text-danger"
-              *ngIf="studentForm.get('mothersTelephone')?.hasError('pattern') && studentForm.get('mothersTelephone')?.touched">Only numbers are allowed..!
+                *ngIf="studentForm.get('mothersTelephone')?.hasError('maxlength') && studentForm.get('mothersTelephone')?.touched">Invalid
+                Phone Number..!
+              </span>
+              <span class="text-danger"
+                *ngIf="studentForm.get('mothersTelephone')?.hasError('pattern') && studentForm.get('mothersTelephone')?.touched">Only
+                numbers are allowed..!
               </span>
             </mat-form-field>
 
@@ -163,14 +207,17 @@
               <mat-label>Mother's Whatsapp </mat-label>
               <input matInput placeholder="Enter the mother's Whatsap Number" value=""
                 formControlName="mothersWhatsapp" />
-                              <span class="text-danger" 
-              *ngIf="studentForm.get('mothersWhatsapp')?.hasError('minlength') && studentForm.get('mothersWhatsapp')?.touched">Invalid Phone Number..!
-              </span>
-              <span class="text-danger" 
-              *ngIf="studentForm.get('mothersWhatsapp')?.hasError('maxlength') && studentForm.get('mothersWhatsapp')?.touched">Invalid Phone Number..!
+              <span class="text-danger"
+                *ngIf="studentForm.get('mothersWhatsapp')?.hasError('minlength') && studentForm.get('mothersWhatsapp')?.touched">Invalid
+                Phone Number..!
               </span>
               <span class="text-danger"
-              *ngIf="studentForm.get('mothersWhatsapp')?.hasError('pattern') && studentForm.get('mothersWhatsapp')?.touched">Only numbers are allowed..!
+                *ngIf="studentForm.get('mothersWhatsapp')?.hasError('maxlength') && studentForm.get('mothersWhatsapp')?.touched">Invalid
+                Phone Number..!
+              </span>
+              <span class="text-danger"
+                *ngIf="studentForm.get('mothersWhatsapp')?.hasError('pattern') && studentForm.get('mothersWhatsapp')?.touched">Only
+                numbers are allowed..!
               </span>
             </mat-form-field>
           </div>
@@ -211,14 +258,17 @@
               <mat-label>Father's Telephone </mat-label>
               <input matInput placeholder="Enter the Father's Telephone Number" value=""
                 formControlName="fathersTelephone" />
-                <span class="text-danger" 
-              *ngIf="studentForm.get('fathersTelephone')?.hasError('minlength') && studentForm.get('fathersTelephone')?.touched">Invalid Phone Number..!
-              </span>
-              <span class="text-danger" 
-              *ngIf="studentForm.get('fathersTelephone')?.hasError('maxlength') && studentForm.get('fathersTelephone')?.touched">Invalid Phone Number..!
+              <span class="text-danger"
+                *ngIf="studentForm.get('fathersTelephone')?.hasError('minlength') && studentForm.get('fathersTelephone')?.touched">Invalid
+                Phone Number..!
               </span>
               <span class="text-danger"
-              *ngIf="studentForm.get('fathersTelephone')?.hasError('pattern') && studentForm.get('fathersTelephone')?.touched">Only numbers are allowed..!
+                *ngIf="studentForm.get('fathersTelephone')?.hasError('maxlength') && studentForm.get('fathersTelephone')?.touched">Invalid
+                Phone Number..!
+              </span>
+              <span class="text-danger"
+                *ngIf="studentForm.get('fathersTelephone')?.hasError('pattern') && studentForm.get('fathersTelephone')?.touched">Only
+                numbers are allowed..!
               </span>
             </mat-form-field>
 
@@ -226,14 +276,17 @@
               <mat-label>Father's Whatsapp </mat-label>
               <input matInput placeholder="Enter the Father's Whatsap Number" value=""
                 formControlName="fathersWhatsapp" />
-                              <span class="text-danger" 
-              *ngIf="studentForm.get('fathersWhatsapp')?.hasError('minlength') && studentForm.get('fathersWhatsapp')?.touched">Invalid Phone Number..!
-              </span>
-              <span class="text-danger" 
-              *ngIf="studentForm.get('fathersWhatsapp')?.hasError('maxlength') && studentForm.get('fathersWhatsapp')?.touched">Invalid Phone Number..!
+              <span class="text-danger"
+                *ngIf="studentForm.get('fathersWhatsapp')?.hasError('minlength') && studentForm.get('fathersWhatsapp')?.touched">Invalid
+                Phone Number..!
               </span>
               <span class="text-danger"
-              *ngIf="studentForm.get('fathersWhatsapp')?.hasError('pattern') && studentForm.get('fathersWhatsapp')?.touched">Only numbers are allowed..!
+                *ngIf="studentForm.get('fathersWhatsapp')?.hasError('maxlength') && studentForm.get('fathersWhatsapp')?.touched">Invalid
+                Phone Number..!
+              </span>
+              <span class="text-danger"
+                *ngIf="studentForm.get('fathersWhatsapp')?.hasError('pattern') && studentForm.get('fathersWhatsapp')?.touched">Only
+                numbers are allowed..!
               </span>
             </mat-form-field>
           </div>
@@ -274,14 +327,17 @@
               <mat-label>Guardian's Telephone </mat-label>
               <input matInput placeholder="Enter the Guardian's  Telephone Number" value=""
                 formControlName="guardiansTelephone" />
-                <span class="text-danger" 
-              *ngIf="studentForm.get('guardiansTelephone')?.hasError('minlength') && studentForm.get('guardiansTelephone')?.touched">Invalid Phone Number..!
-              </span>
-              <span class="text-danger" 
-              *ngIf="studentForm.get('guardiansTelephone')?.hasError('maxlength') && studentForm.get('guardiansTelephone')?.touched">Invalid Phone Number..!
+              <span class="text-danger"
+                *ngIf="studentForm.get('guardiansTelephone')?.hasError('minlength') && studentForm.get('guardiansTelephone')?.touched">Invalid
+                Phone Number..!
               </span>
               <span class="text-danger"
-              *ngIf="studentForm.get('guardiansTelephone')?.hasError('pattern') && studentForm.get('guardiansTelephone')?.touched">Only numbers are allowed..!
+                *ngIf="studentForm.get('guardiansTelephone')?.hasError('maxlength') && studentForm.get('guardiansTelephone')?.touched">Invalid
+                Phone Number..!
+              </span>
+              <span class="text-danger"
+                *ngIf="studentForm.get('guardiansTelephone')?.hasError('pattern') && studentForm.get('guardiansTelephone')?.touched">Only
+                numbers are allowed..!
               </span>
             </mat-form-field>
 
@@ -289,21 +345,25 @@
               <mat-label>Guardian's Whatsapp </mat-label>
               <input matInput placeholder="Enter the Guardian's  Whatsap Number" value=""
                 formControlName="guardiansWhatsapp" />
-                              <span class="text-danger" 
-              *ngIf="studentForm.get('guardiansWhatsapp')?.hasError('minlength') && studentForm.get('guardiansWhatsapp')?.touched">Invalid Phone Number..!
-              </span>
-              <span class="text-danger" 
-              *ngIf="studentForm.get('guardiansWhatsapp')?.hasError('maxlength') && studentForm.get('guardiansWhatsapp')?.touched">Invalid Phone Number..!
+              <span class="text-danger"
+                *ngIf="studentForm.get('guardiansWhatsapp')?.hasError('minlength') && studentForm.get('guardiansWhatsapp')?.touched">Invalid
+                Phone Number..!
               </span>
               <span class="text-danger"
-              *ngIf="studentForm.get('guardiansWhatsapp')?.hasError('pattern') && studentForm.get('guardiansWhatsapp')?.touched">Only numbers are allowed..!
+                *ngIf="studentForm.get('guardiansWhatsapp')?.hasError('maxlength') && studentForm.get('guardiansWhatsapp')?.touched">Invalid
+                Phone Number..!
+              </span>
+              <span class="text-danger"
+                *ngIf="studentForm.get('guardiansWhatsapp')?.hasError('pattern') && studentForm.get('guardiansWhatsapp')?.touched">Only
+                numbers are allowed..!
               </span>
             </mat-form-field>
           </div>
 
           <div class="row">
             <div class="button">
-              <button type="submit" mat-raised-button color="primary" [disabled]="isButtonDisabled">{{ saveButtonLabel }}</button>
+              <button type="submit" mat-raised-button color="primary" [disabled]="isButtonDisabled">{{ saveButtonLabel
+                }}</button>
               <button type="reset" mat-raised-button color="warn" (click)="clearFeild()">Reset</button>
             </div>
           </div>
@@ -359,7 +419,17 @@
         <!-- Symbol Column -->
         <ng-container matColumnDef="dateOfBirth">
           <th mat-header-cell *matHeaderCellDef>DOB</th>
-          <td mat-cell *matCellDef="let element">{{ element.dateOfBirth }}</td>
+          <td mat-cell *matCellDef="let element">{{ element.dateOfBirth | date: 'yyyy/MM/dd' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="dateofAdmission">
+          <th mat-header-cell *matHeaderCellDef>Date of admission</th>
+          <td mat-cell *matCellDef="let element">{{ element.dateofAdmission | date: 'yyyy/MM/dd' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="gender">
+          <th mat-header-cell *matHeaderCellDef>Gender</th>
+          <td mat-cell *matCellDef="let element">{{ element.gender }}</td>
         </ng-container>
 
         <ng-container matColumnDef="address">

@@ -33,6 +33,9 @@ import { StudentDetailsComponent } from './student-details/student-details.compo
 import { CreateExamComponent } from './create-exam/create-exam.component';
 import { AcademicStaffDetailsComponent } from './academic-staff-details/academic-staff-details.component';
 import { NoneAcademicStaffDetailsComponent } from './none-academic-staff-details/none-academic-staff-details.component';
+import { ExtraComponent } from './extra/extra.component';
+import { RequestcertificateComponent } from './requestcertificate/requestcertificate.component';
+import { PaymentsComponent } from './payments/payments.component';
 
 @NgModule({
   declarations: [AppDashboardComponent,
@@ -56,8 +59,12 @@ import { NoneAcademicStaffDetailsComponent } from './none-academic-staff-details
     StudentDetailsComponent,
     CreateExamComponent,
     AcademicStaffDetailsComponent,
-    NoneAcademicStaffDetailsComponent
+    NoneAcademicStaffDetailsComponent,
+    ExtraComponent,
+    RequestcertificateComponent,
+    PaymentsComponent
   ],
+
   imports: [
     ReactiveFormsModule,
     CommonModule,

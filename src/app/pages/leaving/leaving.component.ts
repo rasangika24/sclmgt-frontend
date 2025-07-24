@@ -25,7 +25,7 @@ export class LeavingComponent {
       dateofBirth:new FormControl(''),
       religion:new FormControl(''),
       fullnameofthefatherGardian:new FormControl(''),
-      addressofthefatherGardian:new FormControl(''),
+      address:new FormControl(''),
       dateofAdmission:new FormControl(''),
       causeLeaving:new FormControl(''),
       lastgradePassed:new FormControl(''),
@@ -33,6 +33,18 @@ export class LeavingComponent {
       progressinacademicField:new FormControl(''),
       sportsabilityandLeadership:new FormControl(''),
       specialSkills:new FormControl(''),
+      namewithInitials:new FormControl(''),
+      fullName:new FormControl(''),
+      school:new FormControl(''),
+      dateofLeaving:new FormControl(''),
+      mediumLearned:new FormControl(''),
+      behaviour:new FormControl(''),
+      medicalRecords:new FormControl(''),
+      extraCurricular:new FormControl(''),
+      specialAchievements:new FormControl(''),
+      principalsName:new FormControl(''),
+      malBehavior:new FormControl(''),
+      goodBehaviour:new FormControl(''),
     });
   }
 

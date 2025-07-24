@@ -28,6 +28,13 @@ export class CharacterComponent {
         progressinacademicField:new FormControl(''),
         sportsabilityandLeadership:new FormControl(''),
         specialSkills:new FormControl(''),
+        extraCurricular:new FormControl(''),
+        leadershipSkills:new FormControl(''),
+        principalsRecomendation:new FormControl(''),
+        dateIssued:new FormControl(''),
+        malBehavior:new FormControl(''),
+        goodBehaviour:new FormControl(),
+       
       });
     }
   

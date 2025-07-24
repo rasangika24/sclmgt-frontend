@@ -8,23 +8,24 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class StudentServiceService {
-  constructor(private http:HttpClient, private httpService: HttpService) {}
+
+  constructor(private http: HttpClient, private httpService: HttpService) { }
 
   /* HTTP Client */
   /* Get,Post, Put, Delete */
 
-  serviceCall(form_details:any) {
+  serviceCall(form_details: any) {
     console.log('in this service');
-    const requestUrl = environment.baseUrl+'/student'; // http://localhost:8080/student
+    const requestUrl = environment.baseUrl + '/student'; // http://localhost:8080/student
 
     let headers = {};
 
     if (this.httpService.getAuthToken() !== null) {
       headers = {
-        Authorization:'Bearer'+this.httpService.getAuthToken(),
+        Authorization: 'Bearer' + this.httpService.getAuthToken(),
       };
     }
-    return this.http.post(requestUrl,form_details,{headers:headers});
+    return this.http.post(requestUrl, form_details, { headers: headers });
   }
 
   getData() {
@@ -34,14 +35,14 @@ export class StudentServiceService {
 
     if (this.httpService.getAuthToken() !== null) {
       headers = {
-        Authorization: 'Bearer'+this.httpService.getAuthToken(),
+        Authorization: 'Bearer' + this.httpService.getAuthToken(),
       };
     }
 
-    return this.http.get(requestUrl,headers);
+    return this.http.get(requestUrl, headers);
   }
 
-  
+
   editData(id: any, form_details: any) {
     console.log('in Edit Data');
     const requestUrl = environment.baseUrl + '/student/' + id.toString(); // http://localhost:8080/student
@@ -50,10 +51,10 @@ export class StudentServiceService {
 
     if (this.httpService.getAuthToken() !== null) {
       headers = {
-        Authorization: 'Bearer'+this.httpService.getAuthToken(),
+        Authorization: 'Bearer' + this.httpService.getAuthToken(),
       };
     }
-    return this.http.put(requestUrl, form_details, { headers:headers });
+    return this.http.put(requestUrl, form_details, { headers: headers });
   }
 
   deleteData(id: number) {
@@ -67,7 +68,7 @@ export class StudentServiceService {
         Authorization: 'Bearer' + this.httpService.getAuthToken(),
       };
     }
-    return this.http.delete(requestUrl, { headers:headers });
+    return this.http.delete(requestUrl, { headers: headers });
   }
 
   checkNicExists(nic: string): Observable<boolean> {
@@ -75,6 +76,19 @@ export class StudentServiceService {
     return this.http.get<boolean>(`${environment.baseUrl}/check-nic`, { params });
   }
 
+  getStudenByIndexNumber(indexNo: any) {
+    const requestUrl = environment.baseUrl + '/student-name' + indexNo.toString(); // http://localhost:8080/student
+
+    let headers = {};
+
+    if (this.httpService.getAuthToken() !== null) {
+      headers = {
+        Authorization: 'Bearer' + this.httpService.getAuthToken(),
+      };
+    }
+
+    return this.http.get(requestUrl, headers);
+  }
 
 }
 

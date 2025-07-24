@@ -1,0 +1,67 @@
+
+<div class="container">
+    <h2>Request Certication </h2>
+    <div class="form-container">
+        <form [formGroup]="requestCertificateForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+
+                <mat-form-field class="quater-width">
+                    <mat-label>Index No</mat-label>
+                    <input matInput placeholder="Index No" value="" formControlName="indexNo" />
+
+                </mat-form-field>
+                <mat-form-field class="quater-width">
+                    <mat-label>Pupils Name </mat-label>
+                    <input matInput placeholder="Pupils Name" value="" formControlName="pupilsName" />
+                </mat-form-field>
+            </div>
+            <div class="row">                               
+                <label>Payments :</label>
+                <mat-radio-group class="radio-options" formControlName="payments">
+                    <mat-radio-button value="yes" class="yes">Yes</mat-radio-button>
+                    <mat-radio-button value="no" class="no">No</mat-radio-button>  
+                </mat-radio-group>
+            </div>
+             <div class="row">                               
+                <label>Library Books Hand Over :</label>
+                <mat-radio-group class="radio-options" formControlName="library">
+                    <mat-radio-button value="yes" class="yes">Yes</mat-radio-button>
+                    <mat-radio-button value="no" class="no">No</mat-radio-button>  
+                </mat-radio-group>
+            </div>
+             <div class="row">                               
+                <label>Science Laboratory :</label>
+                <mat-radio-group class="radio-options" formControlName="science">
+                    <mat-radio-button value="yes" class="yes">Yes</mat-radio-button>
+                    <mat-radio-button value="no" class="no">No</mat-radio-button>  
+                </mat-radio-group>
+            </div>
+
+            <div class="row">                               
+                <label>ICT Laboratory :</label>
+                <mat-radio-group class="radio-options" formControlName="ict">
+                    <mat-radio-button value="yes" class="yes">Yes</mat-radio-button>
+                    <mat-radio-button value="no" class="no">No</mat-radio-button>  
+                </mat-radio-group>
+            </div>
+            <div class="row">                               
+                <label>Sports Items  :</label>
+                <mat-radio-group class="radio-options" formControlName="sport">
+                    <mat-radio-button value="yes" class="yes">Yes</mat-radio-button>
+                    <mat-radio-button value="no" class="no">No</mat-radio-button>  
+                </mat-radio-group>
+            </div>
+
+
+
+            <div class="row">
+                <div class="button">
+                    <button type="submit" mat-raised-button color="primary">
+                        Submit
+                    </button>
+                    <button mat-raised-button color="danger">Reset</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
