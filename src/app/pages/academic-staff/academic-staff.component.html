@@ -755,19 +755,19 @@
   <!-- Symbol Column -->
   <ng-container matColumnDef="appointmentDateAsTemperary">
     <th mat-header-cell *matHeaderCellDef> appointmentDateAsTemperary </th>
-    <td mat-cell *matCellDef="let element"> {{element.appointmentDateAsTemperary}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.appointmentDateAsTemperary | date: 'yyyy/MM/dd'}} </td>
   </ng-container>
   
   <!-- Symbol Column -->
   <ng-container matColumnDef="appointmentDateAsEpf">
     <th mat-header-cell *matHeaderCellDef> appointmentDateAsEpf </th>
-    <td mat-cell *matCellDef="let element"> {{element.appointmentDateAsEpf}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.appointmentDateAsEpf | date: 'yyyy/MM/dd'}} </td>
   </ng-container>
   
   <!-- Symbol Column -->
   <ng-container matColumnDef="appointmentDateAsSlts">
     <th mat-header-cell *matHeaderCellDef> appointmentDateAsSlts </th>
-    <td mat-cell *matCellDef="let element"> {{element.appointmentDateAsSlts}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.appointmentDateAsSlts | date: 'yyyy/MM/dd'}} </td>
   </ng-container>
   
   <!-- Symbol Column -->

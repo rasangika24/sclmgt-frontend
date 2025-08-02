@@ -1,1 +1,74 @@
 <p>payments works!</p>
+<div class="container">
+    <h2>Payments</h2>
+    <div class="form-container">
+        <form >
+            <div class="row">
+                <mat-form-field class="half-width">
+                    <mat-label>Index No</mat-label>
+                    <input matInput placeholder="Index Number" value="" formControlName="indexNo" />
+                </mat-form-field>
+                <mat-form-field class="half-width">
+                    <mat-label>Name With Initials</mat-label>
+                    <input matInput placeholder="Name with Initials" value="" formControlName="namewithInitials" />
+                </mat-form-field>           
+                             
+            </div>
+
+            <div class="row">
+                <mat-form-field class="half-width">
+                    <mat-label>Year </mat-label>
+                    <input matInput placeholder="Pupils Full Name" value="" formControlName="year" />
+                </mat-form-field>
+                <mat-form-field class="half-width">
+                    <mat-label>Grade </mat-label>
+                    <input matInput placeholder="Name of The School" value="" formControlName="grade" />
+                </mat-form-field>
+               
+
+            </div>
+
+             <div class="row">
+                <mat-form-field class="half-width">
+                    <mat-label>Term </mat-label>
+                    <input matInput placeholder="Pupils Full Name" value="" formControlName="term" />
+                </mat-form-field>
+                <mat-form-field class="half-width">
+                    <mat-label>amount</mat-label>
+                    <input matInput placeholder="Name of The School" value="" formControlName="amount" />
+                </mat-form-field>
+               
+
+            </div>
+
+            <div class="row">
+                <mat-form-field class="half-width">
+                    <mat-label>Payment Date</mat-label>
+                    <input matInput [matDatepicker]="pd" placeholder="MM/DD/YYYY" formControlName="paymentdate" />
+                    <mat-datepicker-toggle matSuffix [for]="pd"></mat-datepicker-toggle>
+                    <mat-datepicker #pd></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field class="half-width">
+                    <mat-label>Payment Status</mat-label>
+                    <mat-select formControlName="religion">
+                        <mat-option value="complete">Complete</mat-option>
+                        <mat-option value="incomplete">Incomplete</mat-option>
+                        
+                    </mat-select>
+                </mat-form-field>
+                
+            </div>
+             
+
+            <div class="row">
+
+
+                <div class="button">
+                    <button type="submit" mat-raised-button color="primary">Send Request</button>
+                    <button mat-raised-button color="danger">Reset</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

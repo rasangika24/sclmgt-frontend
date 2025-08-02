@@ -419,12 +419,12 @@
         <!-- Symbol Column -->
         <ng-container matColumnDef="dateOfBirth">
           <th mat-header-cell *matHeaderCellDef>DOB</th>
-          <td mat-cell *matCellDef="let element">{{ element.dateOfBirth | date: 'yyyy/MM/dd' }}</td>
+          <td mat-cell *matCellDef="let element">{{ element.dateOfBirth }}</td>
         </ng-container>
 
         <ng-container matColumnDef="dateofAdmission">
           <th mat-header-cell *matHeaderCellDef>Date of admission</th>
-          <td mat-cell *matCellDef="let element">{{ element.dateofAdmission | date: 'yyyy/MM/dd' }}</td>
+          <td mat-cell *matCellDef="let element">{{ element.dateofAdmission }}</td>
         </ng-container>
 
         <ng-container matColumnDef="gender">
