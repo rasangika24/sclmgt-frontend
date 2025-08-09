@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpService } from 'src/app/services/http.service';
+import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
 
 @Component({
   selector: 'app-register',
@@ -20,7 +21,8 @@ export class AppSideRegisterComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private httpService: HttpService
+    private httpService: HttpService,
+    private _messageService: MessageServiceService
   ) {
     this.registerForm = this.formBuilder.group({
       firstName: ['', [Validators.required]],
@@ -55,6 +57,10 @@ export class AppSideRegisterComponent implements OnInit {
         .then((response: any) => {
           this.httpService.setAuthToken(response.token);
           this.router.navigate(['/authentication/login']);
+        })
+        .catch((error) => {
+          console.error('Login error:', error);
+          this._messageService.showError(error);
         });
     }
   }
