@@ -10,7 +10,8 @@ import {
 } from '@angular/forms';
 import { SchedulerService } from 'src/app/services/scheduler/scheduler.service';
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
-import { EmployeeServiceService } from 'src/app/services/employee/employee-service.service';
+import { TeacherService } from 'src/app/services/teacher/teacher.service';
+import { AcademicServiceService } from 'src/app/services/academic/academic-service.service';
 
 interface EmployeeRow {
   // empNo: string;
@@ -30,12 +31,11 @@ interface EmployeeRow {
 })
 export class SchedulerComponent implements OnInit {
   scheduleForm: FormGroup;
-  employees: any = [] /* = [
-    { id: 'E001', name: 'John Doe' },
-    { id: 'E002', name: 'Jane Smith' },
-    { id: 'E003', name: 'Alice Johnson' },
-  ]*/;
-  selectedEmployers: any = [] /* = this.employees*/;
+  teachers: any[] = [];
+  selectedEmployers: any[] = [];
+  selectedTeacherControl = new FormControl('');
+  selectedTeacher: any = null;
+  selectedTeacherDetails: any = null;
 
   selectedEmployee: string = '';
   displayedColumns: string[] = [
@@ -56,7 +56,8 @@ export class SchedulerComponent implements OnInit {
     private fb: FormBuilder,
     private schedulerService: SchedulerService,
     private messageService: MessageServiceService,
-    private employeeService: EmployeeServiceService
+    private teacherService: TeacherService,
+    private academicService: AcademicServiceService
   ) {
     // required, min, max, minL, maxL, pattern, customValidation
     this.scheduleForm = this.fb.group({
@@ -80,24 +81,58 @@ export class SchedulerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.setTeachersList();
+    this.loadTeachers();
+    this.setupTeacherSelection();
+  }
+
+  private loadTeachers(): void {
+    this.teacherService.getAllTeachers().subscribe({
+      next: (teachers: any[]) => {
+        this.teachers = teachers;
+        this.selectedEmployers = teachers;
+        console.log('Teachers loaded:', teachers);
+      },
+      error: (error) => {
+        console.error('Error loading teachers:', error);
+        this.messageService.showError('Failed to load teachers');
+      }
+    });
+  }
+
+  private setupTeacherSelection(): void {
+    this.selectedTeacherControl.valueChanges.subscribe(teacherId => {
+      if (teacherId) {
+        this.loadTeacherDetails(teacherId);
+      } else {
+        this.selectedTeacher = null;
+        this.selectedTeacherDetails = null;
+      }
+    });
+  }
+
+  private loadTeacherDetails(teacherId: string): void {
+    this.selectedTeacher = this.teachers.find(t => t.teacherId === teacherId);
+    if (this.selectedTeacher) {
+      // Load full teacher details from academic service
+      this.academicService.getAllAcademicStaff().subscribe({
+        next: (academicStaff: any[]) => {
+          const teacherDetails = academicStaff.find(staff => staff.id === teacherId);
+          if (teacherDetails) {
+            this.selectedTeacherDetails = teacherDetails;
+            console.log('Teacher details loaded:', teacherDetails);
+          }
+        },
+        error: (error) => {
+          console.error('Error loading teacher details:', error);
+          this.messageService.showError('Failed to load teacher details');
+        }
+      });
+    }
   }
 
   public setTeachersList(): void {
-    this.employeeService.getTeachersList().subscribe((response: any) => {
-      if (response && response.length > 0) {
-        response.forEach((teacher: any) => {
-          const employeeData = {
-            id: teacher.id,
-            name: teacher.name,
-          };
-
-          this.employees.push(employeeData);
-        });
-      }
-
-      this.selectedEmployers = this.employees;
-    });
+    // This method is now replaced by loadTeachers()
+    this.loadTeachers();
   }
 
   get rowData() {
@@ -160,7 +195,7 @@ export class SchedulerComponent implements OnInit {
   cancel() {}
   reset() {
     this.scheduleForm.reset();
-    this.selectedEmployers = this.employees;
+    this.selectedEmployers = this.teachers;
   }
 
   deleteRow(index: number) {
@@ -184,8 +219,8 @@ export class SchedulerComponent implements OnInit {
 
   search(value: string) {
     let filter = value.toLowerCase();
-    return this.employees.filter((option: any) =>
-      option.name.toLowerCase().startsWith(filter)
+    return this.teachers.filter((option: any) =>
+      option.fullName.toLowerCase().startsWith(filter)
     );
   }
 

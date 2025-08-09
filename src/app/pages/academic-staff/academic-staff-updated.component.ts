@@ -11,7 +11,8 @@ import { AcademicStaffDto } from 'src/app/interfaces/academic-staff.interface';
 
 @Component({
   selector: 'app-academic-staff',
-  templateUrl:   './academic-staff.component.html',
+  standalone: false,
+  templateUrl: './academic-staff.component.html',
   styleUrl: './academic-staff.component.scss'
 })
 export class AcademicStaffComponent implements OnInit {
@@ -144,14 +145,14 @@ export class AcademicStaffComponent implements OnInit {
     this.academicStaffForm.get('nic')?.valueChanges.pipe(
       debounceTime(500),
       distinctUntilChanged(),
-      switchMap((nic: string) => {
+      switchMap(nic => {
         if (nic && nic.length >= 10) {
           return this.academicService.checkNicExists(nic);
         }
-        return of(false); // Return observable with false
+        return of(false);
       })
-    ).subscribe(
-      (exists: boolean) => {
+    ).subscribe({
+      next: (exists: boolean) => {
         this.nicExists = exists;
         const nicControl = this.academicStaffForm.get('nic');
         if (exists && this.mode === 'add') {
@@ -165,10 +166,10 @@ export class AcademicStaffComponent implements OnInit {
           }
         }
       },
-      (error: any) => {
+      error: (error) => {
         console.error('Error checking NIC:', error);
       }
-    );
+    });
   }
 
   public onNicChange(): void {
@@ -185,15 +186,15 @@ export class AcademicStaffComponent implements OnInit {
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
         },
-        error: (error: any) => {
+        error: (error) => {
           console.error('Error fetching data:', error);
-          this.messageService.showError('Error fetching academic staff data');
-          this.dataSource = new MatTableDataSource<AcademicStaffDto>([]);
+          this.messageService.showMessage('Error fetching academic staff data', 'error');
+          this.dataSource = new MatTableDataSource([]);
         }
       });
     } catch (error) {
       console.error('Error in populateData:', error);
-      this.messageService.showError('Error loading data');
+      this.messageService.showMessage('Error loading data', 'error');
     }
   }
 
@@ -222,37 +223,37 @@ export class AcademicStaffComponent implements OnInit {
 
       if (this.mode === 'add') {
         this.academicService.createAcademicStaff(processedData).subscribe({
-          next: (response: any) => {
+          next: (response) => {
             console.log('Teacher added successfully:', response);
-            this.messageService.showSuccess('Teacher added successfully!');
+            this.messageService.showMessage('Teacher added successfully!', 'success');
             this.resetForm();
             this.populateData();
             this.isButtonDisabled = false;
           },
-          error: (error: any) => {
+          error: (error) => {
             console.error('Error adding teacher:', error);
-            this.messageService.showError('Error adding teacher: ' + (error.message || 'Unknown error'));
+            this.messageService.showMessage('Error adding teacher: ' + (error.message || 'Unknown error'), 'error');
             this.isButtonDisabled = false;
           }
         });
       } else if (this.mode === 'edit' && this.selectedData?.id) {
         this.academicService.updateAcademicStaff(this.selectedData.id, processedData).subscribe({
-          next: (response: any) => {
+          next: (response) => {
             console.log('Teacher updated successfully:', response);
-            this.messageService.showSuccess('Teacher updated successfully!');
+            this.messageService.showMessage('Teacher updated successfully!', 'success');
             this.resetForm();
             this.populateData();
             this.isButtonDisabled = false;
           },
-          error: (error: any) => {
+          error: (error) => {
             console.error('Error updating teacher:', error);
-            this.messageService.showError('Error updating teacher: ' + (error.message || 'Unknown error'));
+            this.messageService.showMessage('Error updating teacher: ' + (error.message || 'Unknown error'), 'error');
             this.isButtonDisabled = false;
           }
         });
       }
     } else {
-      this.messageService.showError('Please fill in all required fields correctly');
+      this.messageService.showMessage('Please fill in all required fields correctly', 'warning');
       this.markFormGroupTouched();
     }
   }
@@ -296,14 +297,14 @@ export class AcademicStaffComponent implements OnInit {
     if (confirm('Are you sure you want to delete this teacher?')) {
       if (data.id) {
         this.academicService.deleteAcademicStaff(data.id).subscribe({
-          next: (response: any) => {
+          next: (response) => {
             console.log('Teacher deleted successfully:', response);
-            this.messageService.showSuccess('Teacher deleted successfully!');
+            this.messageService.showMessage('Teacher deleted successfully!', 'success');
             this.populateData();
           },
-          error: (error: any) => {
+          error: (error) => {
             console.error('Error deleting teacher:', error);
-            this.messageService.showError('Error deleting teacher: ' + (error.message || 'Unknown error'));
+            this.messageService.showMessage('Error deleting teacher: ' + (error.message || 'Unknown error'), 'error');
           }
         });
       }
@@ -327,11 +328,11 @@ export class AcademicStaffComponent implements OnInit {
   public viewDetails(): void {
     // Implement view details functionality
     console.log('View details clicked');
-    this.messageService.showSuccess('View details functionality to be implemented');
+    this.messageService.showMessage('View details functionality to be implemented', 'info');
   }
 
   public refreshData(): void {
     this.populateData();
-    this.messageService.showSuccess('Data refreshed successfully!');
+    this.messageService.showMessage('Data refreshed successfully!', 'success');
   }
 }

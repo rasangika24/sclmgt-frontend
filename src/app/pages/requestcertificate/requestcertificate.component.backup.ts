@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
 import { CertificationRequestService, CertificationRequestDto } from '../../services/certification-request.service';
+import { StudentMockService, StudentDto } from '../../services/student/student-mock.service';
 
 @Component({
   selector: 'app-requestcertificate',
@@ -12,6 +13,8 @@ import { CertificationRequestService, CertificationRequestDto } from '../../serv
 export class RequestcertificateComponent implements OnInit {
   requestCertificateForm: FormGroup = this.fb.group({});
   isLoading = false;
+  isLoadingStudent = false;
+  studentData: StudentDto | null = null;
   certificationRequests: CertificationRequestDto[] = [];
   filteredRequests: CertificationRequestDto[] = [];
   statistics: any | null = null;
@@ -38,6 +41,7 @@ export class RequestcertificateComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private certificationService: CertificationRequestService,
+    private studentService: StudentMockService,
     private messageService: MessageServiceService
   ) {
     this.initializeForm();
@@ -59,6 +63,43 @@ export class RequestcertificateComponent implements OnInit {
       ictLabCleared: new FormControl(false),
       sportsItemsReturned: new FormControl(false),
       remarks: new FormControl('')
+    });
+
+    // Add listener for admission number changes
+    this.requestCertificateForm.get('studentAdmissionNumber')?.valueChanges.subscribe(
+      (admissionNumber: string) => {
+        if (admissionNumber && admissionNumber.length >= 3) {
+          this.loadStudentData(admissionNumber);
+        } else {
+          this.studentData = null;
+          this.requestCertificateForm.get('studentName')?.setValue('');
+        }
+      }
+    );
+  }
+
+  // Load student data based on admission number
+  private loadStudentData(admissionNumber: string): void {
+    this.isLoadingStudent = true;
+    this.studentService.getStudentByAdmissionNumber(admissionNumber.trim()).subscribe({
+      next: (student) => {
+        this.studentData = student;
+        this.requestCertificateForm.get('studentName')?.setValue(student.fullName);
+        this.isLoadingStudent = false;
+        this.messageService.showSuccess(`Student found: ${student.fullName}`);
+      },
+      error: (error) => {
+        console.error('Error loading student:', error);
+        this.studentData = null;
+        this.requestCertificateForm.get('studentName')?.setValue('');
+        this.isLoadingStudent = false;
+        
+        if (error.status === 404) {
+          this.messageService.showError('Student not found with this admission number');
+        } else {
+          this.messageService.showError('Error loading student data');
+        }
+      }
     });
   }
 
@@ -323,6 +364,75 @@ export class RequestcertificateComponent implements OnInit {
       case 'CHARACTER_CERTIFICATE': return 'badge-info';
       default: return 'badge-secondary';
     }
+  }
+
+  // Check if all clearances are completed
+  areAllClearancesCompleted(request: CertificationRequestDto): boolean {
+    return !!(request.paymentsCleared && 
+             request.libraryBooksReturned && 
+             request.scienceLabCleared && 
+             request.ictLabCleared && 
+             request.sportsItemsReturned);
+  }
+
+  // Get clearance completion percentage
+  getClearanceCompletionPercentage(request: CertificationRequestDto): number {
+    const clearances = [
+      request.paymentsCleared,
+      request.libraryBooksReturned,
+      request.scienceLabCleared,
+      request.ictLabCleared,
+      request.sportsItemsReturned
+    ];
+    const completed = clearances.filter(c => c).length;
+    return Math.round((completed / clearances.length) * 100);
+  }
+
+  // Manual student search
+  searchStudent(): void {
+    const admissionNumber = this.requestCertificateForm.get('studentAdmissionNumber')?.value;
+    if (admissionNumber) {
+      this.loadStudentData(admissionNumber);
+    } else {
+      this.messageService.showError('Please enter admission number first');
+    }
+  }
+
+  // Clear student data
+  clearStudentData(): void {
+    this.studentData = null;
+    this.requestCertificateForm.get('studentAdmissionNumber')?.setValue('');
+    this.requestCertificateForm.get('studentName')?.setValue('');
+  }
+
+  // Check if form is ready for submission
+  isFormReadyForSubmission(): boolean {
+    return this.requestCertificateForm.valid && this.studentData !== null;
+  }
+
+  // Get form validation message
+  getFormValidationMessage(): string {
+    if (!this.studentData) {
+      return 'Please enter a valid admission number to load student data';
+    }
+    if (!this.requestCertificateForm.valid) {
+      return 'Please fill in all required fields';
+    }
+    return 'Form is ready for submission';
+  }
+
+  // Toggle mock data mode (for testing)
+  toggleMockData(): void {
+    const currentMode = this.certificationService.isMockDataEnabled();
+    this.certificationService.toggleMockData(!currentMode);
+    this.messageService.showSuccess(`Mock data ${!currentMode ? 'enabled' : 'disabled'}`);
+    this.loadCertificationRequests();
+    this.loadStatistics();
+  }
+
+  // Get mock data status
+  isMockDataEnabled(): boolean {
+    return this.certificationService.isMockDataEnabled();
   }
 }
 

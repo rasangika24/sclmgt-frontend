@@ -1,0 +1,72 @@
+export interface AcademicStaffDto {
+  id?: number;
+  teacherNumber?: number;
+  nameinFull: string;
+  nameWithInitials: string;
+  usingName?: string;
+  appointmentDateAsTemperary?: string;
+  appointmentDateAsEpf?: string;
+  appointmentDateAsSlts?: string;
+  gradeOfSlts?: string;
+  dateOfBirth?: string;
+  address?: string;
+  telephone?: number;
+  whatsapp?: number;
+  emailAddress?: string;
+  nic: string;
+  schoolStudied?: string;
+  highestEducationQualification?: string;
+  professionalQualification?: string;
+  otherQualification?: string;
+  extraCurricularActivities?: string;
+  subjectTeaching1?: string;
+  marriedOrNot?: string;
+  dateGotMarried?: string;
+  statusOfMarriage?: string;
+  nameOfTheSpouse?: string;
+  spouseSchool?: string;
+  spouseHighestEducationLevel?: string;
+  contactNumber?: number;
+  occupation?: string;
+  numberOfChildren?: string;
+  educationQualification?: string;
+  universityOrInstitute?: string;
+  year?: string;
+  subject?: string;
+  mothersName?: string;
+  mothersSchool?: string;
+  mothersEducationLevel?: string;
+  mothersProfession?: string;
+  mothersTelephone?: number;
+  mothersWhatsapp?: number;
+  fathersName?: string;
+  fathersSchool?: string;
+  fathersEducationLevel?: string;
+  fathersProfession?: number;
+  fathersTelephone?: number;
+  fathersWhatsapp?: number;
+  smothersName?: string;
+  smothersSchool?: string;
+  smothersEducationLevel?: string;
+  smothersProfession?: string;
+  smothersTelephone?: number;
+  smothersWhatsapp?: number;
+  sfathersName?: string;
+  sfathersSchool?: string;
+  sfathersEducationLevel?: string;
+  sfathersProfession?: string;
+  sfathersTelephone?: number;
+  sfathersWhatsapp?: number;
+}
+
+// Simplified interface for teacher selection in timetable
+export interface TeacherBasicInfo {
+  id: number;
+  teacherNumber: string;
+  fullName: string;
+  nameWithInitials: string;
+  usingName?: string;
+  subjectTeaching1?: string;
+  emailAddress?: string;
+  telephone?: string;
+}

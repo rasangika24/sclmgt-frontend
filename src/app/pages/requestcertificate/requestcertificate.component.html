@@ -1,67 +1,390 @@
 
-<div class="container">
-    <h2>Request Certication </h2>
-    <div class="form-container">
-        <form [formGroup]="requestCertificateForm" (ngSubmit)="onSubmit()">
-            <div class="row">
-
-                <mat-form-field class="quater-width">
-                    <mat-label>Index No</mat-label>
-                    <input matInput placeholder="Index No" value="" formControlName="indexNo" />
-
-                </mat-form-field>
-                <mat-form-field class="quater-width">
-                    <mat-label>Pupils Name </mat-label>
-                    <input matInput placeholder="Pupils Name" value="" formControlName="pupilsName" />
-                </mat-form-field>
-            </div>
-            <div class="row">                               
-                <label>Payments :</label>
-                <mat-radio-group class="radio-options" formControlName="payments">
-                    <mat-radio-button value="yes" class="yes">Yes</mat-radio-button>
-                    <mat-radio-button value="no" class="no">No</mat-radio-button>  
-                </mat-radio-group>
-            </div>
-             <div class="row">                               
-                <label>Library Books Hand Over :</label>
-                <mat-radio-group class="radio-options" formControlName="library">
-                    <mat-radio-button value="yes" class="yes">Yes</mat-radio-button>
-                    <mat-radio-button value="no" class="no">No</mat-radio-button>  
-                </mat-radio-group>
-            </div>
-             <div class="row">                               
-                <label>Science Laboratory :</label>
-                <mat-radio-group class="radio-options" formControlName="science">
-                    <mat-radio-button value="yes" class="yes">Yes</mat-radio-button>
-                    <mat-radio-button value="no" class="no">No</mat-radio-button>  
-                </mat-radio-group>
-            </div>
-
-            <div class="row">                               
-                <label>ICT Laboratory :</label>
-                <mat-radio-group class="radio-options" formControlName="ict">
-                    <mat-radio-button value="yes" class="yes">Yes</mat-radio-button>
-                    <mat-radio-button value="no" class="no">No</mat-radio-button>  
-                </mat-radio-group>
-            </div>
-            <div class="row">                               
-                <label>Sports Items  :</label>
-                <mat-radio-group class="radio-options" formControlName="sport">
-                    <mat-radio-button value="yes" class="yes">Yes</mat-radio-button>
-                    <mat-radio-button value="no" class="no">No</mat-radio-button>  
-                </mat-radio-group>
-            </div>
-
-
-
-            <div class="row">
-                <div class="button">
-                    <button type="submit" mat-raised-button color="primary">
-                        Submit
-                    </button>
-                    <button mat-raised-button color="danger">Reset</button>
-                </div>
-            </div>
-        </form>
+<div class="container-fluid">
+  <!-- Header with Statistics -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="d-flex justify-content-between align-items-center">
+        <h2 class="page-title">
+          <mat-icon>assignment</mat-icon>
+          Certificate Requests Management
+        </h2>
+        <button mat-raised-button color="primary" (click)="toggleFormView()">
+          <mat-icon>{{ showRequestForm ? 'list' : 'add' }}</mat-icon>
+          {{ showRequestForm ? 'View Requests' : 'New Request' }}
+        </button>
+      </div>
     </div>
+  </div>
+
+  <!-- Statistics Cards -->
+  <div class="row mb-4" *ngIf="statistics">
+    <div class="col-md-3 col-sm-6 mb-3">
+      <div class="stat-card stat-total">
+        <div class="stat-icon">
+          <mat-icon>assignment</mat-icon>
+        </div>
+        <div class="stat-content">
+          <h3>{{ statistics.totalRequests || 0 }}</h3>
+          <p>Total Requests</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 col-sm-6 mb-3">
+      <div class="stat-card stat-pending">
+        <div class="stat-icon">
+          <mat-icon>hourglass_empty</mat-icon>
+        </div>
+        <div class="stat-content">
+          <h3>{{ statistics.pendingRequests || 0 }}</h3>
+          <p>Pending</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 col-sm-6 mb-3">
+      <div class="stat-card stat-approved">
+        <div class="stat-icon">
+          <mat-icon>check_circle</mat-icon>
+        </div>
+        <div class="stat-content">
+          <h3>{{ statistics.approvedRequests || 0 }}</h3>
+          <p>Approved</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 col-sm-6 mb-3">
+      <div class="stat-card stat-completed">
+        <div class="stat-icon">
+          <mat-icon>done_all</mat-icon>
+        </div>
+        <div class="stat-content">
+          <h3>{{ statistics.completedRequests || 0 }}</h3>
+          <p>Completed</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Request Form -->
+  <div class="row" *ngIf="showRequestForm">
+    <div class="col-12">
+      <mat-card class="form-card">
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon>{{ editingRequest ? 'edit' : 'add' }}</mat-icon>
+            {{ editingRequest ? 'Edit Certificate Request' : 'New Certificate Request' }}
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <form [formGroup]="requestCertificateForm" (ngSubmit)="onSubmit()">
+            <!-- Student Information -->
+            <div class="row">
+              <div class="col-md-4">
+                <mat-form-field class="w-100">
+                  <mat-label>Student Admission Number</mat-label>
+                  <input matInput 
+                         placeholder="Enter student admission number" 
+                         formControlName="studentAdmissionNumber"
+                         [readonly]="editingRequest !== null" />
+                  <mat-error *ngIf="requestCertificateForm.get('studentAdmissionNumber')?.hasError('required')">
+                    Student admission number is required
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-md-4">
+                <mat-form-field class="w-100">
+                  <mat-label>Student Name</mat-label>
+                  <input matInput 
+                         placeholder="Enter student name" 
+                         formControlName="studentName" />
+                  <mat-error *ngIf="requestCertificateForm.get('studentName')?.hasError('required')">
+                    Student name is required
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-md-4">
+                <mat-form-field class="w-100">
+                  <mat-label>Certificate Type</mat-label>
+                  <mat-select formControlName="type">
+                    <mat-option *ngFor="let type of certificateTypes" [value]="type.value">
+                      {{ type.label }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="requestCertificateForm.get('type')?.hasError('required')">
+                    Certificate type is required
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <!-- Clearance Checkboxes -->
+            <div class="clearance-section">
+              <h4 class="section-title">
+                <mat-icon>checklist</mat-icon>
+                Clearance Status
+              </h4>
+              
+              <div class="row">
+                <div class="col-md-6">
+                  <mat-checkbox formControlName="paymentsCleared" class="clearance-checkbox">
+                    <div class="clearance-item">
+                      <mat-icon class="clearance-icon">payment</mat-icon>
+                      <span>Payments Cleared</span>
+                    </div>
+                  </mat-checkbox>
+                </div>
+                <div class="col-md-6">
+                  <mat-checkbox formControlName="libraryBooksReturned" class="clearance-checkbox">
+                    <div class="clearance-item">
+                      <mat-icon class="clearance-icon">library_books</mat-icon>
+                      <span>Library Books Returned</span>
+                    </div>
+                  </mat-checkbox>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <mat-checkbox formControlName="scienceLabCleared" class="clearance-checkbox">
+                    <div class="clearance-item">
+                      <mat-icon class="clearance-icon">science</mat-icon>
+                      <span>Science Lab Cleared</span>
+                    </div>
+                  </mat-checkbox>
+                </div>
+                <div class="col-md-6">
+                  <mat-checkbox formControlName="ictLabCleared" class="clearance-checkbox">
+                    <div class="clearance-item">
+                      <mat-icon class="clearance-icon">computer</mat-icon>
+                      <span>ICT Lab Cleared</span>
+                    </div>
+                  </mat-checkbox>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <mat-checkbox formControlName="sportsItemsReturned" class="clearance-checkbox">
+                    <div class="clearance-item">
+                      <mat-icon class="clearance-icon">sports</mat-icon>
+                      <span>Sports Items Returned</span>
+                    </div>
+                  </mat-checkbox>
+                </div>
+              </div>
+            </div>
+
+            <!-- Remarks -->
+            <div class="row">
+              <div class="col-md-12">
+                <mat-form-field class="w-100">
+                  <mat-label>Remarks (Optional)</mat-label>
+                  <textarea matInput 
+                           placeholder="Enter any additional remarks" 
+                           formControlName="remarks"
+                           rows="3"></textarea>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <!-- Form Actions -->
+            <div class="form-actions">
+              <button mat-raised-button color="primary" type="submit" [disabled]="isLoading || !requestCertificateForm.valid">
+                <mat-icon>{{ editingRequest ? 'save' : 'send' }}</mat-icon>
+                {{ editingRequest ? 'Update Request' : 'Submit Request' }}
+                <mat-spinner diameter="20" *ngIf="isLoading"></mat-spinner>
+              </button>
+              <button mat-button type="button" (click)="resetForm()" [disabled]="isLoading">
+                <mat-icon>refresh</mat-icon>
+                Reset
+              </button>
+            </div>
+          </form>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+  <!-- Requests List -->
+  <div class="row" *ngIf="!showRequestForm">
+    <div class="col-12">
+      <mat-card class="list-card">
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon>list</mat-icon>
+            Certificate Requests
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <!-- Search and Filter -->
+          <div class="search-filter-section">
+            <div class="row">
+              <div class="col-md-4">
+                <mat-form-field class="w-100">
+                  <mat-label>Search by student name or admission number</mat-label>
+                  <input matInput 
+                         [(ngModel)]="searchTerm" 
+                         (ngModelChange)="onSearch()"
+                         placeholder="Search...">
+                  <mat-icon matSuffix>search</mat-icon>
+                </mat-form-field>
+              </div>
+              <div class="col-md-4">
+                <mat-form-field class="w-100">
+                  <mat-label>Filter by Status</mat-label>
+                  <mat-select [(value)]="selectedStatus" (selectionChange)="onStatusChange()">
+                    <mat-option *ngFor="let status of statusOptions" [value]="status.value">
+                      {{ status.label }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-md-4">
+                <mat-form-field class="w-100">
+                  <mat-label>Filter by Type</mat-label>
+                  <mat-select [(value)]="selectedType" (selectionChange)="onTypeChange()">
+                    <mat-option value="ALL">All Types</mat-option>
+                    <mat-option *ngFor="let type of certificateTypes" [value]="type.value">
+                      {{ type.label }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <!-- Requests Table -->
+          <div class="table-responsive">
+            <table mat-table [dataSource]="filteredRequests" class="requests-table">
+              <!-- Student Details -->
+              <ng-container matColumnDef="student">
+                <th mat-header-cell *matHeaderCellDef>Student Details</th>
+                <td mat-cell *matCellDef="let request">
+                  <div class="student-info">
+                    <strong>{{ request.studentName || 'N/A' }}</strong>
+                    <br>
+                    <small class="text-muted">{{ request.studentAdmissionNumber }}</small>
+                  </div>
+                </td>
+              </ng-container>
+
+              <!-- Clearances -->
+              <ng-container matColumnDef="clearances">
+                <th mat-header-cell *matHeaderCellDef>Clearances</th>
+                <td mat-cell *matCellDef="let request">
+                  <div class="clearances-grid">
+                    <div class="clearance-item-small">
+                      <mat-icon [class]="getClearanceClass(request.paymentsCleared)">
+                        {{ getClearanceIcon(request.paymentsCleared) }}
+                      </mat-icon>
+                      <span>Pay</span>
+                    </div>
+                    <div class="clearance-item-small">
+                      <mat-icon [class]="getClearanceClass(request.libraryBooksReturned)">
+                        {{ getClearanceIcon(request.libraryBooksReturned) }}
+                      </mat-icon>
+                      <span>Lib</span>
+                    </div>
+                    <div class="clearance-item-small">
+                      <mat-icon [class]="getClearanceClass(request.scienceLabCleared)">
+                        {{ getClearanceIcon(request.scienceLabCleared) }}
+                      </mat-icon>
+                      <span>Sci</span>
+                    </div>
+                    <div class="clearance-item-small">
+                      <mat-icon [class]="getClearanceClass(request.ictLabCleared)">
+                        {{ getClearanceIcon(request.ictLabCleared) }}
+                      </mat-icon>
+                      <span>ICT</span>
+                    </div>
+                    <div class="clearance-item-small">
+                      <mat-icon [class]="getClearanceClass(request.sportsItemsReturned)">
+                        {{ getClearanceIcon(request.sportsItemsReturned) }}
+                      </mat-icon>
+                      <span>Sport</span>
+                    </div>
+                  </div>
+                </td>
+              </ng-container>
+
+              <!-- Certificate Type -->
+              <ng-container matColumnDef="type">
+                <th mat-header-cell *matHeaderCellDef>Certificate Type</th>
+                <td mat-cell *matCellDef="let request">
+                  <span class="badge" [class]="getCertificateTypeClass(request.type)">
+                    {{ getCertificateTypeLabel(request.type) }}
+                  </span>
+                </td>
+              </ng-container>
+
+              <!-- Status -->
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef>Status</th>
+                <td mat-cell *matCellDef="let request">
+                  <span class="badge" [class]="getStatusClass(request.status || 'PENDING')">
+                    {{ request.status || 'PENDING' }}
+                  </span>
+                </td>
+              </ng-container>
+
+              <!-- Request Date -->
+              <ng-container matColumnDef="requestDate">
+                <th mat-header-cell *matHeaderCellDef>Request Date</th>
+                <td mat-cell *matCellDef="let request">
+                  {{ request.requestDate | date:'short' }}
+                </td>
+              </ng-container>
+
+              <!-- Actions -->
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>Actions</th>
+                <td mat-cell *matCellDef="let request">
+                  <div class="action-buttons">
+                    <button mat-icon-button 
+                            color="primary" 
+                            (click)="editRequest(request)"
+                            matTooltip="Edit Request">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    
+                    <button mat-icon-button 
+                            color="accent" 
+                            (click)="approveRequest(request)"
+                            *ngIf="(request.status || 'PENDING') === 'PENDING'"
+                            matTooltip="Approve Request">
+                      <mat-icon>check</mat-icon>
+                    </button>
+                    
+                    <button mat-icon-button 
+                            color="warn" 
+                            (click)="rejectRequest(request)"
+                            *ngIf="(request.status || 'PENDING') === 'PENDING'"
+                            matTooltip="Reject Request">
+                      <mat-icon>close</mat-icon>
+                    </button>
+                    
+                    <button mat-icon-button 
+                            color="warn" 
+                            (click)="deleteRequest(request)"
+                            matTooltip="Delete Request">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="['student', 'clearances', 'type', 'status', 'requestDate', 'actions']"></tr>
+              <tr mat-row *matRowDef="let row; columns: ['student', 'clearances', 'type', 'status', 'requestDate', 'actions']"></tr>
+            </table>
+          </div>
+
+          <!-- No Data Message -->
+          <div class="no-data" *ngIf="filteredRequests.length === 0">
+            <mat-icon>assignment</mat-icon>
+            <h3>No certification requests found</h3>
+            <p>{{ searchTerm || selectedStatus !== 'ALL' ? 'Try adjusting your search criteria' : 'Start by creating a new request' }}</p>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
 </div>

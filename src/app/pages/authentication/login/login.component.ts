@@ -69,19 +69,37 @@ export class AppSideLoginComponent implements OnInit {
   onSubmitLogin(): void {
     this.submitted = true;
     if (this.loginForm?.valid) {
+      console.log('Attempting login with:', {
+        login: this.loginForm.value.loginName,
+        password: '***' // Don't log actual password
+      });
+      
       this.httpService
         .request('POST', '/login', {
           login: this.loginForm.value.loginName,
           password: this.loginForm.value.password,
         })
         .then((response) => {
+          console.log('Login response received:', response);
+          
+          // Based on your Postman response, the structure is:
+          // { "id": 1, "firstName": "admin", "lastName": "head", "login": "admin", "token": "..." }
+          if (response && response.token) {
           this.httpService.setAuthToken(response.token);
           this.httpService.setUserId(response.id);
           this.httpService.setLoginNameToCache(response.login);
           this.getData(response.id);
+            this.userNamePasswordError = false;
+          } else {
+            console.error('Invalid response structure:', response);
+            this.userNamePasswordError = true;
+            this._messageService.showError('Invalid login response');
+          }
         })
         .catch((error) => {
+          console.error('Login error:', error);
           this.userNamePasswordError = true;
+          this._messageService.showError('Username or password incorrect');
         });
     }
   }

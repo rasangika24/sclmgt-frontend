@@ -8,7 +8,6 @@ import { CharacterComponent } from './character/character.component';
 import { StudentComponent } from './student/student.component';
 import { NoneAcademicStaffComponent } from './none-academic-staff/none-academic-staff.component';
 import { ApplicationToStaffComponent } from './application-to-staff/application-to-staff.component';
-import { TimetableComponent } from './timetable/timetable.component';
 import { AcademicStaffComponent } from './academic-staff/academic-staff.component';
 import { ReliefPeriodManagementComponent } from './relief-period-management/relief-period-management.component';
 import { SbamarksComponent } from './sbamarks/sbamarks.component';
@@ -23,17 +22,11 @@ import { ClassGradeGenerateComponent } from './class-grade-generate/class-grade-
 import { ExtraComponent } from './extra/extra.component';
 import { RequestcertificateComponent } from './requestcertificate/requestcertificate.component';
 import { PaymentsComponent } from './payments/payments.component';
+import { TimetableComponent } from './timetable/timetable.component';
 
 export const PagesRoutes: Routes = [
   {
     path: '', // http://localhost:4200/dashboard
-    component: AppDashboardComponent,
-    data: {
-      title: 'Starter Page',
-    },
-  },
-  {
-    path: '',
     component: AppDashboardComponent,
     data: {
       title: 'Starter Page',
@@ -83,8 +76,8 @@ export const PagesRoutes: Routes = [
     component: ApplicationToStaffComponent,
   },
   {//set path to application to time table
-    path: 'timetable',  // http://localhost:4200/dashboard
-    component: TimetableComponent,
+    path: 'timetable',  // http://localhost:4200/dashboard/timetable
+    loadChildren: () => import('./timetable/timetable.module').then(m => m.TimetableModule)
   },
   {//set path to application to time table
     path: 'relief-period-management',  // http://localhost:4200/dashboard
@@ -116,33 +109,28 @@ export const PagesRoutes: Routes = [
   },
   {
     //set path of employee module
-    path: 'applicant', // http://localhost:4200/dashboard/employee
-    component: RecruitmentSelectionAdmissionComponent,
+    path: 'time-table', // http://localhost:4200/dashboard/time-table
+    component: TimetableComponent,
   },
   {
     //set path of employee module
-    path: 'time-table', // http://localhost:4200/dashboard/employee
-    component: SchedulerComponent,
-  },
-  {
-    //set path of employee module
-    path: 'class-grade-gen', // http://localhost:4200/dashboard/employee
+    path: 'class-grade-gen', // http://localhost:4200/dashboard/class-grade-gen
     component: ClassGradeGenerateComponent,
   },
   {
     //set path of extra module
-    path: 'extra', // http://localhost:4200/dashboard/employee
+    path: 'extra', // http://localhost:4200/dashboard/extra
     component: ExtraComponent,
   },
   {
     //set path of request certificate module
-    path: 'request-certificate', // http://localhost:4200/dashboard/employee
-    component :RequestcertificateComponent ,
+    path: 'request-certificate', // http://localhost:4200/dashboard/request-certificate
+    component: RequestcertificateComponent,
   },
   {
     //set path of payments module
-    path: 'payments', // http://localhost:4200/dashboard/employee
-    component : PaymentsComponent ,
+    path: 'payments', // http://localhost:4200/dashboard/payments
+    component: PaymentsComponent,
   },
 
 ];

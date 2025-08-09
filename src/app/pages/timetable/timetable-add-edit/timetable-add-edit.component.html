@@ -1,0 +1,138 @@
+<!-- src/app/pages/timetable/timetable-add-edit/timetable-add-edit.component.html -->
+<div mat-dialog-title>
+  <h3>{{ isEditMode ? 'Edit' : 'Add' }} Timetable Entry</h3>
+</div>
+
+<form [formGroup]="timetableForm" (ngSubmit)="onSubmit()">
+  <div mat-dialog-content class="content" style="max-height: 70vh; overflow-y: auto;">
+    
+    <!-- Teacher Selection -->
+    <div class="row" style="display: flex; gap: 15px; margin-bottom: 15px;">
+      <mat-form-field appearance="outline" style="flex: 1;">
+        <mat-label>Teacher</mat-label>
+        <mat-select formControlName="teacherId">
+          <mat-option *ngFor="let teacher of teachers" [value]="teacher.id">
+            {{ teacher.firstName }} {{ teacher.lastName }} - {{ teacher.subject }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="timetableForm.get('teacherId')?.hasError('required')">
+          Teacher selection is required
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- Day and Period -->
+    <div class="row" style="display: flex; gap: 15px; margin-bottom: 15px;">
+      <mat-form-field appearance="outline" style="flex: 1;">
+        <mat-label>Day of Week</mat-label>
+        <mat-select formControlName="dayOfWeek">
+          <mat-option *ngFor="let day of daysOfWeek" [value]="day.value">
+            {{ day.label }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="timetableForm.get('dayOfWeek')?.hasError('required')">
+          Day of Week is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" style="flex: 1;">
+        <mat-label>Period</mat-label>
+        <mat-select formControlName="periodNumber" (selectionChange)="onPeriodChange()">
+          <mat-option *ngFor="let period of periods" [value]="period">
+            Period {{ period }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="timetableForm.get('periodNumber')?.hasError('required')">
+          Period is required
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- Subject and Class -->
+    <div class="row" style="display: flex; gap: 15px; margin-bottom: 15px;">
+      <mat-form-field appearance="outline" style="flex: 1;">
+        <mat-label>Subject</mat-label>
+        <mat-select formControlName="subject">
+          <mat-option *ngFor="let subject of subjects" [value]="subject">
+            {{ subject }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="timetableForm.get('subject')?.hasError('required')">
+          Subject is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" style="flex: 1;">
+        <mat-label>Class/Grade</mat-label>
+        <mat-select formControlName="grade">
+          <mat-option *ngFor="let grade of grades" [value]="grade">
+            {{ grade }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="timetableForm.get('grade')?.hasError('required')">
+          Class/Grade is required
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- Room Number -->
+    <div class="row" style="display: flex; gap: 15px; margin-bottom: 15px;">
+      <mat-form-field appearance="outline" style="flex: 1;">
+        <mat-label>Classroom</mat-label>
+        <input matInput formControlName="classRoom" placeholder="Enter classroom">
+        <mat-error *ngIf="timetableForm.get('classRoom')?.hasError('required')">
+          Classroom is required
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- Time Slots (Read-only, auto-populated) -->
+    <div class="row" style="display: flex; gap: 15px; margin-bottom: 15px;">
+      <mat-form-field appearance="outline" style="flex: 1;">
+        <mat-label>Start Time</mat-label>
+        <input matInput formControlName="startTime" readonly>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" style="flex: 1;">
+        <mat-label>End Time</mat-label>
+        <input matInput formControlName="endTime" readonly>
+      </mat-form-field>
+    </div>
+
+    <!-- Academic Year and Term -->
+    <div class="row" style="display: flex; gap: 15px; margin-bottom: 15px;">
+      <mat-form-field appearance="outline" style="flex: 1;">
+        <mat-label>Academic Year</mat-label>
+        <mat-select formControlName="academicYear">
+          <mat-option value="2024">2024</mat-option>
+          <mat-option value="2025">2025</mat-option>
+          <mat-option value="2026">2026</mat-option>
+        </mat-select>
+        <mat-error *ngIf="timetableForm.get('academicYear')?.hasError('required')">
+          Academic year is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" style="flex: 1;">
+        <mat-label>Term</mat-label>
+        <mat-select formControlName="term">
+          <mat-option value="Term 1">Term 1</mat-option>
+          <mat-option value="Term 2">Term 2</mat-option>
+          <mat-option value="Term 3">Term 3</mat-option>
+        </mat-select>
+        <mat-error *ngIf="timetableForm.get('term')?.hasError('required')">
+          Term is required
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+  </div>
+
+  <!-- Dialog Actions -->
+  <div mat-dialog-actions style="display: flex; justify-content: flex-end; gap: 10px; padding: 20px;">
+    <button mat-button type="button" (click)="onCancel()">Cancel</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="timetableForm.invalid">
+      {{ isEditMode ? 'Update' : 'Save' }}
+    </button>
+  </div>
+</form>

@@ -23,7 +23,6 @@ import { CharacterComponent } from './character/character.component';
 import { StudentComponent } from './student/student.component';
 import { NoneAcademicStaffComponent } from './none-academic-staff/none-academic-staff.component';
 import { ApplicationToStaffComponent } from './application-to-staff/application-to-staff.component';
-import { TimetableComponent } from './timetable/timetable.component';
 import { ReliefPeriodManagementComponent } from './relief-period-management/relief-period-management.component';
 import { AcademicStaffComponent } from './academic-staff/academic-staff.component';
 import { SbamarksComponent } from './sbamarks/sbamarks.component';
@@ -51,7 +50,6 @@ import { PaymentsComponent } from './payments/payments.component';
     StudentComponent,
     NoneAcademicStaffComponent,
     ApplicationToStaffComponent,
-    TimetableComponent,
     ReliefPeriodManagementComponent,
     AcademicStaffComponent,
     SbamarksComponent,

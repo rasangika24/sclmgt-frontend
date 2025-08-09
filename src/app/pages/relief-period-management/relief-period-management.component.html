@@ -1,1 +1,620 @@
-<p>relief-period-management works!</p>
+<div class="container-fluid">
+  <!-- Header with Navigation -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="d-flex justify-content-between align-items-center">
+        <h2 class="page-title">
+          <mat-icon>assignment_ind</mat-icon>
+          Relief Period Management
+        </h2>
+        
+        <!-- Navigation Tabs -->
+        <div class="nav-tabs">
+          <button mat-raised-button 
+                  [color]="currentView === 'markAbsent' ? 'primary' : ''" 
+                  (click)="setCurrentView('markAbsent')"
+                  class="mx-1">
+            <mat-icon>person_off</mat-icon>
+            Mark Absent
+          </button>
+          <button mat-raised-button 
+                  [color]="currentView === 'assignRelief' ? 'primary' : ''" 
+                  (click)="setCurrentView('assignRelief')"
+                  class="mx-1">
+            <mat-icon>assignment_ind</mat-icon>
+            Assign Relief
+          </button>
+          <button mat-raised-button 
+                  [color]="currentView === 'reports' ? 'primary' : ''" 
+                  (click)="setCurrentView('reports')"
+                  class="mx-1">
+            <mat-icon>assessment</mat-icon>
+            Reports
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================== -->
+  <!-- MARK ABSENT TEACHERS SECTION -->
+  <!-- ================================== -->
+  <div *ngIf="currentView === 'markAbsent'">
+    <div class="row">
+      <div class="col-12">
+        <mat-card class="form-card">
+          <mat-card-header>
+            <mat-card-title>
+              <mat-icon>person_off</mat-icon>
+              Mark Teacher Absent
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <form [formGroup]="markAbsentForm" (ngSubmit)="onMarkTeacherAbsent()">
+              <div class="form-section">
+                <h4 class="section-title">
+                  <mat-icon>person</mat-icon>
+                  Teacher Information
+                </h4>
+                
+                <div class="row">
+                  <div class="col-md-6">
+                    <mat-form-field class="w-100">
+                      <mat-label>Select Teacher</mat-label>
+                      <mat-select formControlName="teacherId" (selectionChange)="onTeacherIdChange()">
+                        <mat-option *ngFor="let teacher of allTeachers" [value]="teacher.teacherId">
+                          {{ teacher.fullName }} ({{ teacher.teacherId }})
+                        </mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="markAbsentForm.get('teacherId')?.hasError('required')">
+                        Please select a teacher
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-6">
+                    <mat-form-field class="w-100">
+                      <mat-label>Teacher Name</mat-label>
+                      <input matInput 
+                             placeholder="Auto-filled when teacher selected" 
+                             formControlName="teacherName"
+                             readonly />
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-section">
+                <h4 class="section-title">
+                  <mat-icon>event_busy</mat-icon>
+                  Absence Details
+                </h4>
+                
+                <div class="row">
+                  <div class="col-md-6">
+                    <mat-form-field class="w-100">
+                      <mat-label>Absence Date</mat-label>
+                      <input matInput 
+                             [matDatepicker]="picker"
+                             formControlName="absenceDate"
+                             readonly />
+                      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+                      <mat-error *ngIf="markAbsentForm.get('absenceDate')?.hasError('required')">
+                        Absence date is required
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-6">
+                    <mat-form-field class="w-100">
+                      <mat-label>Reason for Absence</mat-label>
+                      <mat-select formControlName="reason">
+                        <mat-option value="Sick Leave">Sick Leave</mat-option>
+                        <mat-option value="Personal Leave">Personal Leave</mat-option>
+                        <mat-option value="Emergency">Emergency</mat-option>
+                        <mat-option value="Medical Appointment">Medical Appointment</mat-option>
+                        <mat-option value="Training">Training</mat-option>
+                        <mat-option value="Other">Other</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <button mat-raised-button 
+                        color="primary" 
+                        type="submit" 
+                        [disabled]="isLoading || !markAbsentForm.valid">
+                  <mat-icon>save</mat-icon>
+                  Mark Absent
+                  <mat-spinner diameter="20" *ngIf="isLoading"></mat-spinner>
+                </button>
+                <button mat-button 
+                        type="button" 
+                        (click)="markAbsentForm.reset()" 
+                        [disabled]="isLoading">
+                  <mat-icon>refresh</mat-icon>
+                  Reset
+                </button>
+              </div>
+            </form>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================== -->
+  <!-- ASSIGN RELIEF SECTION -->
+  <!-- ================================== -->
+  <div *ngIf="currentView === 'assignRelief'">
+    <!-- Step 1: Select Date -->
+    <div class="row mb-4">
+      <div class="col-12">
+        <mat-card class="step-card">
+          <mat-card-header>
+            <mat-card-title>
+              <mat-icon>calendar_today</mat-icon>
+              Step 1: Select Date
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="step-indicator">
+              <div class="step-number">1</div>
+              <div class="step-description">Choose a date to view absent teachers and assign relief periods</div>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-6">
+                <mat-form-field class="w-100">
+                  <mat-label>Select Date</mat-label>
+                  <input matInput 
+                         [matDatepicker]="datePicker"
+                         [(ngModel)]="selectedDate" 
+                         (dateChange)="onDateChange()"
+                         readonly />
+                  <mat-datepicker-toggle matIconSuffix [for]="datePicker"></mat-datepicker-toggle>
+                  <mat-datepicker #datePicker></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div class="col-md-6" *ngIf="selectedDate">
+                <div class="date-info">
+                  <mat-icon>calendar_today</mat-icon>
+                  <div>
+                    <div class="selected-date">{{ selectedDate | date:'fullDate' }}</div>
+                    <div class="day-info">{{ selectedDate | date:'EEEE' }}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+
+    <!-- Step 2: Select Absent Teacher -->
+    <div class="row mb-4" *ngIf="selectedDate">
+      <div class="col-12">
+        <mat-card class="step-card">
+          <mat-card-header>
+            <mat-card-title>
+              <mat-icon>person_off</mat-icon>
+              Step 2: Select Absent Teacher
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="step-indicator">
+              <div class="step-number">2</div>
+              <div class="step-description">Select which teacher is absent for the chosen date</div>
+            </div>
+            
+            <div class="row" *ngIf="absentTeachers.length > 0; else noAbsentTeachers">
+              <div class="col-md-8">
+                <mat-form-field class="w-100">
+                  <mat-label>Select Absent Teacher</mat-label>
+                  <mat-select [(value)]="selectedTeacher" (selectionChange)="onTeacherSelect()">
+                    <mat-option *ngFor="let teacher of absentTeachers" [value]="teacher.teacherId">
+                      <div class="teacher-option">
+                        <div class="teacher-name">{{ teacher.teacherName }}</div>
+                        <div class="teacher-details">ID: {{ teacher.teacherId }} | Reason: {{ teacher.reason || 'Not specified' }}</div>
+                      </div>
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-md-4" *ngIf="selectedTeacher">
+                <div class="teacher-summary">
+                  <mat-icon>person_off</mat-icon>
+                  <div>
+                    <div class="summary-title">Selected Teacher</div>
+                    <div class="summary-details">{{ getSelectedTeacherName() }}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <ng-template #noAbsentTeachers>
+              <div class="alert alert-info">
+                <mat-icon>info</mat-icon>
+                <div>
+                  <strong>No absent teachers for {{ selectedDate | date:'fullDate' }}</strong>
+                  <p>Please mark teachers absent first using the "Mark Absent" section.</p>
+                </div>
+              </div>
+            </ng-template>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+
+    <!-- Step 3: Teacher's Timetable -->
+    <div class="row mb-4" *ngIf="selectedTeacher">
+      <div class="col-12">
+        <mat-card class="step-card">
+          <mat-card-header>
+            <mat-card-title>
+              <mat-icon>schedule</mat-icon>
+              Step 3: Select Period to Assign Relief
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="step-indicator">
+              <div class="step-number">3</div>
+              <div class="step-description">Choose which period needs a relief teacher</div>
+            </div>
+            
+            <div *ngIf="selectedTeacherTimetable.length > 0; else noTimetableMessage">
+              <div class="timetable-grid">
+                <div class="period-card" 
+                     *ngFor="let period of selectedTeacherTimetable"
+                     [class.selected]="selectedPeriod?.id === period.id"
+                     (click)="onPeriodSelect(period)">
+                  <div class="period-header">
+                    <div class="period-info">
+                      <span class="period-number">Period {{ period.periodNumber }}</span>
+                      <span class="period-time">{{ formatTime(period.startTime) }} - {{ formatTime(period.endTime) }}</span>
+                    </div>
+                    <div class="selection-indicator" *ngIf="selectedPeriod?.id === period.id">
+                      <mat-icon>check_circle</mat-icon>
+                    </div>
+                  </div>
+                  <div class="period-details">
+                    <div class="subject">{{ period.subject }}</div>
+                    <div class="grade-class">
+                      <mat-icon>school</mat-icon>
+                      {{ period.grade }} - {{ period.classRoom }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <ng-template #noTimetableMessage>
+              <!-- Loading State -->
+              <div class="alert alert-info" *ngIf="isLoadingTimetable">
+                <mat-icon>hourglass_empty</mat-icon>
+                <div>
+                  <strong>Loading teacher's timetable...</strong>
+                  <p *ngIf="selectedTeacher">Fetching schedule for {{ getSelectedTeacherName() }} on {{ selectedDate | date:'fullDate' }}</p>
+                  <mat-spinner diameter="16" style="display: inline-block; margin-right: 8px;"></mat-spinner>
+                  Please wait while we fetch the data...
+                </div>
+              </div>
+              
+              <!-- Error State -->
+              <div class="alert alert-warning" *ngIf="!isLoadingTimetable && timetableError">
+                <mat-icon>warning</mat-icon>
+                <div>
+                  <strong>Unable to load timetable</strong>
+                  <p>{{ timetableError }}</p>
+                  <button mat-stroked-button 
+                          color="primary" 
+                          (click)="loadTeacherTimetable()" 
+                          style="margin-top: 8px;">
+                    <mat-icon>refresh</mat-icon>
+                    Retry
+                  </button>
+                </div>
+              </div>
+              
+              <!-- Empty State (no error, not loading) -->
+              <div class="alert alert-info" *ngIf="!isLoadingTimetable && !timetableError && selectedTeacher">
+                <mat-icon>info</mat-icon>
+                <div>
+                  <strong>No scheduled periods found</strong>
+                  <p>{{ getSelectedTeacherName() }} has no scheduled classes on {{ selectedDate | date:'fullDate' }}.</p>
+                  <p>This teacher may not have any classes scheduled for this day.</p>
+                </div>
+              </div>
+              
+              <!-- Initial State -->
+              <div class="alert alert-secondary" *ngIf="!selectedTeacher">
+                <mat-icon>info</mat-icon>
+                <div>
+                  <strong>Select a teacher first</strong>
+                  <p>Please select an absent teacher from Step 2 to view their timetable.</p>
+                </div>
+              </div>
+            </ng-template>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+
+    <!-- Step 4: Available Teachers -->
+    <div class="row mb-4" *ngIf="selectedPeriod">
+      <div class="col-12">
+        <mat-card class="step-card">
+          <mat-card-header>
+            <mat-card-title>
+              <mat-icon>people</mat-icon>
+              Step 4: Assign Relief Teacher
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="step-indicator">
+              <div class="step-number">4</div>
+              <div class="step-description">Select an available teacher to assign relief duty</div>
+            </div>
+            
+            <div class="selected-period-info" *ngIf="selectedPeriod">
+              <mat-icon>schedule</mat-icon>
+              <div>
+                <div class="period-title">Period {{ selectedPeriod.periodNumber }} Relief Assignment</div>
+                <div class="period-subtitle">
+                  {{ selectedPeriod.subject }} | {{ selectedPeriod.grade }} - {{ selectedPeriod.classRoom }} | 
+                  {{ formatTime(selectedPeriod.startTime) }} - {{ formatTime(selectedPeriod.endTime) }}
+                </div>
+              </div>
+            </div>
+            
+            <div *ngIf="availableTeachers.length > 0; else noAvailableTeachers">
+              <div class="teacher-grid">
+                <div class="teacher-card" 
+                     *ngFor="let teacher of availableTeachers">
+                  <div class="teacher-avatar">
+                    <mat-icon>person</mat-icon>
+                  </div>
+                  <div class="teacher-info">
+                    <div class="teacher-name">{{ teacher.teacherName }}</div>
+                    <div class="teacher-id">ID: {{ teacher.teacherId }}</div>
+                    <div class="availability-status">
+                      <mat-icon class="available-icon">check_circle</mat-icon>
+                      Available
+                    </div>
+                  </div>
+                  <button mat-raised-button 
+                          color="primary" 
+                          (click)="onAssignRelief(teacher.teacherId, teacher.teacherName)">
+                    <mat-icon>assignment_ind</mat-icon>
+                    Assign Relief
+                  </button>
+                </div>
+              </div>
+            </div>
+            
+            <ng-template #noAvailableTeachers>
+              <!-- Loading available teachers -->
+              <div class="alert alert-info" *ngIf="isLoadingAvailableTeachers">
+                <mat-icon>hourglass_empty</mat-icon>
+                <div>
+                  <strong>Loading available teachers...</strong>
+                  <p>Checking which teachers are free for Period {{ selectedPeriod.periodNumber }} on {{ selectedDate | date:'fullDate' }}.</p>
+                  <mat-spinner diameter="16" style="display: inline-block; margin-right: 8px;"></mat-spinner>
+                  Please wait...
+                </div>
+              </div>
+              
+              <!-- No available teachers found -->
+              <div class="alert alert-warning" *ngIf="!isLoadingAvailableTeachers">
+                <mat-icon>warning</mat-icon>
+                <div>
+                  <strong>No available teachers found</strong>
+                  <p>All teachers appear to be busy for Period {{ selectedPeriod.periodNumber }} on {{ selectedDate | date:'fullDate' }}.</p>
+                  <p>This could mean all teachers have scheduled classes during this period.</p>
+                  <button mat-stroked-button 
+                          color="primary" 
+                          (click)="loadAvailableTeachers(selectedPeriod.periodNumber)" 
+                          style="margin-top: 8px;">
+                    <mat-icon>refresh</mat-icon>
+                    Retry Search
+                  </button>
+                </div>
+              </div>
+            </ng-template>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ================================== -->
+  <!-- REPORTS SECTION -->
+  <!-- ================================== -->
+  <div *ngIf="currentView === 'reports'">
+    <!-- Date Selection for Reports -->
+    <div class="row mb-4">
+      <div class="col-12">
+        <mat-card class="form-card">
+          <mat-card-header>
+            <mat-card-title>
+              <mat-icon>assessment</mat-icon>
+              Relief Period Reports
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="report-controls">
+              <div class="row">
+                <div class="col-md-4">
+                  <mat-form-field class="w-100">
+                    <mat-label>Select Date</mat-label>
+                    <input matInput 
+                           [matDatepicker]="reportPicker"
+                           [(ngModel)]="selectedDate"
+                           (dateChange)="loadReliefPeriods()"
+                           readonly />
+                    <mat-datepicker-toggle matIconSuffix [for]="reportPicker"></mat-datepicker-toggle>
+                    <mat-datepicker #reportPicker></mat-datepicker>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                  <button mat-raised-button 
+                          color="primary" 
+                          (click)="generateReport()"
+                          [disabled]="!selectedDate"
+                          class="generate-btn">
+                    <mat-icon>assessment</mat-icon>
+                    Generate Report
+                  </button>
+                </div>
+                <div class="col-md-4" *ngIf="selectedDate">
+                  <div class="report-date-info">
+                    <mat-icon>event</mat-icon>
+                    <div>
+                      <div class="report-date">{{ selectedDate | date:'mediumDate' }}</div>
+                      <div class="report-day">{{ selectedDate | date:'EEEE' }}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+
+    <!-- Relief Periods Table -->
+    <div class="row mb-4" *ngIf="reliefPeriods.length > 0">
+      <div class="col-12">
+        <mat-card class="list-card">
+          <mat-card-header>
+            <mat-card-title>
+              <mat-icon>list</mat-icon>
+              Relief Period Assignments - {{ selectedDate | date:'fullDate' }}
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="table-responsive">
+              <table mat-table [dataSource]="reliefPeriods" class="relief-table">
+                <!-- Period Number -->
+                <ng-container matColumnDef="period">
+                  <th mat-header-cell *matHeaderCellDef>Period</th>
+                  <td mat-cell *matCellDef="let relief">{{ relief.periodNumber }}</td>
+                </ng-container>
+
+                <!-- Absent Teacher -->
+                <ng-container matColumnDef="absentTeacher">
+                  <th mat-header-cell *matHeaderCellDef>Absent Teacher</th>
+                  <td mat-cell *matCellDef="let relief">
+                    <div class="teacher-info">
+                      <strong>{{ relief.absentTeacherName }}</strong>
+                      <br>
+                      <small class="text-muted">{{ relief.absentTeacherId }}</small>
+                    </div>
+                  </td>
+                </ng-container>
+
+                <!-- Subject & Class -->
+                <ng-container matColumnDef="subjectClass">
+                  <th mat-header-cell *matHeaderCellDef>Subject & Class</th>
+                  <td mat-cell *matCellDef="let relief">
+                    <div class="subject-info">
+                      <div class="subject">{{ relief.subject }}</div>
+                      <div class="grade-class">{{ relief.grade }} - {{ relief.classRoom }}</div>
+                    </div>
+                  </td>
+                </ng-container>
+
+                <!-- Relief Teacher -->
+                <ng-container matColumnDef="reliefTeacher">
+                  <th mat-header-cell *matHeaderCellDef>Relief Teacher</th>
+                  <td mat-cell *matCellDef="let relief">
+                    <div class="teacher-info" *ngIf="relief.reliefTeacherName; else notAssigned">
+                      <strong>{{ relief.reliefTeacherName }}</strong>
+                      <br>
+                      <small class="text-muted">{{ relief.reliefTeacherId }}</small>
+                    </div>
+                    <ng-template #notAssigned>
+                      <span class="text-muted">Not Assigned</span>
+                    </ng-template>
+                  </td>
+                </ng-container>
+
+                <!-- Status -->
+                <ng-container matColumnDef="status">
+                  <th mat-header-cell *matHeaderCellDef>Status</th>
+                  <td mat-cell *matCellDef="let relief">
+                    <span class="badge" [class]="getStatusClass(relief.status)">
+                      {{ relief.status }}
+                    </span>
+                  </td>
+                </ng-container>
+
+                <!-- Actions -->
+                <ng-container matColumnDef="actions">
+                  <th mat-header-cell *matHeaderCellDef>Actions</th>
+                  <td mat-cell *matCellDef="let relief">
+                    <div class="action-buttons">
+                      <button mat-icon-button 
+                              color="warn" 
+                              (click)="cancelReliefPeriod(relief.id!)"
+                              *ngIf="relief.status === 'ASSIGNED'"
+                              matTooltip="Cancel Assignment">
+                        <mat-icon>cancel</mat-icon>
+                      </button>
+                    </div>
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="['period', 'absentTeacher', 'subjectClass', 'reliefTeacher', 'status', 'actions']"></tr>
+                <tr mat-row *matRowDef="let row; columns: ['period', 'absentTeacher', 'subjectClass', 'reliefTeacher', 'status', 'actions']"></tr>
+              </table>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+
+    <!-- Report Summary -->
+    <div class="row" *ngIf="reportData">
+      <div class="col-12">
+        <mat-card class="report-card">
+          <mat-card-header>
+            <mat-card-title>
+              <mat-icon>pie_chart</mat-icon>
+              Report Summary
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="stat-item">
+                  <div class="stat-value">{{ reportData.totalReliefPeriods }}</div>
+                  <div class="stat-label">Total Relief Periods</div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="stat-item">
+                  <div class="stat-value">{{ reportData.assignedPeriods }}</div>
+                  <div class="stat-label">Assigned</div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="stat-item">
+                  <div class="stat-value">{{ reportData.pendingPeriods }}</div>
+                  <div class="stat-label">Pending</div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="stat-item">
+                  <div class="stat-value">{{ reportData.completedPeriods }}</div>
+                  <div class="stat-label">Completed</div>
+                </div>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

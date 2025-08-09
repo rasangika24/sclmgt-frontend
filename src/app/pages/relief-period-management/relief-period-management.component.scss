@@ -1,0 +1,666 @@
+// Page Layout
+.container-fluid {
+  padding: 20px;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+.page-title {
+  color: #2c3e50;
+  font-weight: 600;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  mat-icon {
+    font-size: 32px;
+    width: 32px;
+    height: 32px;
+  }
+}
+
+// Navigation Tabs
+.nav-tabs {
+  display: flex;
+  gap: 10px;
+
+  button {
+    border-radius: 25px;
+    font-weight: 500;
+    
+    &:not([color="primary"]) {
+      background-color: white;
+      color: #6c757d;
+      border: 1px solid #dee2e6;
+    }
+  }
+}
+
+// Cards
+.form-card, .list-card, .step-card, .report-card {
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: none;
+  margin-bottom: 20px;
+
+  mat-card-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 12px 12px 0 0;
+    padding: 20px;
+    margin: -24px -24px 24px -24px;
+
+    mat-card-title {
+      color: white;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0;
+
+      mat-icon {
+        font-size: 24px;
+        width: 24px;
+        height: 24px;
+      }
+    }
+  }
+}
+
+.step-card {
+  border-left: 4px solid #667eea;
+  
+  mat-card-header {
+    background: linear-gradient(135deg, #667eea 0%, #5a67d8 100%);
+  }
+}
+
+// Form Styling
+.form-section {
+  margin-bottom: 30px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #667eea;
+}
+
+.section-title {
+  color: #2c3e50;
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  mat-icon {
+    color: #667eea;
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.form-actions {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #e9ecef;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+
+  button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+  }
+}
+
+// Step Indicators
+.step-indicator {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 25px;
+  padding: 15px;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  border-radius: 8px;
+  border-left: 4px solid #667eea;
+
+  .step-number {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+  }
+
+  .step-description {
+    color: #2c3e50;
+    font-weight: 500;
+    font-size: 1rem;
+  }
+}
+
+// Date Info
+.date-info, .teacher-summary, .selected-period-info, .report-date-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  border-left: 4px solid #667eea;
+
+  mat-icon {
+    color: #667eea;
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+  }
+
+  .selected-date, .summary-title, .period-title, .report-date {
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 1rem;
+  }
+
+  .day-info, .summary-details, .period-subtitle, .report-day {
+    color: #6c757d;
+    font-size: 0.9rem;
+  }
+}
+
+// Teacher Option in Select
+.teacher-option {
+  padding: 5px 0;
+
+  .teacher-name {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 3px;
+  }
+
+  .teacher-details {
+    font-size: 0.85rem;
+    color: #6c757d;
+  }
+}
+
+// Timetable Grid
+.timetable-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.period-card {
+  background: white;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  padding: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    border-color: #667eea;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+  }
+
+  &.selected {
+    border-color: #667eea;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+  }
+
+  .period-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+
+    .period-info {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+
+      .period-number {
+        color: #2c3e50;
+        font-size: 1.1rem;
+        font-weight: 700;
+      }
+
+      .period-time {
+        color: #6c757d;
+        font-size: 0.9rem;
+        font-weight: 500;
+      }
+    }
+
+    .selection-indicator {
+      mat-icon {
+        color: #27ae60;
+        font-size: 24px;
+        width: 24px;
+        height: 24px;
+      }
+    }
+  }
+
+  .period-details {
+    .subject {
+      color: #2c3e50;
+      font-weight: 600;
+      font-size: 1rem;
+      margin-bottom: 8px;
+    }
+
+    .grade-class {
+      color: #6c757d;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+
+      mat-icon {
+        font-size: 16px;
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+}
+
+// Teacher Grid
+.teacher-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.teacher-card {
+  background: white;
+  border: 1px solid #e9ecef;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  transition: all 0.3s ease;
+  text-align: center;
+
+  &:hover {
+    border-color: #667eea;
+    box-shadow: 0 4px 16px rgba(102, 126, 234, 0.15);
+    transform: translateY(-2px);
+  }
+
+  .teacher-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    mat-icon {
+      color: white;
+      font-size: 28px;
+      width: 28px;
+      height: 28px;
+    }
+  }
+
+  .teacher-info {
+    .teacher-name {
+      color: #2c3e50;
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-bottom: 5px;
+    }
+
+    .teacher-id {
+      color: #6c757d;
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+    }
+
+    .availability-status {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      color: #27ae60;
+      font-size: 0.9rem;
+      font-weight: 500;
+
+      .available-icon {
+        font-size: 16px;
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+
+  button {
+    border-radius: 25px;
+    font-weight: 500;
+    padding: 10px 20px;
+    width: 100%;
+  }
+}
+
+// Table Styling
+.relief-table {
+  width: 100%;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+
+  th {
+    background: #f8f9fa;
+    color: #2c3e50;
+    font-weight: 600;
+    border-bottom: 2px solid #e9ecef;
+  }
+
+  td {
+    border-bottom: 1px solid #e9ecef;
+    padding: 16px;
+  }
+
+  tr:hover {
+    background: rgba(102, 126, 234, 0.05);
+  }
+}
+
+.teacher-info {
+  strong {
+    color: #2c3e50;
+    font-size: 1rem;
+  }
+
+  small {
+    color: #6c757d;
+    font-size: 0.85rem;
+  }
+}
+
+.subject-info {
+  .subject {
+    color: #2c3e50;
+    font-weight: 600;
+    margin-bottom: 3px;
+  }
+
+  .grade-class {
+    color: #6c757d;
+    font-size: 0.9rem;
+  }
+}
+
+// Status Badges
+.badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+
+  &.badge-warning {
+    background: #f39c12;
+    color: white;
+  }
+
+  &.badge-success {
+    background: #27ae60;
+    color: white;
+  }
+
+  &.badge-danger {
+    background: #e74c3c;
+    color: white;
+  }
+
+  &.badge-info {
+    background: #3498db;
+    color: white;
+  }
+
+  &.badge-secondary {
+    background: #6c757d;
+    color: white;
+  }
+}
+
+// Action Buttons
+.action-buttons {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+
+  button {
+    width: 36px;
+    height: 36px;
+    
+    mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+    }
+  }
+}
+
+// Alerts
+.alert {
+  padding: 20px;
+  border-radius: 8px;
+  border: none;
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  margin: 20px 0;
+
+  mat-icon {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+    margin-top: 2px;
+  }
+
+  &.alert-info {
+    background: rgba(52, 152, 219, 0.1);
+    color: #2980b9;
+    border-left: 4px solid #3498db;
+
+    strong {
+      color: #2980b9;
+    }
+
+    p {
+      margin: 5px 0 0 0;
+      color: #5dade2;
+    }
+  }
+
+  &.alert-warning {
+    background: rgba(243, 156, 18, 0.1);
+    color: #d35400;
+    border-left: 4px solid #f39c12;
+
+    strong {
+      color: #d35400;
+    }
+
+    p {
+      margin: 5px 0 0 0;
+      color: #e67e22;
+    }
+  }
+
+  &.alert-success {
+    background: rgba(39, 174, 96, 0.1);
+    color: #27ae60;
+    border-left: 4px solid #27ae60;
+  }
+}
+
+// Report Controls
+.report-controls {
+  margin-bottom: 25px;
+
+  .generate-btn {
+    height: 56px;
+    font-weight: 600;
+    border-radius: 8px;
+  }
+}
+
+// Report Statistics
+.stat-item {
+  text-align: center;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  margin-bottom: 15px;
+
+  .stat-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 5px;
+  }
+
+  .stat-label {
+    color: #6c757d;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+}
+
+// Text Utilities
+.text-muted {
+  color: #6c757d !important;
+}
+
+.text-success {
+  color: #27ae60 !important;
+}
+
+.text-danger {
+  color: #e74c3c !important;
+}
+
+.text-warning {
+  color: #f39c12 !important;
+}
+
+// Form Field Improvements
+mat-form-field {
+  &.w-100 {
+    width: 100%;
+  }
+}
+
+// Loading Spinner
+mat-spinner {
+  margin-left: 10px;
+}
+
+// Table Responsive
+.table-responsive {
+  overflow-x: auto;
+  margin-top: 20px;
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .container-fluid {
+    padding: 15px;
+  }
+
+  .page-title {
+    font-size: 1.5rem;
+    
+    mat-icon {
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  .nav-tabs {
+    flex-direction: column;
+    gap: 5px;
+
+    button {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  .timetable-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .teacher-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .teacher-card {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+
+    button {
+      width: 100%;
+    }
+  }
+
+  .action-buttons {
+    justify-content: center;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    align-items: stretch;
+
+    button {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+}
+
+// Animation
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form-card, .list-card, .step-card, .report-card {
+  animation: fadeIn 0.5s ease-out;
+}

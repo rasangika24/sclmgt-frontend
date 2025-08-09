@@ -10,13 +10,13 @@ export class MessageServiceService {
 
   constructor(private toastrService: ToastrService) {}
 
-  showSuccess(message: string, duration: number = 3000) {
+  public showSuccess(message: string, duration: number = 3000) {
     this.toastrService.success('Scucess!', message, {
       timeOut: duration,
     });
   }
 
-  showError(message: string, duration: number = 8000) {
+  public showError(message: string, duration: number = 8000) {
     this.toastrService.error(message, 'Major Error', {
       timeOut: duration,
     });

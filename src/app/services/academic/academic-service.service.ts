@@ -1,83 +1,57 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpService } from '../http.service';
-import { environment } from 'src/app/environments/environment';
-import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
+import { AcademicStaffDto } from '../../interfaces/academic-staff.interface';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AcademicServiceService {
+  private baseUrl = `${environment.baseUrl}/academic-staff`;
 
-  constructor(private http:HttpClient, private httpService:HttpService) { }
-
-serviceCall(form_details:any){
-  console.log('In The Service');
-
-   const requestUrl = environment.baseUrl + '/academic-staff'; // http://localhost:8080/academic-staff
-
-   let headers = {};
-
-    if (this.httpService.getAuthToken() !== null) {
-      headers = {
-        Authorization:'Bearer' +this.httpService.getAuthToken(),
-      };
-    }
-
-    return this.http.post(requestUrl,form_details,headers);
-
-}
-
-getData(){
-
-   const requestUrl = environment.baseUrl+'/academic-staff'; // http://localhost:8080/academic-staff
-   let headers = {};
-
-    if (this.httpService.getAuthToken() !== null) {
-      headers = {
-        Authorization: 'Bearer'+this.httpService.getAuthToken(),
-      };
-    }
-    return this.http.get(requestUrl,headers);
-  }
-
-  editData(id: any, form_details: any){
-
-   console.log('In The EditData');
-
-   const requestUrl = environment.baseUrl + '/academic-staff/'+id.toString(); // http://localhost:8080/academic-staff
-
-   let headers = {};
-
-    if (this.httpService.getAuthToken() !== null) {
-      headers = {
-        Authorization:'Bearer' +this.httpService.getAuthToken(),
-      };
-    }
-
-    return this.http.put(requestUrl,form_details,headers);
-
-  }
-
-  deleteData(id: number){
-       console.log('In The deleteData');
-
-   const requestUrl = environment.baseUrl + '/academic-staff/'+id.toString(); // http://localhost:8080/academic-staff
-
-   let headers = {};
-
-    if (this.httpService.getAuthToken() !== null) {
-      headers = {
-        Authorization:'Bearer' +this.httpService.getAuthToken(),
-      };
-    }
-
-    return this.http.delete(requestUrl,headers);
-  }
+  constructor(private http: HttpClient) {}
 
   checkNicExists(nic: string): Observable<boolean> {
-      const params = new HttpParams().set('nic', nic);
-      return this.http.get<boolean>(`${environment.baseUrl}/acheck-nic`, { params });
-    }
+    return this.http.get<boolean>(`${this.baseUrl}/check-nic/${nic}`).pipe(
+      catchError(() => of(false))
+    );
+  }
 
-} 
+  getAllAcademicStaff(): Observable<AcademicStaffDto[]> {
+    return this.http.get<AcademicStaffDto[]>(this.baseUrl);
+  }
+
+  getAcademicStaffById(id: number): Observable<AcademicStaffDto> {
+    return this.http.get<AcademicStaffDto>(`${this.baseUrl}/${id}`);
+  }
+
+  createAcademicStaff(academicStaff: AcademicStaffDto): Observable<AcademicStaffDto> {
+    return this.http.post<AcademicStaffDto>(this.baseUrl, academicStaff);
+  }
+
+  updateAcademicStaff(id: number, academicStaff: AcademicStaffDto): Observable<AcademicStaffDto> {
+    return this.http.put<AcademicStaffDto>(`${this.baseUrl}/${id}`, academicStaff);
+  }
+
+  deleteAcademicStaff(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
+  }
+
+  // For timetable integration
+  getTeachersForTimetable(): Observable<any[]> {
+    return this.getAllAcademicStaff().pipe(
+      map(teachers => teachers.map(teacher => ({
+        id: teacher.id?.toString(),
+        teacherId: teacher.teacherNumber || '',
+        firstName: teacher.nameinFull?.split(' ')[0] || '',
+        lastName: teacher.nameinFull?.split(' ').slice(1).join(' ') || '',
+        fullName: teacher.nameinFull,
+        email: teacher.emailAddress || '',
+        phone: teacher.telephone?.toString() || '',
+        subject: teacher.subjectTeaching1 || ''
+      })))
+    );
+  }
+}

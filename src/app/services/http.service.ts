@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -52,18 +52,52 @@ export class HttpService {
     window.localStorage.clear();
   }
 
-  request(method: string, url: string, data: any): Promise<any> {
-    const requestUrl = environment.baseUrl + url; // http://localhost:8080/login
+  async request(method: string, url: string, data: any): Promise<any> {
+    const requestUrl = environment.baseUrl + url;
+    console.log('=== HTTP REQUEST DEBUG ===');
+    console.log('Method:', method);
+    console.log('URL:', requestUrl);
+    console.log('Request data:', JSON.stringify(data, null, 2));
 
-    let headers = {};
+    // For login requests, don't manually add auth headers - let interceptor handle it
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    });
 
-    if (this.getAuthToken() !== null) {
-      headers = { Authorization: 'Bearer ' + this.getAuthToken() };
+    console.log('Headers:', headers.keys().map(key => `${key}: ${headers.get(key)}`));
+
+    try {
+      let response;
+      if (method.toUpperCase() === 'POST') {
+        response = await firstValueFrom(
+          this.http.post(requestUrl, data, { headers: headers })
+        );
+      } else if (method.toUpperCase() === 'GET') {
+        response = await firstValueFrom(
+          this.http.get(requestUrl, { headers: headers })
+        );
+      } else if (method.toUpperCase() === 'PUT') {
+        response = await firstValueFrom(
+          this.http.put(requestUrl, data, { headers: headers })
+        );
+      } else {
+        throw new Error(`Unsupported HTTP method: ${method}`);
+      }
+      
+      console.log('=== HTTP RESPONSE DEBUG ===');
+      console.log('Response received:', JSON.stringify(response, null, 2));
+      return response;
+    } catch (error: any) {
+      console.error('=== HTTP ERROR DEBUG ===');
+      console.error('Error status:', error.status);
+      console.error('Error message:', error.message);
+      console.error('Error details:', error);
+      if (error.error) {
+        console.error('Error body:', error.error);
+      }
+      throw error;
     }
-
-    // if (method === 'POST') {
-    return this.http.post(requestUrl, data, { headers: headers }).toPromise();
-    // }
   }
 
   get isLoggedIn() {
@@ -73,45 +107,82 @@ export class HttpService {
     return false;
   }
 
-  public logOut(): void {
-    this.request('GET', '/logout', {}).then((response) => {
+  public async logOut(): Promise<void> {
+    try {
+      await this.request('GET', '/logout', {});
+    } catch (error) {
+      console.error('Logout error:', error);
+    } finally {
       window.localStorage.clear();
-    });
+    }
   }
 
-  public getAuthIds(userId: number): Promise<any> {
+  public async getAuthIds(userId: number): Promise<any> {
     const requestUrl = environment.baseUrl + '/get-auth-ids/' + userId;
 
-    let headers = {};
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    });
 
-    if (this.getAuthToken() !== null) {
-      headers = { Authorization: 'Bearer ' + this.getAuthToken() };
+    const token = this.getAuthToken();
+    if (token) {
+      headers = headers.set('Authorization', 'Bearer ' + token);
     }
 
-    return this.http.get(requestUrl, { headers: headers }).toPromise();
+    try {
+      return await firstValueFrom(
+        this.http.get(requestUrl, { headers: headers })
+      );
+    } catch (error) {
+      console.error('getAuthIds error:', error);
+      throw error;
+    }
   }
 
-  getSystemPrivileges(): Promise<any> {
+  async getSystemPrivileges(): Promise<any> {
     const requestUrl = environment.baseUrl + '/system-privileges';
 
-    let headers = {};
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    });
 
-    if (this.getAuthToken() !== null) {
-      headers = { Authorization: 'Bearer ' + this.getAuthToken() };
+    const token = this.getAuthToken();
+    if (token) {
+      headers = headers.set('Authorization', 'Bearer ' + token);
     }
 
-    return this.http.get(requestUrl, { headers: headers }).toPromise();
+    try {
+      return await firstValueFrom(
+        this.http.get(requestUrl, { headers: headers })
+      );
+    } catch (error) {
+      console.error('getSystemPrivileges error:', error);
+      throw error;
+    }
   }
 
-  saveSystemPrivileges(data: any): Promise<any> {
+  async saveSystemPrivileges(data: any): Promise<any> {
     const requestUrl = environment.baseUrl + '/system-privileges';
 
-    let headers = {};
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    });
 
-    if (this.getAuthToken() !== null) {
-      headers = { Authorization: 'Bearer ' + this.getAuthToken() };
+    const token = this.getAuthToken();
+    if (token) {
+      headers = headers.set('Authorization', 'Bearer ' + token);
     }
 
-    return this.http.put(requestUrl, data, { headers: headers }).toPromise();
+    try {
+      return await firstValueFrom(
+        this.http.put(requestUrl, data, { headers: headers })
+      );
+    } catch (error) {
+      console.error('saveSystemPrivileges error:', error);
+      throw error;
+    }
   }
 }

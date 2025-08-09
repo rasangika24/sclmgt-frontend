@@ -1,0 +1,273 @@
+<div class="container">
+  <div class="header-section">
+    <h2>Academic Staff Management</h2>
+    <div class="action-buttons">
+      <button mat-raised-button color="primary" (click)="viewDetails()">
+        <mat-icon>visibility</mat-icon>
+        View Details
+      </button>
+      <button mat-raised-button color="accent" (click)="refreshData()">
+        <mat-icon>refresh</mat-icon>
+        Refresh
+      </button>
+    </div>
+  </div>
+
+  <!-- Form Section -->
+  <mat-card class="form-card">
+    <mat-card-header>
+      <mat-card-title>{{ mode === 'add' ? 'Add New Teacher' : 'Edit Teacher' }}</mat-card-title>
+    </mat-card-header>
+    
+    <mat-card-content>
+      <form [formGroup]="academicStaffForm" (ngSubmit)="onSubmit()">
+        <!-- Basic Information -->
+        <div class="form-section">
+          <h3>Basic Information</h3>
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>Teacher Number</mat-label>
+              <input matInput placeholder="Enter Teacher Number" formControlName="teacherNumber">
+              <mat-error *ngIf="academicStaffForm.get('teacherNumber')?.hasError('required')">
+                Teacher Number is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>Full Name</mat-label>
+              <input matInput placeholder="Enter Full Name" formControlName="nameinFull">
+              <mat-error *ngIf="academicStaffForm.get('nameinFull')?.hasError('required')">
+                Full Name is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>Name with Initials</mat-label>
+              <input matInput placeholder="Enter Name with Initials" formControlName="nameWithInitials">
+              <mat-error *ngIf="academicStaffForm.get('nameWithInitials')?.hasError('required')">
+                Name with Initials is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>Using Name</mat-label>
+              <input matInput placeholder="Enter Using Name" formControlName="usingName">
+            </mat-form-field>
+          </div>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>NIC</mat-label>
+              <input matInput placeholder="Enter NIC" formControlName="nic" (input)="onNicChange()">
+              <mat-error *ngIf="academicStaffForm.get('nic')?.hasError('required')">
+                NIC is required
+              </mat-error>
+              <mat-error *ngIf="academicStaffForm.get('nic')?.hasError('nicExists')">
+                This NIC already exists
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>Appointment Date (EPF)</mat-label>
+              <input matInput [matDatepicker]="epfPicker" formControlName="appointmentDateAsEpf">
+              <mat-datepicker-toggle matIconSuffix [for]="epfPicker"></mat-datepicker-toggle>
+              <mat-datepicker #epfPicker></mat-datepicker>
+              <mat-error *ngIf="academicStaffForm.get('appointmentDateAsEpf')?.hasError('required')">
+                Appointment Date is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="form-section">
+          <h3>Contact Information</h3>
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>Email Address</mat-label>
+              <input matInput type="email" placeholder="Enter Email" formControlName="emailAddress">
+              <mat-error *ngIf="academicStaffForm.get('emailAddress')?.hasError('email')">
+                Please enter a valid email
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>Telephone</mat-label>
+              <input matInput placeholder="Enter Telephone" formControlName="telephone">
+              <mat-error *ngIf="academicStaffForm.get('telephone')?.hasError('pattern')">
+                Please enter a valid telephone number
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>WhatsApp</mat-label>
+              <input matInput placeholder="Enter WhatsApp Number" formControlName="whatsapp">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>Address</mat-label>
+              <textarea matInput placeholder="Enter Address" formControlName="address" rows="3"></textarea>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <!-- Professional Information -->
+        <div class="form-section">
+          <h3>Professional Information</h3>
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>Subject Teaching</mat-label>
+              <input matInput placeholder="Enter Subject" formControlName="subjectTeaching1">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>Highest Education Qualification</mat-label>
+              <mat-select formControlName="highestEducationQualification">
+                <mat-option value="A/L">A/L</mat-option>
+                <mat-option value="Diploma">Diploma</mat-option>
+                <mat-option value="Degree">Degree</mat-option>
+                <mat-option value="PGD">PGD</mat-option>
+                <mat-option value="MA/MSC">MA/MSC</mat-option>
+                <mat-option value="PhD">PhD</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>Professional Qualification</mat-label>
+              <input matInput placeholder="Enter Professional Qualification" formControlName="professionalQualification">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>School Studied</mat-label>
+              <input matInput placeholder="Enter School Studied" formControlName="schoolStudied">
+            </mat-form-field>
+          </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+          <button mat-raised-button type="button" (click)="clearFields()" class="clear-btn">
+            <mat-icon>clear</mat-icon>
+            Clear
+          </button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="academicStaffForm.invalid || isButtonDisabled">
+            <mat-icon>{{ mode === 'add' ? 'add' : 'update' }}</mat-icon>
+            {{ saveButtonLabel }}
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Table Section -->
+  <mat-card class="table-card">
+    <mat-card-header>
+      <mat-card-title>Teachers List</mat-card-title>
+      <div class="table-actions">
+        <mat-form-field appearance="outline" class="search-field">
+          <mat-label>Search</mat-label>
+          <input matInput (keyup)="applyFilter($event)" placeholder="Search teachers...">
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+      </div>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="table-container">
+        <table mat-table [dataSource]="dataSource" class="teachers-table" matSort>
+          
+          <!-- Teacher Number Column -->
+          <ng-container matColumnDef="teacherNumber">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Teacher No.</th>
+            <td mat-cell *matCellDef="let element">{{ element.teacherNumber }}</td>
+          </ng-container>
+
+          <!-- Full Name Column -->
+          <ng-container matColumnDef="nameinFull">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Full Name</th>
+            <td mat-cell *matCellDef="let element">{{ element.nameinFull }}</td>
+          </ng-container>
+
+          <!-- Name with Initials Column -->
+          <ng-container matColumnDef="nameWithInitials">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Name with Initials</th>
+            <td mat-cell *matCellDef="let element">{{ element.nameWithInitials }}</td>
+          </ng-container>
+
+          <!-- Email Column -->
+          <ng-container matColumnDef="emailAddress">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+            <td mat-cell *matCellDef="let element">{{ element.emailAddress || 'N/A' }}</td>
+          </ng-container>
+
+          <!-- Telephone Column -->
+          <ng-container matColumnDef="telephone">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Telephone</th>
+            <td mat-cell *matCellDef="let element">{{ element.telephone || 'N/A' }}</td>
+          </ng-container>
+
+          <!-- Subject Column -->
+          <ng-container matColumnDef="subjectTeaching1">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Subject</th>
+            <td mat-cell *matCellDef="let element">
+              <mat-chip-set *ngIf="element.subjectTeaching1">
+                <mat-chip color="primary" selected>{{ element.subjectTeaching1 }}</mat-chip>
+              </mat-chip-set>
+              <span *ngIf="!element.subjectTeaching1" class="no-subject">No Subject</span>
+            </td>
+          </ng-container>
+
+          <!-- Appointment Date Column -->
+          <ng-container matColumnDef="appointmentDateAsEpf">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Appointment Date</th>
+            <td mat-cell *matCellDef="let element">{{ element.appointmentDateAsEpf | date:'mediumDate' }}</td>
+          </ng-container>
+
+          <!-- NIC Column -->
+          <ng-container matColumnDef="nic">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>NIC</th>
+            <td mat-cell *matCellDef="let element">{{ element.nic }}</td>
+          </ng-container>
+
+          <!-- Actions Column -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button color="primary" (click)="editData(element)" matTooltip="Edit">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="deleteData(element)" matTooltip="Delete">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+          <!-- No data row -->
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+              <div class="no-data">
+                <mat-icon class="no-data-icon">people_outline</mat-icon>
+                <p>No teachers found</p>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" 
+                     [pageSize]="10"
+                     showFirstLastButtons
+                     aria-label="Select page of teachers">
+      </mat-paginator>
+    </mat-card-content>
+  </mat-card>
+</div>

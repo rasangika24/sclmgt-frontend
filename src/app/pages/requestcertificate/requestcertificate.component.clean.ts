@@ -52,7 +52,7 @@ export class RequestcertificateComponent implements OnInit {
     this.requestCertificateForm = this.fb.group({
       studentAdmissionNumber: new FormControl('', [Validators.required]),
       studentName: new FormControl('', [Validators.required]),
-      type: new FormControl('LEAVING_CERTIFICATE', [Validators.required]), // NEW FIELD
+      type: new FormControl('LEAVING_CERTIFICATE', [Validators.required]),
       paymentsCleared: new FormControl(false),
       libraryBooksReturned: new FormControl(false),
       scienceLabCleared: new FormControl(false),
@@ -87,7 +87,7 @@ export class RequestcertificateComponent implements OnInit {
         this.loadStatistics();
         this.isLoading = false;
       },
-      error: (error) => {
+      error: (error: any) => {
         console.error('Error creating request:', error);
         let errorMessage = 'Failed to submit certification request';
         
@@ -117,7 +117,7 @@ export class RequestcertificateComponent implements OnInit {
         this.loadStatistics();
         this.isLoading = false;
       },
-      error: (error) => {
+      error: (error: any) => {
         console.error('Error updating request:', error);
         this.messageService.showError('Failed to update certification request: ' + (error.error?.message || error.message));
         this.isLoading = false;
@@ -138,7 +138,7 @@ export class RequestcertificateComponent implements OnInit {
         this.certificationRequests = requests;
         this.applyFilters();
       },
-      error: (error) => {
+      error: (error: any) => {
         console.error('Error loading requests:', error);
         this.messageService.showError('Failed to load certification requests');
       }
@@ -150,7 +150,7 @@ export class RequestcertificateComponent implements OnInit {
       next: (stats) => {
         this.statistics = stats;
       },
-      error: (error) => {
+      error: (error: any) => {
         console.error('Error loading statistics:', error);
       }
     });
@@ -199,7 +199,7 @@ export class RequestcertificateComponent implements OnInit {
     this.requestCertificateForm.patchValue({
       studentAdmissionNumber: request.studentAdmissionNumber,
       studentName: request.studentName,
-      type: request.type || 'LEAVING_CERTIFICATE', // Include type field
+      type: request.type || 'LEAVING_CERTIFICATE',
       paymentsCleared: request.paymentsCleared,
       libraryBooksReturned: request.libraryBooksReturned,
       scienceLabCleared: request.scienceLabCleared,
@@ -219,7 +219,7 @@ export class RequestcertificateComponent implements OnInit {
           this.loadCertificationRequests();
           this.loadStatistics();
         },
-        error: (error) => {
+        error: (error: any) => {
           console.error('Error deleting request:', error);
           this.messageService.showError('Failed to delete certification request');
         }
@@ -241,7 +241,7 @@ export class RequestcertificateComponent implements OnInit {
         this.loadCertificationRequests();
         this.loadStatistics();
       },
-      error: (error) => {
+      error: (error: any) => {
         console.error('Error approving request:', error);
         this.messageService.showError('Failed to approve request');
       }
@@ -263,7 +263,7 @@ export class RequestcertificateComponent implements OnInit {
         this.loadCertificationRequests();
         this.loadStatistics();
       },
-      error: (error) => {
+      error: (error: any) => {
         console.error('Error rejecting request:', error);
         this.messageService.showError('Failed to reject request');
       }
@@ -325,5 +325,3 @@ export class RequestcertificateComponent implements OnInit {
     }
   }
 }
-
-

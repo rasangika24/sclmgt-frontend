@@ -1,0 +1,25 @@
+/* src/app/pages/timetable/timetable-add-edit/timetable-add-edit.component.scss */
+.content {
+  padding-top: 10px;
+  min-width: 500px;
+}
+
+.row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 10px;
+
+  mat-form-field {
+    flex: 1;
+  }
+}
+
+.actions {
+  padding: 16px 24px;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+mat-form-field {
+  width: 100%;
+}

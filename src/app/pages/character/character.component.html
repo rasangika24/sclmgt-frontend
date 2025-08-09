@@ -1,104 +1,317 @@
 <div class="container">
-  <h2>Character Form Creator</h2>
-  <div class="form-container">
+  <h2>Character Certificate Generator</h2>
+
+  <!-- Loading indicator -->
+  <div *ngIf="isLoading" class="text-center p-4">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p class="mt-2">Loading...</p>
+  </div>
+
+  <!-- Navigation buttons -->
+  <div class="mb-3" *ngIf="!isLoading">
+    <button mat-raised-button color="primary" (click)="setView('viewRequests')" 
+            [class.mat-button-disabled]="currentView === 'viewRequests'">
+      <mat-icon>list</mat-icon> View Requests
+    </button>
+    <button mat-raised-button color="accent" (click)="loadApprovedCharacterCertificationRequests()" class="ms-2">
+      <mat-icon>refresh</mat-icon> Refresh
+    </button>
+  </div>
+
+  <!-- View Certification Requests -->
+  <div *ngIf="currentView === 'viewRequests' && !isLoading">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Approved Character Certificate Requests</mat-card-title>
+        <mat-card-subtitle>Select a request to generate character certificate</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div *ngIf="certificationRequests.length === 0" class="text-center p-4">
+          <mat-icon class="large-icon text-muted">assignment</mat-icon>
+          <p class="mt-2">No approved character certificate requests found.</p>
+        </div>
+
+        <div *ngIf="certificationRequests.length > 0">
+          <table mat-table [dataSource]="certificationRequests" class="w-100">
+            <!-- Student Name Column -->
+            <ng-container matColumnDef="studentName">
+              <th mat-header-cell *matHeaderCellDef>Student Name</th>
+              <td mat-cell *matCellDef="let request">{{ request.studentName }}</td>
+            </ng-container>
+
+            <!-- Admission Number Column -->
+            <ng-container matColumnDef="admissionNumber">
+              <th mat-header-cell *matHeaderCellDef>Admission Number</th>
+              <td mat-cell *matCellDef="let request">{{ request.studentAdmissionNumber }}</td>
+            </ng-container>
+
+            <!-- Request Date Column -->
+            <ng-container matColumnDef="requestDate">
+              <th mat-header-cell *matHeaderCellDef>Request Date</th>
+              <td mat-cell *matCellDef="let request">{{ request.requestDate | date:'shortDate' }}</td>
+            </ng-container>
+
+            <!-- Status Column -->
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef>Status</th>
+              <td mat-cell *matCellDef="let request">
+                <span class="badge" [class]="getStatusClass(request.status || 'APPROVED')">
+                  {{ request.status || 'APPROVED' }}
+                </span>
+              </td>
+            </ng-container>
+
+            <!-- Clearances Column -->
+            <ng-container matColumnDef="clearances">
+              <th mat-header-cell *matHeaderCellDef>Clearances</th>
+              <td mat-cell *matCellDef="let request">
+                <div class="clearances-status">
+                  <mat-icon [class]="getClearanceClass(request.paymentsCleared)" matTooltip="Payments">
+                    {{ getClearanceIcon(request.paymentsCleared) }}
+                  </mat-icon>
+                  <mat-icon [class]="getClearanceClass(request.libraryBooksReturned)" matTooltip="Library">
+                    {{ getClearanceIcon(request.libraryBooksReturned) }}
+                  </mat-icon>
+                  <mat-icon [class]="getClearanceClass(request.scienceLabCleared)" matTooltip="Science Lab">
+                    {{ getClearanceIcon(request.scienceLabCleared) }}
+                  </mat-icon>
+                  <mat-icon [class]="getClearanceClass(request.ictLabCleared)" matTooltip="ICT Lab">
+                    {{ getClearanceIcon(request.ictLabCleared) }}
+                  </mat-icon>
+                  <mat-icon [class]="getClearanceClass(request.sportsItemsReturned)" matTooltip="Sports">
+                    {{ getClearanceIcon(request.sportsItemsReturned) }}
+                  </mat-icon>
+                </div>
+              </td>
+            </ng-container>
+
+            <!-- Actions Column -->
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef>Actions</th>
+              <td mat-cell *matCellDef="let request">
+                <button mat-raised-button color="primary" 
+                        (click)="selectCertificationRequest(request)"
+                        [disabled]="!isAllClearancesCompleted(request)">
+                  <mat-icon>description</mat-icon>
+                  Generate Certificate
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="['studentName', 'admissionNumber', 'requestDate', 'status', 'clearances', 'actions']"></tr>
+            <tr mat-row *matRowDef="let row; columns: ['studentName', 'admissionNumber', 'requestDate', 'status', 'clearances', 'actions']"></tr>
+          </table>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Fill Character Certificate Form -->
+  <div *ngIf="currentView === 'fillForm' && !isLoading" class="form-container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h3><mat-icon>assignment</mat-icon> Generate Character Certificate</h3>
+      <button mat-raised-button (click)="resetToRequestList()">
+        <mat-icon>arrow_back</mat-icon> Back to Requests
+      </button>
+    </div>
+
+    <!-- Selected Request Info -->
+    <mat-card class="mb-3" *ngIf="selectedRequest" style="background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);">
+      <mat-card-content>
+        <h4><mat-icon>person</mat-icon> Selected Student Request</h4>
+        <div class="info-grid">
+          <p><strong>Student:</strong> {{ selectedRequest.studentName }}</p>
+          <p><strong>Admission Number:</strong> {{ selectedRequest.studentAdmissionNumber }}</p>
+          <p><strong>Request Date:</strong> {{ selectedRequest.requestDate | date:'fullDate' }}</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
     <form [formGroup]="characterForm" (ngSubmit)="onSubmit()">
-      <div class="row">
-        <mat-form-field class="half-width">
-          <mat-label>Index No</mat-label>
-          <input matInput placeholder="Index No" value="" formControlName="indexNo" />
-        </mat-form-field>
+      <!-- Student Information Section -->
+      <mat-card class="mb-3">
+        <mat-card-header>
+          <mat-card-title><mat-icon>school</mat-icon> Student Information</mat-card-title>
+          <mat-card-subtitle>Basic student details (auto-filled from database)</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="row">
+            <mat-form-field class="half-width">
+              <mat-label>Student Name</mat-label>
+              <input matInput formControlName="pupilsName" />
+              <mat-error *ngIf="hasError('pupilsName', 'required')">Student name is required</mat-error>
+            </mat-form-field>
 
-        <mat-form-field class="half-width">
-          <mat-label>Pupils Name </mat-label>
-          <input matInput placeholder="Pupils Name" value="" formControlName="pupilsName" />
-        </mat-form-field>
-      </div>
-
-      <div class="row">
-        <mat-form-field class="quater-width">
-          <mat-label>Date of Admission</mat-label>
-          <input matInput [matDatepicker]="doa" placeholder="MM/DD/YYYY" formControlName="dateofAdmission" />
-          <mat-datepicker-toggle matSuffix [for]="doa"></mat-datepicker-toggle>
-          <mat-datepicker #doa></mat-datepicker>
-        </mat-form-field>
-
-        <mat-form-field class="quater-width">
-          <mat-label>Date of Leaving</mat-label>
-          <input matInput [matDatepicker]="dol" placeholder="MM/DD/YYYY" formControlName="dateofLeaving" />
-          <mat-datepicker-toggle matSuffix [for]="dol"></mat-datepicker-toggle>
-          <mat-datepicker #dol></mat-datepicker>
-        </mat-form-field>
-      </div>
-
-      <div class="row">
-        <mat-form-field class="half-width">
-          <mat-label>Last Grade Passed</mat-label>
-          <input matInput placeholder="Last Grade Passed" value="" type="number" min="1" max="12"
-            oninput="this.value = Math.min(Math.max(this.value, 1), 13)" formControlName="lastgradePassed" />
-        </mat-form-field>
-
-        <mat-form-field class="half-width">
-          <mat-label>Character and Conduct </mat-label>
-          <mat-select formControlName="characerandConduct">
-            <mat-option value="veryGood">Very Good</mat-option>
-            <mat-option value="good">Good</mat-option>
-            <mat-option value="moderate">Moderate</mat-option>
-            <mat-option value="bad">Bad</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-
-      <div class="row">
-        <mat-form-field class="half-width">
-          <mat-label>Extra Curriculary</mat-label>
-          <input matInput placeholder="Extra Curricular" value="" formControlName="extraCurricular" />
-        </mat-form-field>
-
-        <mat-form-field class="half-width">
-          <mat-label>Special Skills </mat-label>
-          <input matInput placeholder="Special" value="" formControlName="specialSkills" />
-        </mat-form-field>
-      </div>
-
-      <div class="row">
-        <mat-form-field class="half-width">
-          <mat-label>Malbehavior </mat-label>
-          <input matInput placeholder="Malbehaviour" value="" formControlName="malBehavior" />
-        </mat-form-field>
-
-        <mat-form-field class="half-width">
-          <mat-label>Good Behaviour</mat-label>
-          <input matInput placeholder="Good Behaviour" value="" formControlName="goodBehaviour" />
-        </mat-form-field>
-
-        <div class="row">
-          <mat-form-field class="half-width">
-            <mat-label>Leadership Skills</mat-label>
-            <input matInput placeholder="Leadership Skills" value="" formControlName="leadershipSkills" />
-          </mat-form-field>
-
-          <mat-form-field class="half-width">
-            <mat-label>Principals Recomendation</mat-label>
-            <input matInput placeholder="Pricipals Recomondation" value="" formControlName="principalsRecomendation" />
-          </mat-form-field>
-        </div>
-
-        <div class="row">
-          <mat-form-field class="half-width">
-            <mat-label>Date Issued</mat-label>
-            <input matInput placeholder="Date Issued" value="" formControlName="dateIssued" />
-          </mat-form-field>
-        </div>
-
-        <div class="row">
-          <div class="button">
-            <button type="submit" mat-raised-button color="primary">
-              Print
-            </button>
-            <button mat-raised-button color="danger">Reset</button>
-
+            <mat-form-field class="half-width">
+              <mat-label>Date of Birth</mat-label>
+              <input matInput [matDatepicker]="dob" formControlName="dateofBirth" />
+              <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
+              <mat-datepicker #dob></mat-datepicker>
+              <mat-error *ngIf="hasError('dateofBirth', 'required')">Date of birth is required</mat-error>
+            </mat-form-field>
           </div>
 
+          <div class="row">
+            <mat-form-field class="half-width">
+              <mat-label>Religion</mat-label>
+              <mat-select formControlName="religion">
+                <mat-option value="Buddhism">Buddhism</mat-option>
+                <mat-option value="Hindu">Hindu</mat-option>
+                <mat-option value="Islam">Islam</mat-option>
+                <mat-option value="Christian">Christian</mat-option>
+                <mat-option value="Other">Other</mat-option>
+              </mat-select>
+              <mat-error *ngIf="hasError('religion', 'required')">Religion is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="half-width">
+              <mat-label>Date of Admission</mat-label>
+              <input matInput [matDatepicker]="doa" formControlName="dateofAdmission" />
+              <mat-datepicker-toggle matSuffix [for]="doa"></mat-datepicker-toggle>
+              <mat-datepicker #doa></mat-datepicker>
+              <mat-error *ngIf="hasError('dateofAdmission', 'required')">Date of admission is required</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <mat-form-field class="full-width">
+              <mat-label>Father/Guardian Name</mat-label>
+              <input matInput formControlName="fullnameofthefatherGardian" />
+              <mat-error *ngIf="hasError('fullnameofthefatherGardian', 'required')">Father/Guardian name is required</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <mat-form-field class="full-width">
+              <mat-label>Father/Guardian Address</mat-label>
+              <textarea matInput rows="2" formControlName="addressofthefatherGardian"></textarea>
+              <mat-error *ngIf="hasError('addressofthefatherGardian', 'required')">Address is required</mat-error>
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Academic Information Section -->
+      <mat-card class="mb-3">
+        <mat-card-header>
+          <mat-card-title><mat-icon>menu_book</mat-icon> Academic Information</mat-card-title>
+          <mat-card-subtitle>Academic and character assessment details</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="row">
+            <mat-form-field class="half-width">
+              <mat-label>Last Grade Passed</mat-label>
+              <mat-select formControlName="lastgradePassed">
+                <mat-option value="1">Grade 1</mat-option>
+                <mat-option value="2">Grade 2</mat-option>
+                <mat-option value="3">Grade 3</mat-option>
+                <mat-option value="4">Grade 4</mat-option>
+                <mat-option value="5">Grade 5</mat-option>
+                <mat-option value="6">Grade 6</mat-option>
+                <mat-option value="7">Grade 7</mat-option>
+                <mat-option value="8">Grade 8</mat-option>
+                <mat-option value="9">Grade 9</mat-option>
+                <mat-option value="10">Grade 10</mat-option>
+                <mat-option value="11">Grade 11</mat-option>
+                <mat-option value="12">Grade 12</mat-option>
+                <mat-option value="13">Grade 13</mat-option>
+              </mat-select>
+              <mat-error *ngIf="hasError('lastgradePassed', 'required')">Last grade passed is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="half-width">
+              <mat-label>Academic Progress</mat-label>
+              <mat-select formControlName="progressinacademicField">
+                <mat-option value="Excellent">Excellent</mat-option>
+                <mat-option value="Very Good">Very Good</mat-option>
+                <mat-option value="Good">Good</mat-option>
+                <mat-option value="Satisfactory">Satisfactory</mat-option>
+                <mat-option value="Needs Improvement">Needs Improvement</mat-option>
+              </mat-select>
+              <mat-error *ngIf="hasError('progressinacademicField', 'required')">Academic progress is required</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <mat-form-field class="half-width">
+              <mat-label>Good Behaviour</mat-label>
+              <mat-select formControlName="goodBehaviour">
+                <mat-option [value]="true">Yes</mat-option>
+                <mat-option [value]="false">No</mat-option>
+              </mat-select>
+              <mat-error *ngIf="hasError('goodBehaviour', 'required')">Behaviour status is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="half-width">
+              <mat-label>Date Issued</mat-label>
+              <input matInput [matDatepicker]="di" formControlName="dateIssued" />
+              <mat-datepicker-toggle matSuffix [for]="di"></mat-datepicker-toggle>
+              <mat-datepicker #di></mat-datepicker>
+              <mat-error *ngIf="hasError('dateIssued', 'required')">Date issued is required</mat-error>
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Character Assessment Section -->
+      <mat-card class="mb-3">
+        <mat-card-header>
+          <mat-card-title><mat-icon>workspace_premium</mat-icon> Character Assessment</mat-card-title>
+          <mat-card-subtitle>Skills, activities and principal's recommendation</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="row">
+            <mat-form-field class="half-width">
+              <mat-label>Extra Curricular Activities</mat-label>
+              <input matInput formControlName="extraCurricular" placeholder="Sports, Arts, Music, etc." />
+            </mat-form-field>
+
+            <mat-form-field class="half-width">
+              <mat-label>Special Skills</mat-label>
+              <input matInput formControlName="specialSkills" placeholder="Technical, Creative, etc." />
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <mat-form-field class="half-width">
+              <mat-label>Leadership Skills</mat-label>
+              <input matInput formControlName="leadershipSkills" placeholder="Leadership abilities" />
+            </mat-form-field>
+
+            <mat-form-field class="half-width">
+              <mat-label>Principal's Recommendation</mat-label>
+              <textarea matInput rows="3" formControlName="principalsRecomendation" placeholder="Principal's recommendation"></textarea>
+              <mat-error *ngIf="hasError('principalsRecomendation', 'required')">Principal's recommendation is required</mat-error>
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Action Buttons -->
+      <div class="action-buttons">
+        <!-- Form validation status -->
+        <div class="validation-status" [ngClass]="{'valid': isFormValidForPDF(), 'invalid': !isFormValidForPDF()}">
+          <mat-icon>{{ isFormValidForPDF() ? 'check_circle' : 'error' }}</mat-icon>
+          <span>{{ getFormValidationMessage() }}</span>
+        </div>
+
+        <div class="button-group">
+          <button type="button" mat-raised-button color="primary" (click)="generatePDF()" 
+                  [disabled]="!isFormValidForPDF()">
+            <mat-icon>picture_as_pdf</mat-icon> Generate PDF Certificate
+          </button>
+          <button type="submit" mat-raised-button color="accent" [disabled]="!isFormValidForPDF()" class="ms-2">
+            <mat-icon>save</mat-icon> Save & Generate PDF
+          </button>
+          <button type="button" mat-raised-button color="warn" (click)="resetForm()" class="ms-2">
+            <mat-icon>refresh</mat-icon> Reset Form
+          </button>
+          <button type="button" mat-raised-button (click)="resetToRequestList()" class="ms-2">
+            <mat-icon>cancel</mat-icon> Cancel
+          </button>
         </div>
       </div>
+    </form>
+  </div>
+</div>
     

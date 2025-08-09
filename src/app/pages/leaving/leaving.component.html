@@ -1,190 +1,358 @@
 <div class="container">
-    <h2>Leaving Form Creator</h2>
-    <div class="form-container">
-        <form [formGroup]="leavingForm" (ngSubmit)="onSubmit()">
-            <div class="row">
-                <mat-form-field class="half-width">
-                    <mat-label>Index No</mat-label>
-                    <input matInput placeholder="Index Number" value="" formControlName="indexNo" />
-                </mat-form-field>
-                <mat-form-field class="half-width">
-                    <mat-label>Name With Initials</mat-label>
-                    <input matInput placeholder="Name with Initials" value="" formControlName="namewithInitials" />
-                </mat-form-field>           
-                             
-            </div>
+  <h2>Leaving Certificate Generator</h2>
 
-            <div class="row">
-                <mat-form-field class="half-width">
-                    <mat-label>Pupils Full Name </mat-label>
-                    <input matInput placeholder="Pupils Full Name" value="" formControlName="fullName" />
-                </mat-form-field>
-                <mat-form-field class="half-width">
-                    <mat-label>School </mat-label>
-                    <input matInput placeholder="Name of The School" value="" formControlName="school" />
-                </mat-form-field>
-               
+  <!-- Loading indicator -->
+  <div *ngIf="isLoading" class="text-center p-4">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p class="mt-2">Loading...</p>
+  </div>
 
-            </div>
+  <!-- Navigation buttons -->
+  <div class="mb-3" *ngIf="!isLoading">
+    <button mat-raised-button color="primary" (click)="setView('viewRequests')" 
+            [class.mat-button-disabled]="currentView === 'viewRequests'">
+      <mat-icon>list</mat-icon> View Requests
+    </button>
+    <button mat-raised-button color="accent" (click)="loadApprovedCertificationRequests()" class="ms-2">
+      <mat-icon>refresh</mat-icon> Refresh
+    </button>
+  </div>
 
-            <div class="row">
-                <mat-form-field class="half-width">
-                    <mat-label>Date of Birth</mat-label>
-                    <input matInput [matDatepicker]="dob" placeholder="MM/DD/YYYY" formControlName="dateofBirth" />
-                    <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
-                    <mat-datepicker #dob></mat-datepicker>
-                </mat-form-field>
+  <!-- View Certification Requests -->
+  <div *ngIf="currentView === 'viewRequests' && !isLoading">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Approved Certification Requests</mat-card-title>
+        <mat-card-subtitle>Select a request to generate leaving certificate</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div *ngIf="certificationRequests.length === 0" class="text-center p-4">
+          <mat-icon class="large-icon text-muted">assignment</mat-icon>
+          <p class="mt-2">No approved certification requests found.</p>
+        </div>
 
-                <mat-form-field class="half-width">
-                    <mat-label>Religion</mat-label>
-                    <mat-select formControlName="religion">
-                        <mat-option value="buddhism">Buddhism</mat-option>
-                        <mat-option value="hindu">Hindu</mat-option>
-                        <mat-option value="islam">Islam</mat-option>
-                        <mat-option value="christian">Christian</mat-option>
-                    </mat-select>
-                </mat-form-field>
-                
-            </div>
-             <div class="row">
-               <mat-form-field class="half-width">
-                    <mat-label>Date of Admission</mat-label>
-                    <input matInput [matDatepicker]="doa" placeholder="MM/DD/YYYY" formControlName="dateofAdmission" />
-                    <mat-datepicker-toggle matSuffix [for]="doa"></mat-datepicker-toggle>
-                    <mat-datepicker #doa></mat-datepicker>
-                </mat-form-field>
+        <div *ngIf="certificationRequests.length > 0">
+          <table mat-table [dataSource]="certificationRequests" class="w-100">
+            <!-- Student Name Column -->
+            <ng-container matColumnDef="studentName">
+              <th mat-header-cell *matHeaderCellDef>Student Name</th>
+              <td mat-cell *matCellDef="let request">{{ request.studentName }}</td>
+            </ng-container>
 
-                <mat-form-field class="half-width">
-                    <mat-label>Date of Leaving</mat-label>
-                    <input matInput [matDatepicker]="doa" placeholder="MM/DD/YYYY" formControlName="dateofLeaving" />
-                    <mat-datepicker-toggle matSuffix [for]="doa"></mat-datepicker-toggle>
-                    <mat-datepicker #dol></mat-datepicker>
-                </mat-form-field>
-                
-            </div>
+            <!-- Admission Number Column -->
+            <ng-container matColumnDef="admissionNumber">
+              <th mat-header-cell *matHeaderCellDef>Admission Number</th>
+              <td mat-cell *matCellDef="let request">{{ request.studentAdmissionNumber }}</td>
+            </ng-container>
 
-            <div class="row">
-                <mat-form-field class="half-width">
-                    <mat-label>Address</mat-label>
-                    <textarea matInput rows="1" maxlength="1000" placeholder="Address"
-                        formControlName="address"></textarea>
-                </mat-form-field>
+            <!-- Request Date Column -->
+            <ng-container matColumnDef="requestDate">
+              <th mat-header-cell *matHeaderCellDef>Request Date</th>
+              <td mat-cell *matCellDef="let request">{{ request.requestDate | date:'shortDate' }}</td>
+            </ng-container>
 
-                <mat-form-field class="half-width">
-                    <mat-label>Full name of the Father</mat-label>
-                    <input matInput placeholder="Full name of the Father*" value="" formControlName="fullnameofthefatherGardian" />
-                </mat-form-field>
-                
-            </div>
+            <!-- Status Column -->
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef>Status</th>
+              <td mat-cell *matCellDef="let request">
+                <span class="badge" [ngClass]="getStatusClass(request.status!)">
+                  {{ request.status }}
+                </span>
+              </td>
+            </ng-container>
 
-            <div class="row">
-
-
-                <mat-form-field class="half-width">
-                    <mat-label>Cause of Leaving</mat-label>
-                    <input matInput placeholder="Cause of Leaving" value="" formControlName="causeLeaving" />
-                </mat-form-field>
-                <mat-form-field class="half-width">
-                    <mat-label>Current Class subjects</mat-label>
-                    <input matInput placeholder="Current Class Subjects" value="" type=""
-                        formControlName="subjectstudiedinthepresentClass" />
-                </mat-form-field>
-            </div>
-            <div class="row">
-                <mat-form-field class="half-width">
-                    <mat-label>Last Grade Passed</mat-label>
-                    <input matInput placeholder=":ast Grade passed" value="" type="number" min="1" max="12"
-                        oninput="this.value = Math.min(Math.max(this.value, 1), 13)"
-                        formControlName="lastgradePassed" />
-                </mat-form-field>
-                <mat-form-field class="half-width">
-                    <mat-label>Progress of academic Field</mat-label>
-                    <mat-select formControlName="progressinacademicField">
-                        <mat-option value="veryGood">Very Good</mat-option>
-                        <mat-option value="good">Good</mat-option>
-                        <mat-option value="moderate">Moderate</mat-option>
-                        <mat-option value="bad">Bad</mat-option>
-                    </mat-select>
-                </mat-form-field>
-
-            </div>
-             <div class="row">
-                <mat-form-field class="half-width">
-                    <mat-label>Malbehavior </mat-label>
-                    <input matInput placeholder="Malbehaviour" value="" formControlName="malBehavior" />
-                </mat-form-field>
-
-                <mat-form-field class="half-width">
-                    <mat-label>Good Behaviour</mat-label>
-                    <input matInput placeholder="Good Behaviour" value="" formControlName="goodBehaviour" />
-                </mat-form-field>
-
-            </div>
-             <div class="row">
-                <mat-form-field class="half-width">
-                    <mat-label>Medium of subject Learned</mat-label>
-                    <mat-select formControlName="mediumLearned">
-                        <mat-option value="Sinhala">Sinhala</mat-option>
-                        <mat-option value="English">English</mat-option>
-                        <mat-option value="Bilingual">Bilingual</mat-option>
-                    </mat-select>
-                </mat-form-field>
-               
-
-                <mat-form-field class="half-width">
-                    <mat-label>Behaviour</mat-label>
-                    <mat-select formControlName="behaviour">
-                        <mat-option value="veryGood">Very Good</mat-option>
-                        <mat-option value="good">Good</mat-option>
-                        <mat-option value="moderate">Moderate</mat-option>
-                        <mat-option value="bad">Bad</mat-option>
-                    </mat-select>
-                </mat-form-field>
-
-            </div>
-             <div class="row">
-                <mat-form-field class="half-width">
-                    <mat-label>Special Achievements </mat-label>
-                    <input matInput placeholder="Special Achivements" value=""
-                        formControlName="specialAchievements" />
-                </mat-form-field>
-
-                <mat-form-field class="half-width">
-                    <mat-label>Extra Curricular </mat-label>
-                    <input matInput placeholder="ExtraCurricular" value="" formControlName="extraCurricular" />
-                </mat-form-field>
-            </div>
-
-            <div class="row">
-                
-                <mat-form-field class="full-width">
-                    <mat-label>Medical Records </mat-label>
-                    <input matInput placeholder="Mecicals Records " value=""
-                        formControlName="medicalRecords" />
-                </mat-form-field>
-                
-            </div>
-            <div class="row">
-                <mat-form-field class="half-width">
-                    <mat-label>Principal's Name </mat-label>
-                    <input matInput placeholder="Principal'S Name" value=""
-                        formControlName="principalsName" />
-                </mat-form-field>
-
-                <mat-form-field class="half-width">
-                    <mat-label>Date Issued </mat-label>
-                    <input matInput placeholder="Date Issued" value="" formControlName="dateIssued" />
-                </mat-form-field>
-            </div>
-
-            <div class="row">
-
-
-                <div class="button">
-                    <button type="submit" mat-raised-button color="primary">Send Request</button>
-                    <button mat-raised-button color="danger">Reset</button>
+            <!-- Clearances Column -->
+            <ng-container matColumnDef="clearances">
+              <th mat-header-cell *matHeaderCellDef>Clearances</th>
+              <td mat-cell *matCellDef="let request">
+                <div class="clearance-icons">
+                  <mat-icon [ngClass]="getClearanceClass(request.paymentsCleared)" 
+                           matTooltip="Payments Cleared">{{ getClearanceIcon(request.paymentsCleared) }}</mat-icon>
+                  <mat-icon [ngClass]="getClearanceClass(request.libraryBooksReturned)" 
+                           matTooltip="Library Books Returned">{{ getClearanceIcon(request.libraryBooksReturned) }}</mat-icon>
+                  <mat-icon [ngClass]="getClearanceClass(request.scienceLabCleared)" 
+                           matTooltip="Science Lab Cleared">{{ getClearanceIcon(request.scienceLabCleared) }}</mat-icon>
+                  <mat-icon [ngClass]="getClearanceClass(request.ictLabCleared)" 
+                           matTooltip="ICT Lab Cleared">{{ getClearanceIcon(request.ictLabCleared) }}</mat-icon>
+                  <mat-icon [ngClass]="getClearanceClass(request.sportsItemsReturned)" 
+                           matTooltip="Sports Items Returned">{{ getClearanceIcon(request.sportsItemsReturned) }}</mat-icon>
                 </div>
-            </div>
-        </form>
+              </td>
+            </ng-container>
+
+            <!-- Actions Column -->
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef>Actions</th>
+              <td mat-cell *matCellDef="let request">
+                <button mat-raised-button color="primary" 
+                        (click)="selectCertificationRequest(request)"
+                        [disabled]="!isAllClearancesCompleted(request)">
+                  <mat-icon>description</mat-icon>
+                  Generate Certificate
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="['studentName', 'admissionNumber', 'requestDate', 'status', 'clearances', 'actions']"></tr>
+            <tr mat-row *matRowDef="let row; columns: ['studentName', 'admissionNumber', 'requestDate', 'status', 'clearances', 'actions']"></tr>
+          </table>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Fill Leaving Certificate Form -->
+  <div *ngIf="currentView === 'fillForm' && !isLoading" class="form-container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h3><mat-icon>assignment</mat-icon> Generate Leaving Certificate</h3>
+      <button mat-raised-button (click)="resetToRequestList()">
+        <mat-icon>arrow_back</mat-icon> Back to Requests
+      </button>
     </div>
+
+    <!-- Selected Request Info -->
+    <mat-card class="mb-3" *ngIf="selectedRequest" style="background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);">
+      <mat-card-content>
+        <h4><mat-icon>person</mat-icon> Selected Student Request</h4>
+        <div class="info-grid">
+          <p><strong>Student:</strong> {{ selectedRequest.studentName }}</p>
+          <p><strong>Admission Number:</strong> {{ selectedRequest.studentAdmissionNumber }}</p>
+          <p><strong>Request Date:</strong> {{ selectedRequest.requestDate | date:'fullDate' }}</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <form [formGroup]="leavingForm" (ngSubmit)="onSubmit()">
+      <!-- Student Information Section -->
+      <mat-card class="mb-3">
+        <mat-card-header>
+          <mat-card-title><mat-icon>school</mat-icon> Student Information</mat-card-title>
+          <mat-card-subtitle>Basic student details (auto-filled from database)</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <!-- <div class="row">
+          <mat-form-field class="half-width">
+              <mat-label>Index Number</mat-label>
+              <input matInput formControlName="indexNo" />
+              <mat-error *ngIf="hasError('indexNo', 'required')">Index number is required</mat-error>
+            </mat-form-field> 
+
+            <mat-form-field class="half-width">
+              <mat-label>Name With Initials</mat-label>
+              <input matInput formControlName="namewithInitials" />
+              <mat-error *ngIf="hasError('namewithInitials', 'required')">Name with initials is required</mat-error>
+            </mat-form-field> -->
+          <!-- </div> -->
+
+          <div class="row">
+            <mat-form-field class="half-width">
+              <mat-label>Full Name</mat-label>
+              <input matInput formControlName="namewithInitials" />
+              <mat-error *ngIf="hasError('namewithInitials', 'required')">Full name is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="half-width">
+              <mat-label>School Name</mat-label>
+              <input matInput formControlName="school" />
+              <mat-error *ngIf="hasError('school', 'required')">School name is required</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <mat-form-field class="half-width">
+              <mat-label>Date of Birth</mat-label>
+              <input matInput [matDatepicker]="dob" formControlName="dateofBirth" />
+              <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
+              <mat-datepicker #dob></mat-datepicker>
+              <mat-error *ngIf="hasError('dateofBirth', 'required')">Date of birth is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="half-width">
+              <mat-label>Religion</mat-label>
+              <mat-select formControlName="religion">
+                <mat-option value="Buddhism">Buddhism</mat-option>
+                <mat-option value="Hindu">Hindu</mat-option>
+                <mat-option value="Islam">Islam</mat-option>
+                <mat-option value="Christian">Christian</mat-option>
+                <mat-option value="Other">Other</mat-option>
+              </mat-select>
+              <mat-error *ngIf="hasError('religion', 'required')">Religion is required</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <mat-form-field class="full-width">
+              <mat-label>Address</mat-label>
+              <textarea matInput rows="2" formControlName="address"></textarea>
+              <mat-error *ngIf="hasError('address', 'required')">Address is required</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <mat-form-field class="full-width">
+              <mat-label>Father/Guardian Name</mat-label>
+              <input matInput formControlName="fullnameofthefatherGardian" />
+              <mat-error *ngIf="hasError('fullnameofthefatherGardian', 'required')">Father/Guardian name is required</mat-error>
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Academic Information Section -->
+      <mat-card class="mb-3">
+        <mat-card-header>
+          <mat-card-title><mat-icon>menu_book</mat-icon> Academic Information</mat-card-title>
+          <mat-card-subtitle>Academic details and leaving information</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="row">
+            <mat-form-field class="half-width">
+              <mat-label>Date of Admission</mat-label>
+              <input matInput [matDatepicker]="doa" formControlName="dateofAdmission" />
+              <mat-datepicker-toggle matSuffix [for]="doa"></mat-datepicker-toggle>
+              <mat-datepicker #doa></mat-datepicker>
+              <mat-error *ngIf="hasError('dateofAdmission', 'required')">Date of admission is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="half-width">
+              <mat-label>Date of Leaving</mat-label>
+              <input matInput [matDatepicker]="dol" formControlName="dateofLeaving" />
+              <mat-datepicker-toggle matSuffix [for]="dol"></mat-datepicker-toggle>
+              <mat-datepicker #dol></mat-datepicker>
+              <mat-error *ngIf="hasError('dateofLeaving', 'required')">Date of leaving is required</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <mat-form-field class="half-width">
+              <mat-label>Last Grade Passed</mat-label>
+              <mat-select formControlName="lastgradePassed">
+                <mat-option value="1">Grade 1</mat-option>
+                <mat-option value="2">Grade 2</mat-option>
+                <mat-option value="3">Grade 3</mat-option>
+                <mat-option value="4">Grade 4</mat-option>
+                <mat-option value="5">Grade 5</mat-option>
+                <mat-option value="6">Grade 6</mat-option>
+                <mat-option value="7">Grade 7</mat-option>
+                <mat-option value="8">Grade 8</mat-option>
+                <mat-option value="9">Grade 9</mat-option>
+                <mat-option value="10">Grade 10</mat-option>
+                <mat-option value="11">Grade 11</mat-option>
+                <mat-option value="12">Grade 12</mat-option>
+                <mat-option value="13">Grade 13</mat-option>
+              </mat-select>
+              <mat-error *ngIf="hasError('lastgradePassed', 'required')">Last grade passed is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="half-width">
+              <mat-label>Medium of Learning</mat-label>
+              <mat-select formControlName="mediumLearned">
+                <mat-option value="Sinhala">Sinhala</mat-option>
+                <mat-option value="English">English</mat-option>
+                <mat-option value="Tamil">Tamil</mat-option>
+                <mat-option value="Bilingual">Bilingual</mat-option>
+              </mat-select>
+              <mat-error *ngIf="hasError('mediumLearned', 'required')">Medium of learning is required</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <mat-form-field class="full-width">
+              <mat-label>Reason for Leaving</mat-label>
+              <input matInput formControlName="causeLeaving" placeholder="e.g., Transfer to another school, Completion of studies" />
+              <mat-error *ngIf="hasError('causeLeaving', 'required')">Reason for leaving is required</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <mat-form-field class="half-width">
+              <mat-label>Academic Progress</mat-label>
+              <mat-select formControlName="progressinacademicField">
+                <mat-option value="Excellent">Excellent</mat-option>
+                <mat-option value="Very Good">Very Good</mat-option>
+                <mat-option value="Good">Good</mat-option>
+                <mat-option value="Satisfactory">Satisfactory</mat-option>
+                <mat-option value="Needs Improvement">Needs Improvement</mat-option>
+              </mat-select>
+              <mat-error *ngIf="hasError('progressinacademicField', 'required')">Academic progress is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="half-width">
+              <mat-label>Behaviour</mat-label>
+              <mat-select formControlName="behaviour">
+                <mat-option value="Excellent">Excellent</mat-option>
+                <mat-option value="Very Good">Very Good</mat-option>
+                <mat-option value="Good">Good</mat-option>
+                <mat-option value="Satisfactory">Satisfactory</mat-option>
+                <mat-option value="Needs Improvement">Needs Improvement</mat-option>
+              </mat-select>
+              <mat-error *ngIf="hasError('behaviour', 'required')">Behaviour assessment is required</mat-error>
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Certificate Details Section -->
+      <mat-card class="mb-3">
+        <mat-card-header>
+          <mat-card-title><mat-icon>workspace_premium</mat-icon> Certificate Details</mat-card-title>
+          <mat-card-subtitle>Additional information and certification details</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="row">
+            <mat-form-field class="half-width">
+              <mat-label>Extra Curricular Activities</mat-label>
+              <input matInput formControlName="extraCurricular" placeholder="Sports, Arts, Music, etc." />
+            </mat-form-field>
+
+            <mat-form-field class="half-width">
+              <mat-label>Special Achievements</mat-label>
+              <input matInput formControlName="specialAchievements" placeholder="Awards, Competitions, etc." />
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <mat-form-field class="half-width">
+              <mat-label>Principal's Name</mat-label>
+              <input matInput formControlName="principalsName" />
+              <mat-error *ngIf="hasError('principalsName', 'required')">Principal's name is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="half-width">
+              <mat-label>Date Issued</mat-label>
+              <input matInput [matDatepicker]="di" formControlName="dateIssued" />
+              <mat-datepicker-toggle matSuffix [for]="di"></mat-datepicker-toggle>
+              <mat-datepicker #di></mat-datepicker>
+              <mat-error *ngIf="hasError('dateIssued', 'required')">Date issued is required</mat-error>
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Action Buttons -->
+      <div class="action-buttons">
+        <!-- Form validation status -->
+        <div class="validation-status" [ngClass]="{'valid': isFormValidForPDF(), 'invalid': !isFormValidForPDF()}">
+          <mat-icon>{{ isFormValidForPDF() ? 'check_circle' : 'error' }}</mat-icon>
+          <span>{{ getFormValidationMessage() }}</span>
+        </div>
+
+        <div class="button-group">
+          <button type="button" mat-raised-button color="primary" (click)="generatePDF()" 
+                  [disabled]="!isFormValidForPDF()">
+            <mat-icon>picture_as_pdf</mat-icon> Generate PDF Certificate
+          </button>
+          <button type="submit" mat-raised-button color="accent" [disabled]="!isFormValidForPDF()" class="ms-2">
+            <mat-icon>save</mat-icon> Save & Generate PDF
+          </button>
+          <button type="button" mat-raised-button color="warn" (click)="resetForm()" class="ms-2">
+            <mat-icon>refresh</mat-icon> Reset Form
+          </button>
+          <button type="button" mat-raised-button (click)="resetToRequestList()" class="ms-2">
+            <mat-icon>cancel</mat-icon> Cancel
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>

@@ -1,74 +1,263 @@
-<p>payments works!</p>
 <div class="container">
-    <h2>Payments</h2>
-    <div class="form-container">
-        <form >
-            <div class="row">
-                <mat-form-field class="half-width">
-                    <mat-label>Index No</mat-label>
-                    <input matInput placeholder="Index Number" value="" formControlName="indexNo" />
-                </mat-form-field>
-                <mat-form-field class="half-width">
-                    <mat-label>Name With Initials</mat-label>
-                    <input matInput placeholder="Name with Initials" value="" formControlName="namewithInitials" />
-                </mat-form-field>           
-                             
-            </div>
-
-            <div class="row">
-                <mat-form-field class="half-width">
-                    <mat-label>Year </mat-label>
-                    <input matInput placeholder="Pupils Full Name" value="" formControlName="year" />
-                </mat-form-field>
-                <mat-form-field class="half-width">
-                    <mat-label>Grade </mat-label>
-                    <input matInput placeholder="Name of The School" value="" formControlName="grade" />
-                </mat-form-field>
-               
-
-            </div>
-
-             <div class="row">
-                <mat-form-field class="half-width">
-                    <mat-label>Term </mat-label>
-                    <input matInput placeholder="Pupils Full Name" value="" formControlName="term" />
-                </mat-form-field>
-                <mat-form-field class="half-width">
-                    <mat-label>amount</mat-label>
-                    <input matInput placeholder="Name of The School" value="" formControlName="amount" />
-                </mat-form-field>
-               
-
-            </div>
-
-            <div class="row">
-                <mat-form-field class="half-width">
-                    <mat-label>Payment Date</mat-label>
-                    <input matInput [matDatepicker]="pd" placeholder="MM/DD/YYYY" formControlName="paymentdate" />
-                    <mat-datepicker-toggle matSuffix [for]="pd"></mat-datepicker-toggle>
-                    <mat-datepicker #pd></mat-datepicker>
-                </mat-form-field>
-
-                <mat-form-field class="half-width">
-                    <mat-label>Payment Status</mat-label>
-                    <mat-select formControlName="religion">
-                        <mat-option value="complete">Complete</mat-option>
-                        <mat-option value="incomplete">Incomplete</mat-option>
-                        
-                    </mat-select>
-                </mat-form-field>
-                
-            </div>
-             
-
-            <div class="row">
-
-
-                <div class="button">
-                    <button type="submit" mat-raised-button color="primary">Send Request</button>
-                    <button mat-raised-button color="danger">Reset</button>
-                </div>
-            </div>
-        </form>
+  <!-- Header with Statistics -->
+  <div class="header-section">
+    <div class="title-section">
+      <h2>
+        <mat-icon>payment</mat-icon>
+        Payments Management
+      </h2>
+      <button mat-raised-button color="primary" (click)="toggleFormView()">
+        <mat-icon>{{ showForm ? 'list' : 'add' }}</mat-icon>
+        {{ showForm ? 'View Payments' : 'New Payment' }}
+      </button>
     </div>
+
+    <!-- Statistics Cards -->
+    <div class="stats-grid">
+      <div class="stat-card total">
+        <div class="stat-icon">
+          <mat-icon>receipt</mat-icon>
+        </div>
+        <div class="stat-content">
+          <h3>{{ filteredPayments.length }}</h3>
+          <p>Total Records</p>
+        </div>
+      </div>
+      <div class="stat-card completed">
+        <div class="stat-icon">
+          <mat-icon>check_circle</mat-icon>
+        </div>
+        <div class="stat-content">
+          <h3>{{ getCompletedPayments() }}</h3>
+          <p>Completed</p>
+        </div>
+      </div>
+      <div class="stat-card pending">
+        <div class="stat-icon">
+          <mat-icon>hourglass_empty</mat-icon>
+        </div>
+        <div class="stat-content">
+          <h3>{{ getIncompletePayments() }}</h3>
+          <p>Pending</p>
+        </div>
+      </div>
+      <div class="stat-card amount">
+        <div class="stat-icon">
+          <mat-icon>attach_money</mat-icon>
+        </div>
+        <div class="stat-content">
+          <h3>{{ getFormattedAmount(getTotalAmount()) }}</h3>
+          <p>Total Amount</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Payment Form -->
+  <div class="form-section" *ngIf="showForm">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>{{ editingPayment ? 'edit' : 'add' }}</mat-icon>
+          {{ editingPayment ? 'Edit Payment' : 'New Payment' }}
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
+          <div class="form-grid">
+            <mat-form-field>
+              <mat-label>Index No</mat-label>
+              <input matInput placeholder="Enter Index Number" formControlName="indexNo" />
+              <mat-error *ngIf="paymentForm.get('indexNo')?.hasError('required')">
+                Index number is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Name With Initials</mat-label>
+              <input matInput placeholder="Enter Name with Initials" formControlName="namewithInitials" />
+              <mat-error *ngIf="paymentForm.get('namewithInitials')?.hasError('required')">
+                Name is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Year</mat-label>
+              <input matInput placeholder="Enter Year" formControlName="year" />
+              <mat-error *ngIf="paymentForm.get('year')?.hasError('required')">
+                Year is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Grade</mat-label>
+              <input matInput placeholder="Enter Grade" formControlName="grade" />
+              <mat-error *ngIf="paymentForm.get('grade')?.hasError('required')">
+                Grade is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Term</mat-label>
+              <mat-select formControlName="term">
+                <mat-option value="1st Term">1st Term</mat-option>
+                <mat-option value="2nd Term">2nd Term</mat-option>
+                <mat-option value="3rd Term">3rd Term</mat-option>
+              </mat-select>
+              <mat-error *ngIf="paymentForm.get('term')?.hasError('required')">
+                Term is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Amount (LKR)</mat-label>
+              <input matInput type="number" placeholder="Enter Amount" formControlName="amount" />
+              <mat-error *ngIf="paymentForm.get('amount')?.hasError('required')">
+                Amount is required
+              </mat-error>
+              <mat-error *ngIf="paymentForm.get('amount')?.hasError('min')">
+                Amount must be greater than 0
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Payment Date</mat-label>
+              <input matInput [matDatepicker]="pd" placeholder="Select Date" formControlName="paymentdate" />
+              <mat-datepicker-toggle matSuffix [for]="pd"></mat-datepicker-toggle>
+              <mat-datepicker #pd></mat-datepicker>
+              <mat-error *ngIf="paymentForm.get('paymentdate')?.hasError('required')">
+                Payment date is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Payment Status</mat-label>
+              <mat-select formControlName="paymentStatus">
+                <mat-option value="complete">Complete</mat-option>
+                <mat-option value="incomplete">Incomplete</mat-option>
+              </mat-select>
+              <mat-error *ngIf="paymentForm.get('paymentStatus')?.hasError('required')">
+                Payment status is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" mat-raised-button color="primary" [disabled]="isLoading || !paymentForm.valid">
+              <mat-icon>{{ editingPayment ? 'save' : 'send' }}</mat-icon>
+              {{ editingPayment ? 'Update Payment' : 'Create Payment' }}
+              <mat-spinner diameter="20" *ngIf="isLoading"></mat-spinner>
+            </button>
+            <button type="button" mat-button (click)="resetForm()" [disabled]="isLoading">
+              <mat-icon>refresh</mat-icon>
+              Reset
+            </button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Payments List -->
+  <div class="list-section" *ngIf="!showForm">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>list</mat-icon>
+          Payment Records
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <!-- Search and Filter -->
+        <div class="search-section">
+          <mat-form-field class="search-field">
+            <mat-label>Search by Index No or Name</mat-label>
+            <input matInput [(ngModel)]="searchTerm" (ngModelChange)="onSearch()" placeholder="Search...">
+            <mat-icon matSuffix>search</mat-icon>
+          </mat-form-field>
+          <mat-form-field class="filter-field">
+            <mat-label>Filter by Status</mat-label>
+            <mat-select [(value)]="selectedStatus" (selectionChange)="onStatusChange()">
+              <mat-option value="all">All Status</mat-option>
+              <mat-option value="complete">Complete</mat-option>
+              <mat-option value="incomplete">Incomplete</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <!-- Payments Table -->
+        <div class="table-container">
+          <table mat-table [dataSource]="filteredPayments" class="payments-table">
+            <!-- Index No Column -->
+            <ng-container matColumnDef="indexNo">
+              <th mat-header-cell *matHeaderCellDef>Index No</th>
+              <td mat-cell *matCellDef="let payment">{{ payment.indexNo }}</td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef>Name</th>
+              <td mat-cell *matCellDef="let payment">{{ payment.namewithInitials }}</td>
+            </ng-container>
+
+            <!-- Academic Info Column -->
+            <ng-container matColumnDef="academic">
+              <th mat-header-cell *matHeaderCellDef>Academic Info</th>
+              <td mat-cell *matCellDef="let payment">
+                <div class="academic-info">
+                  <span>Grade {{ payment.grade }}</span>
+                  <small>{{ payment.year }} - {{ payment.term }}</small>
+                </div>
+              </td>
+            </ng-container>
+
+            <!-- Amount Column -->
+            <ng-container matColumnDef="amount">
+              <th mat-header-cell *matHeaderCellDef>Amount</th>
+              <td mat-cell *matCellDef="let payment">{{ getFormattedAmount(payment.amount) }}</td>
+            </ng-container>
+
+            <!-- Payment Date Column -->
+            <ng-container matColumnDef="date">
+              <th mat-header-cell *matHeaderCellDef>Payment Date</th>
+              <td mat-cell *matCellDef="let payment">{{ payment.paymentdate | date:'short' }}</td>
+            </ng-container>
+
+            <!-- Status Column -->
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef>Status</th>
+              <td mat-cell *matCellDef="let payment">
+                <span class="status-badge" [class]="getStatusClass(payment.paymentStatus)">
+                  {{ payment.paymentStatus | titlecase }}
+                </span>
+              </td>
+            </ng-container>
+
+            <!-- Actions Column -->
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef>Actions</th>
+              <td mat-cell *matCellDef="let payment">
+                <button mat-icon-button color="primary" (click)="editPayment(payment)" matTooltip="Edit">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" (click)="deletePayment(payment)" matTooltip="Delete">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="['indexNo', 'name', 'academic', 'amount', 'date', 'status', 'actions']"></tr>
+            <tr mat-row *matRowDef="let row; columns: ['indexNo', 'name', 'academic', 'amount', 'date', 'status', 'actions']"></tr>
+          </table>
+        </div>
+
+        <!-- No Data Message -->
+        <div class="no-data" *ngIf="filteredPayments.length === 0">
+          <mat-icon>receipt</mat-icon>
+          <h3>No payment records found</h3>
+          <p>{{ searchTerm ? 'Try adjusting your search criteria' : 'Start by creating a new payment record' }}</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>

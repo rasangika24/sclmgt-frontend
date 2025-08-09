@@ -1,24 +1,259 @@
 <div class="container">
-  <div class="left">
-    <div class="left-header">
-      <div class="row inputs">
-        <label>
-          From Grade:
-          <input type="number" [(ngModel)]="fromGrade" />
-        </label>
-        <label>
-          To Grade:
-          <input type="number" [(ngModel)]="toGrade" />
-        </label>
-      </div>
-      <button (click)="generateGrades()">Generate Grades</button>
-    </div>
-    show grades list here (Rasangika)
+  <!-- Header -->
+  <div class="header">
+    <h2>
+      <mat-icon>school</mat-icon>
+      Class & Grade Generation System
+    </h2>
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="resetAllData()"
+      class="reset-btn"
+    >
+      <mat-icon>restore</mat-icon>
+      Reset All Data
+    </button>
   </div>
 
-  <div class="right">
-    <form (ngSubmit)="generateClasses()">
-      <button type="submit">Generate Classes</button>
-    </form>
+  <div class="main-content">
+    <!-- Left Panel - Grade Promotion -->
+    <div class="left-panel">
+      <mat-card class="promotion-card">
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon>trending_up</mat-icon>
+            Grade Promotion
+          </mat-card-title>
+          <mat-card-subtitle>Promote students to next grade</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="promotion-form">
+            <div class="grade-inputs">
+              <mat-form-field class="grade-field">
+                <mat-label>From Grade</mat-label>
+                <input
+                  matInput
+                  type="number"
+                  [(ngModel)]="fromGrade"
+                  min="6"
+                  max="12"
+                  placeholder="e.g., 6"
+                />
+              </mat-form-field>
+
+              <mat-form-field class="grade-field">
+                <mat-label>To Grade</mat-label>
+                <input
+                  matInput
+                  type="number"
+                  [(ngModel)]="toGrade"
+                  min="6"
+                  max="12"
+                  placeholder="e.g., 9"
+                />
+              </mat-form-field>
+            </div>
+
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="generateGrades()"
+              [disabled]="isLoading"
+              class="promote-btn"
+            >
+              <mat-spinner
+                diameter="20"
+                *ngIf="isLoading && !showStudentsList"
+              ></mat-spinner>
+              <mat-icon *ngIf="!isLoading">arrow_upward</mat-icon>
+              {{
+                isLoading && !showStudentsList
+                  ? "Promoting..."
+                  : "Promote Students"
+              }}
+            </button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Grades Overview -->
+      <mat-card class="grades-overview">
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon>grade</mat-icon>
+            Grades Overview
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="grades-grid">
+            <div
+              *ngFor="let grade of grades"
+              class="grade-card"
+              (click)="viewStudents(grade.grade)"
+            >
+              <div class="grade-number">{{ grade.grade }}</div>
+              <div class="grade-info">
+                <div class="student-count">
+                  {{ getTotalStudentsInGrade(grade.grade) }} Students
+                </div>
+                <div class="class-count">
+                  {{ getClassesForGrade(grade.grade).length }} Classes
+                </div>
+              </div>
+              <mat-icon class="view-icon">visibility</mat-icon>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- Right Panel - Class Generation -->
+    <div class="right-panel">
+      <mat-card class="class-generation-card">
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon>class</mat-icon>
+            Class Generation
+          </mat-card-title>
+          <mat-card-subtitle>Auto-assign students to classes</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="class-generation-info">
+            <div class="info-item">
+              <mat-icon>people</mat-icon>
+              <span>Maximum 25 students per class</span>
+            </div>
+            <div class="info-item">
+              <mat-icon>auto_awesome</mat-icon>
+              <span>Automatic class naming (A, B, C...)</span>
+            </div>
+            <div class="info-item">
+              <mat-icon>balance</mat-icon>
+              <span>Even distribution of students</span>
+            </div>
+          </div>
+
+          <button
+            mat-raised-button
+            color="accent"
+            (click)="generateClasses()"
+            [disabled]="isLoading"
+            class="generate-btn"
+          >
+            <mat-spinner
+              diameter="20"
+              *ngIf="isLoading && showStudentsList"
+            ></mat-spinner>
+            <mat-icon *ngIf="!isLoading">group_work</mat-icon>
+            {{
+              isLoading && showStudentsList
+                ? "Generating..."
+                : "Generate Classes"
+            }}
+          </button>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Class Distribution -->
+      <mat-card class="class-distribution" *ngIf="hasAnyClass()">
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon>pie_chart</mat-icon>
+            Class Distribution
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="distribution-list">
+            <ng-container *ngFor="let grade of grades">
+              <div class="grade-distribution" *ngIf="grade.classes.length > 0">
+                <h4>Grade {{ grade.grade }}</h4>
+                <div class="classes-list">
+                  <div *ngFor="let class of grade.classes" class="class-item">
+                    <span class="class-name">{{ class.className }}</span>
+                    <span class="student-count"
+                      >{{ class.currentStudents }}/{{ class.maxStudents }}</span
+                    >
+                    <div class="progress-bar">
+                      <div
+                        class="progress-fill"
+                        [style.width.%]="
+                          (class.currentStudents / class.maxStudents) * 100
+                        "
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+  <!-- Students List Modal -->
+  <div
+    class="students-modal"
+    *ngIf="showStudentsList"
+    (click)="closeStudentsList()"
+  >
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3>
+          <mat-icon>people</mat-icon>
+          Students in Grade {{ selectedGrade }}
+        </h3>
+        <button mat-icon-button (click)="closeStudentsList()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="students-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Index No</th>
+                <th>Full Name</th>
+                <th>Current Grade</th>
+                <th>New Grade</th>
+                <th>Assigned Class</th>
+                <th>Status</th>
+                <th>Gender</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let student of studentsForGrade">
+                <td>{{ student.indexNo }}</td>
+                <td>{{ student.fullName }}</td>
+                <td>{{ student.currentGrade }}</td>
+                <td>
+                  <span *ngIf="student.newGrade" class="new-grade">{{
+                    student.newGrade
+                  }}</span>
+                  <span *ngIf="!student.newGrade">-</span>
+                </td>
+                <td>
+                  <span *ngIf="student.newClass" class="new-class">{{
+                    student.newClass
+                  }}</span>
+                  <span *ngIf="!student.newClass">Not Assigned</span>
+                </td>
+                <td>
+                  <span
+                    class="status-badge"
+                    [class]="'status-' + student.status.toLowerCase()"
+                  >
+                    {{ student.status }}
+                  </span>
+                </td>
+                <td>{{ student.gender }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
