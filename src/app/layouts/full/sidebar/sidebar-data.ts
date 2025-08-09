@@ -62,13 +62,13 @@ export const navItems: NavItem[] = [
     isVisible: false,
   },
 
-  {
-    displayName: 'Academic Staff-details',
-    iconName: 'layout-dashboard',
-    route: '/dashboard/academic-staff-details',
-    auth: [authenticationEnum.Academic_Staff],
-    isVisible: true,
-  },
+  // {
+  //   displayName: 'Academic Staff-details',
+  //   iconName: 'layout-dashboard',
+  //   route: '/dashboard/academic-staff-details',
+  //   auth: [authenticationEnum.Academic_Staff],
+  //   isVisible: true,
+  // },
 
   {
     displayName: 'None Academic Staff',

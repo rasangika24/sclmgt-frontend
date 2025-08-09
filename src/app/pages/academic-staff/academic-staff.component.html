@@ -2,10 +2,10 @@
   <div class="header-section">
     <h2>Academic Staff Management</h2>
     <div class="action-buttons">
-      <button mat-raised-button color="primary" (click)="viewDetails()">
+      <!-- <button mat-raised-button color="primary" (click)="viewDetails()">
         <mat-icon>visibility</mat-icon>
         View Details
-      </button>
+      </button> -->
       <button mat-raised-button color="accent" (click)="refreshData()">
         <mat-icon>refresh</mat-icon>
         Refresh
@@ -16,28 +16,46 @@
   <!-- Form Section -->
   <mat-card class="form-card">
     <mat-card-header>
-      <mat-card-title>{{ mode === 'add' ? 'Add New Teacher' : 'Edit Teacher' }}</mat-card-title>
+      <mat-card-title>{{
+        mode === "add" ? "Add New Teacher" : "Edit Teacher"
+      }}</mat-card-title>
     </mat-card-header>
-    
+
     <mat-card-content>
       <form [formGroup]="academicStaffForm" (ngSubmit)="onSubmit()">
-        
         <!-- Basic Information -->
         <div class="form-section">
           <h3>Basic Information</h3>
           <div class="form-row">
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Teacher Number</mat-label>
-              <input matInput type="number" placeholder="Enter Teacher Number" formControlName="teacherNumber">
-              <mat-error *ngIf="academicStaffForm.get('teacherNumber')?.hasError('required')">
+              <input
+                matInput
+                type="number"
+                placeholder="Enter Teacher Number"
+                formControlName="teacherNumber"
+              />
+              <mat-error
+                *ngIf="
+                  academicStaffForm.get('teacherNumber')?.hasError('required')
+                "
+              >
                 Teacher Number is required
               </mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Full Name</mat-label>
-              <input matInput placeholder="Enter Full Name" formControlName="nameinFull">
-              <mat-error *ngIf="academicStaffForm.get('nameinFull')?.hasError('required')">
+              <input
+                matInput
+                placeholder="Enter Full Name"
+                formControlName="nameinFull"
+              />
+              <mat-error
+                *ngIf="
+                  academicStaffForm.get('nameinFull')?.hasError('required')
+                "
+              >
                 Full Name is required
               </mat-error>
             </mat-form-field>
@@ -46,34 +64,64 @@
           <div class="form-row">
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Name with Initials</mat-label>
-              <input matInput placeholder="Enter Name with Initials" formControlName="nameWithInitials">
-              <mat-error *ngIf="academicStaffForm.get('nameWithInitials')?.hasError('required')">
+              <input
+                matInput
+                placeholder="Enter Name with Initials"
+                formControlName="nameWithInitials"
+              />
+              <mat-error
+                *ngIf="
+                  academicStaffForm
+                    .get('nameWithInitials')
+                    ?.hasError('required')
+                "
+              >
                 Name with Initials is required
               </mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Using Name</mat-label>
-              <input matInput placeholder="Enter Using Name" formControlName="usingName">
+              <input
+                matInput
+                placeholder="Enter Using Name"
+                formControlName="usingName"
+              />
             </mat-form-field>
           </div>
 
           <div class="form-row">
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>NIC</mat-label>
-              <input matInput placeholder="Enter NIC" formControlName="nic" (input)="onNicChange()">
-              <mat-error *ngIf="academicStaffForm.get('nic')?.hasError('required')">
+              <input
+                matInput
+                placeholder="Enter NIC"
+                formControlName="nic"
+                (input)="onNicChange()"
+              />
+              <mat-error
+                *ngIf="academicStaffForm.get('nic')?.hasError('required')"
+              >
                 NIC is required
               </mat-error>
-              <mat-error *ngIf="academicStaffForm.get('nic')?.hasError('nicExists')">
+              <mat-error
+                *ngIf="academicStaffForm.get('nic')?.hasError('nicExists')"
+              >
                 This NIC already exists
               </mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Date of Birth</mat-label>
-              <input matInput [matDatepicker]="dobPicker" formControlName="dateOfBirth">
-              <mat-datepicker-toggle matIconSuffix [for]="dobPicker"></mat-datepicker-toggle>
+              <input
+                matInput
+                [matDatepicker]="dobPicker"
+                formControlName="dateOfBirth"
+              />
+              <mat-datepicker-toggle
+                matIconSuffix
+                [for]="dobPicker"
+              ></mat-datepicker-toggle>
               <mat-datepicker #dobPicker></mat-datepicker>
             </mat-form-field>
           </div>
@@ -81,7 +129,12 @@
           <div class="form-row">
             <mat-form-field appearance="outline" class="form-field full-width">
               <mat-label>Address</mat-label>
-              <textarea matInput placeholder="Enter Address" formControlName="address" rows="3"></textarea>
+              <textarea
+                matInput
+                placeholder="Enter Address"
+                formControlName="address"
+                rows="3"
+              ></textarea>
             </mat-form-field>
           </div>
         </div>
@@ -92,15 +145,29 @@
           <div class="form-row">
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Appointment Date (Temporary)</mat-label>
-              <input matInput [matDatepicker]="tempPicker" formControlName="appointmentDateAsTemperary">
-              <mat-datepicker-toggle matIconSuffix [for]="tempPicker"></mat-datepicker-toggle>
+              <input
+                matInput
+                [matDatepicker]="tempPicker"
+                formControlName="appointmentDateAsTemperary"
+              />
+              <mat-datepicker-toggle
+                matIconSuffix
+                [for]="tempPicker"
+              ></mat-datepicker-toggle>
               <mat-datepicker #tempPicker></mat-datepicker>
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Appointment Date (EPF)</mat-label>
-              <input matInput [matDatepicker]="epfPicker" formControlName="appointmentDateAsEpf">
-              <mat-datepicker-toggle matIconSuffix [for]="epfPicker"></mat-datepicker-toggle>
+              <input
+                matInput
+                [matDatepicker]="epfPicker"
+                formControlName="appointmentDateAsEpf"
+              />
+              <mat-datepicker-toggle
+                matIconSuffix
+                [for]="epfPicker"
+              ></mat-datepicker-toggle>
               <mat-datepicker #epfPicker></mat-datepicker>
             </mat-form-field>
           </div>
@@ -108,14 +175,25 @@
           <div class="form-row">
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Appointment Date (SLTS)</mat-label>
-              <input matInput [matDatepicker]="sltsPicker" formControlName="appointmentDateAsSlts">
-              <mat-datepicker-toggle matIconSuffix [for]="sltsPicker"></mat-datepicker-toggle>
+              <input
+                matInput
+                [matDatepicker]="sltsPicker"
+                formControlName="appointmentDateAsSlts"
+              />
+              <mat-datepicker-toggle
+                matIconSuffix
+                [for]="sltsPicker"
+              ></mat-datepicker-toggle>
               <mat-datepicker #sltsPicker></mat-datepicker>
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Grade of SLTS</mat-label>
-              <input matInput placeholder="Enter Grade of SLTS" formControlName="gradeOfSlts">
+              <input
+                matInput
+                placeholder="Enter Grade of SLTS"
+                formControlName="gradeOfSlts"
+              />
             </mat-form-field>
           </div>
         </div>
@@ -126,16 +204,30 @@
           <div class="form-row">
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Email Address</mat-label>
-              <input matInput type="email" placeholder="Enter Email" formControlName="emailAddress">
-              <mat-error *ngIf="academicStaffForm.get('emailAddress')?.hasError('email')">
+              <input
+                matInput
+                type="email"
+                placeholder="Enter Email"
+                formControlName="emailAddress"
+              />
+              <mat-error
+                *ngIf="academicStaffForm.get('emailAddress')?.hasError('email')"
+              >
                 Please enter a valid email
               </mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Telephone</mat-label>
-              <input matInput type="number" placeholder="Enter Telephone" formControlName="telephone">
-              <mat-error *ngIf="academicStaffForm.get('telephone')?.hasError('pattern')">
+              <input
+                matInput
+                type="number"
+                placeholder="Enter Telephone"
+                formControlName="telephone"
+              />
+              <mat-error
+                *ngIf="academicStaffForm.get('telephone')?.hasError('pattern')"
+              >
                 Please enter a valid telephone number
               </mat-error>
             </mat-form-field>
@@ -144,12 +236,22 @@
           <div class="form-row">
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>WhatsApp</mat-label>
-              <input matInput type="number" placeholder="Enter WhatsApp Number" formControlName="whatsapp">
+              <input
+                matInput
+                type="number"
+                placeholder="Enter WhatsApp Number"
+                formControlName="whatsapp"
+              />
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Contact Number</mat-label>
-              <input matInput type="number" placeholder="Enter Contact Number" formControlName="contactNumber">
+              <input
+                matInput
+                type="number"
+                placeholder="Enter Contact Number"
+                formControlName="contactNumber"
+              />
             </mat-form-field>
           </div>
         </div>
@@ -160,48 +262,76 @@
           <div class="form-row">
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>School Studied</mat-label>
-              <input matInput placeholder="Enter School Studied" formControlName="schoolStudied">
+              <input
+                matInput
+                placeholder="Enter School Studied"
+                formControlName="schoolStudied"
+              />
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Highest Education Qualification</mat-label>
-              <input matInput placeholder="Enter Highest Education Qualification" formControlName="highestEducationQualification">
+              <input
+                matInput
+                placeholder="Enter Highest Education Qualification"
+                formControlName="highestEducationQualification"
+              />
             </mat-form-field>
           </div>
 
           <div class="form-row">
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Professional Qualification</mat-label>
-              <input matInput placeholder="Enter Professional Qualification" formControlName="professionalQualification">
+              <input
+                matInput
+                placeholder="Enter Professional Qualification"
+                formControlName="professionalQualification"
+              />
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Other Qualification</mat-label>
-              <input matInput placeholder="Enter Other Qualification" formControlName="otherQualification">
+              <input
+                matInput
+                placeholder="Enter Other Qualification"
+                formControlName="otherQualification"
+              />
             </mat-form-field>
           </div>
 
           <div class="form-row">
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Education Qualification</mat-label>
-              <input matInput placeholder="Enter Education Qualification" formControlName="educationQualification">
+              <input
+                matInput
+                placeholder="Enter Education Qualification"
+                formControlName="educationQualification"
+              />
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>University/Institute</mat-label>
-              <input matInput placeholder="Enter University or Institute" formControlName="universityOrInstitute">
+              <input
+                matInput
+                placeholder="Enter University or Institute"
+                formControlName="universityOrInstitute"
+              />
             </mat-form-field>
           </div>
 
           <div class="form-row">
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Year</mat-label>
-              <input matInput placeholder="Enter Year" formControlName="year">
+              <input matInput placeholder="Enter Year" formControlName="year" />
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Subject</mat-label>
-              <input matInput placeholder="Enter Subject" formControlName="subject">
+              <input
+                matInput
+                placeholder="Enter Subject"
+                formControlName="subject"
+              />
             </mat-form-field>
           </div>
         </div>
@@ -212,19 +342,31 @@
           <div class="form-row">
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Subject Teaching</mat-label>
-              <input matInput placeholder="Enter Subject Teaching" formControlName="subjectTeaching1">
+              <input
+                matInput
+                placeholder="Enter Subject Teaching"
+                formControlName="subjectTeaching1"
+              />
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Extra Curricular Activities</mat-label>
-              <input matInput placeholder="Enter Extra Curricular Activities" formControlName="extraCurricularActivities">
+              <input
+                matInput
+                placeholder="Enter Extra Curricular Activities"
+                formControlName="extraCurricularActivities"
+              />
             </mat-form-field>
           </div>
 
           <div class="form-row">
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Occupation</mat-label>
-              <input matInput placeholder="Enter Occupation" formControlName="occupation">
+              <input
+                matInput
+                placeholder="Enter Occupation"
+                formControlName="occupation"
+              />
             </mat-form-field>
           </div>
         </div>
@@ -243,8 +385,15 @@
 
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Date Got Married</mat-label>
-              <input matInput [matDatepicker]="marriagePicker" formControlName="dateGotMarried">
-              <mat-datepicker-toggle matIconSuffix [for]="marriagePicker"></mat-datepicker-toggle>
+              <input
+                matInput
+                [matDatepicker]="marriagePicker"
+                formControlName="dateGotMarried"
+              />
+              <mat-datepicker-toggle
+                matIconSuffix
+                [for]="marriagePicker"
+              ></mat-datepicker-toggle>
               <mat-datepicker #marriagePicker></mat-datepicker>
             </mat-form-field>
           </div>
@@ -252,31 +401,51 @@
           <div class="form-row">
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Status of Marriage</mat-label>
-              <input matInput placeholder="Enter Status of Marriage" formControlName="statusOfMarriage">
+              <input
+                matInput
+                placeholder="Enter Status of Marriage"
+                formControlName="statusOfMarriage"
+              />
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Name of the Spouse</mat-label>
-              <input matInput placeholder="Enter Name of the Spouse" formControlName="nameOfTheSpouse">
+              <input
+                matInput
+                placeholder="Enter Name of the Spouse"
+                formControlName="nameOfTheSpouse"
+              />
             </mat-form-field>
           </div>
 
           <div class="form-row">
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Spouse School</mat-label>
-              <input matInput placeholder="Enter Spouse School" formControlName="spouseSchool">
+              <input
+                matInput
+                placeholder="Enter Spouse School"
+                formControlName="spouseSchool"
+              />
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Spouse Highest Education Level</mat-label>
-              <input matInput placeholder="Enter Spouse Highest Education Level" formControlName="spouseHighestEducationLevel">
+              <input
+                matInput
+                placeholder="Enter Spouse Highest Education Level"
+                formControlName="spouseHighestEducationLevel"
+              />
             </mat-form-field>
           </div>
 
           <div class="form-row">
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Number of Children</mat-label>
-              <input matInput placeholder="Enter Number of Children" formControlName="numberOfChildren">
+              <input
+                matInput
+                placeholder="Enter Number of Children"
+                formControlName="numberOfChildren"
+              />
             </mat-form-field>
           </div>
         </div>
@@ -287,36 +456,62 @@
           <div class="form-row">
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Mother's Name</mat-label>
-              <input matInput placeholder="Enter Mother's Name" formControlName="mothersName">
+              <input
+                matInput
+                placeholder="Enter Mother's Name"
+                formControlName="mothersName"
+              />
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Mother's School</mat-label>
-              <input matInput placeholder="Enter Mother's School" formControlName="mothersSchool">
+              <input
+                matInput
+                placeholder="Enter Mother's School"
+                formControlName="mothersSchool"
+              />
             </mat-form-field>
           </div>
 
           <div class="form-row">
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Mother's Education Level</mat-label>
-              <input matInput placeholder="Enter Mother's Education Level" formControlName="mothersEducationLevel">
+              <input
+                matInput
+                placeholder="Enter Mother's Education Level"
+                formControlName="mothersEducationLevel"
+              />
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Mother's Profession</mat-label>
-              <input matInput placeholder="Enter Mother's Profession" formControlName="mothersProfession">
+              <input
+                matInput
+                placeholder="Enter Mother's Profession"
+                formControlName="mothersProfession"
+              />
             </mat-form-field>
           </div>
 
           <div class="form-row">
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Mother's Telephone</mat-label>
-              <input matInput type="number" placeholder="Enter Mother's Telephone" formControlName="mothersTelephone">
+              <input
+                matInput
+                type="number"
+                placeholder="Enter Mother's Telephone"
+                formControlName="mothersTelephone"
+              />
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Mother's WhatsApp</mat-label>
-              <input matInput type="number" placeholder="Enter Mother's WhatsApp" formControlName="mothersWhatsapp">
+              <input
+                matInput
+                type="number"
+                placeholder="Enter Mother's WhatsApp"
+                formControlName="mothersWhatsapp"
+              />
             </mat-form-field>
           </div>
         </div>
@@ -327,36 +522,63 @@
           <div class="form-row">
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Father's Name</mat-label>
-              <input matInput placeholder="Enter Father's Name" formControlName="fathersName">
+              <input
+                matInput
+                placeholder="Enter Father's Name"
+                formControlName="fathersName"
+              />
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Father's School</mat-label>
-              <input matInput placeholder="Enter Father's School" formControlName="fathersSchool">
+              <input
+                matInput
+                placeholder="Enter Father's School"
+                formControlName="fathersSchool"
+              />
             </mat-form-field>
           </div>
 
           <div class="form-row">
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Father's Education Level</mat-label>
-              <input matInput placeholder="Enter Father's Education Level" formControlName="fathersEducationLevel">
+              <input
+                matInput
+                placeholder="Enter Father's Education Level"
+                formControlName="fathersEducationLevel"
+              />
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Father's Profession</mat-label>
-              <input matInput type="number" placeholder="Enter Father's Profession" formControlName="fathersProfession">
+              <input
+                matInput
+                type="number"
+                placeholder="Enter Father's Profession"
+                formControlName="fathersProfession"
+              />
             </mat-form-field>
           </div>
 
           <div class="form-row">
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Father's Telephone</mat-label>
-              <input matInput type="number" placeholder="Enter Father's Telephone" formControlName="fathersTelephone">
+              <input
+                matInput
+                type="number"
+                placeholder="Enter Father's Telephone"
+                formControlName="fathersTelephone"
+              />
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Father's WhatsApp</mat-label>
-              <input matInput type="number" placeholder="Enter Father's WhatsApp" formControlName="fathersWhatsapp">
+              <input
+                matInput
+                type="number"
+                placeholder="Enter Father's WhatsApp"
+                formControlName="fathersWhatsapp"
+              />
             </mat-form-field>
           </div>
         </div>
@@ -367,36 +589,62 @@
           <div class="form-row">
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Spouse Mother's Name</mat-label>
-              <input matInput placeholder="Enter Spouse Mother's Name" formControlName="smothersName">
+              <input
+                matInput
+                placeholder="Enter Spouse Mother's Name"
+                formControlName="smothersName"
+              />
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Spouse Mother's School</mat-label>
-              <input matInput placeholder="Enter Spouse Mother's School" formControlName="smothersSchool">
+              <input
+                matInput
+                placeholder="Enter Spouse Mother's School"
+                formControlName="smothersSchool"
+              />
             </mat-form-field>
           </div>
 
           <div class="form-row">
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Spouse Mother's Education Level</mat-label>
-              <input matInput placeholder="Enter Spouse Mother's Education Level" formControlName="smothersEducationLevel">
+              <input
+                matInput
+                placeholder="Enter Spouse Mother's Education Level"
+                formControlName="smothersEducationLevel"
+              />
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Spouse Mother's Profession</mat-label>
-              <input matInput placeholder="Enter Spouse Mother's Profession" formControlName="smothersProfession">
+              <input
+                matInput
+                placeholder="Enter Spouse Mother's Profession"
+                formControlName="smothersProfession"
+              />
             </mat-form-field>
           </div>
 
           <div class="form-row">
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Spouse Mother's Telephone</mat-label>
-              <input matInput type="number" placeholder="Enter Spouse Mother's Telephone" formControlName="smothersTelephone">
+              <input
+                matInput
+                type="number"
+                placeholder="Enter Spouse Mother's Telephone"
+                formControlName="smothersTelephone"
+              />
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Spouse Mother's WhatsApp</mat-label>
-              <input matInput type="number" placeholder="Enter Spouse Mother's WhatsApp" formControlName="smothersWhatsapp">
+              <input
+                matInput
+                type="number"
+                placeholder="Enter Spouse Mother's WhatsApp"
+                formControlName="smothersWhatsapp"
+              />
             </mat-form-field>
           </div>
         </div>
@@ -407,50 +655,85 @@
           <div class="form-row">
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Spouse Father's Name</mat-label>
-              <input matInput placeholder="Enter Spouse Father's Name" formControlName="sfathersName">
+              <input
+                matInput
+                placeholder="Enter Spouse Father's Name"
+                formControlName="sfathersName"
+              />
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Spouse Father's School</mat-label>
-              <input matInput placeholder="Enter Spouse Father's School" formControlName="sfathersSchool">
+              <input
+                matInput
+                placeholder="Enter Spouse Father's School"
+                formControlName="sfathersSchool"
+              />
             </mat-form-field>
           </div>
 
           <div class="form-row">
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Spouse Father's Education Level</mat-label>
-              <input matInput placeholder="Enter Spouse Father's Education Level" formControlName="sfathersEducationLevel">
+              <input
+                matInput
+                placeholder="Enter Spouse Father's Education Level"
+                formControlName="sfathersEducationLevel"
+              />
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Spouse Father's Profession</mat-label>
-              <input matInput placeholder="Enter Spouse Father's Profession" formControlName="sfathersProfession">
+              <input
+                matInput
+                placeholder="Enter Spouse Father's Profession"
+                formControlName="sfathersProfession"
+              />
             </mat-form-field>
           </div>
 
           <div class="form-row">
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Spouse Father's Telephone</mat-label>
-              <input matInput type="number" placeholder="Enter Spouse Father's Telephone" formControlName="sfathersTelephone">
+              <input
+                matInput
+                type="number"
+                placeholder="Enter Spouse Father's Telephone"
+                formControlName="sfathersTelephone"
+              />
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="form-field">
               <mat-label>Spouse Father's WhatsApp</mat-label>
-              <input matInput type="number" placeholder="Enter Spouse Father's WhatsApp" formControlName="sfathersWhatsapp">
+              <input
+                matInput
+                type="number"
+                placeholder="Enter Spouse Father's WhatsApp"
+                formControlName="sfathersWhatsapp"
+              />
             </mat-form-field>
           </div>
         </div>
 
         <!-- Form Actions -->
         <div class="form-actions">
-          <button mat-raised-button type="button" (click)="resetForm()" class="reset-btn">
+          <button
+            mat-raised-button
+            type="button"
+            (click)="resetForm()"
+            class="reset-btn"
+          >
             <mat-icon>refresh</mat-icon>
             Reset
           </button>
-          
-          <button mat-raised-button color="primary" type="submit" 
-                  [disabled]="academicStaffForm.invalid || isButtonDisabled" 
-                  class="submit-btn">
+
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="academicStaffForm.invalid || isButtonDisabled"
+            class="submit-btn"
+          >
             <mat-icon>save</mat-icon>
             {{ saveButtonLabel }}
           </button>
@@ -464,24 +747,36 @@
     <mat-card-header>
       <mat-card-title>Academic Staff List</mat-card-title>
     </mat-card-header>
-    
+
     <mat-card-content>
       <!-- Search Bar -->
       <div class="search-section">
         <mat-form-field appearance="outline" class="search-field">
           <mat-label>Search Teachers</mat-label>
-          <input matInput (keyup)="applyFilter($event)" placeholder="Search by name, email, or subject...">
+          <input
+            matInput
+            (keyup)="applyFilter($event)"
+            placeholder="Search by name, email, or subject..."
+          />
           <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
       </div>
 
       <!-- Data Table -->
       <div class="table-container">
-        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
-          
+        <table
+          mat-table
+          [dataSource]="dataSource"
+          class="mat-elevation-z8"
+          matSort
+        >
           <ng-container matColumnDef="teacherNumber">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Teacher Number</th>
-            <td mat-cell *matCellDef="let element">{{ element.teacherNumber }}</td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Teacher Number
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.teacherNumber }}
+            </td>
           </ng-container>
 
           <ng-container matColumnDef="nameinFull">
@@ -490,13 +785,19 @@
           </ng-container>
 
           <ng-container matColumnDef="nameWithInitials">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Name with Initials</th>
-            <td mat-cell *matCellDef="let element">{{ element.nameWithInitials }}</td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Name with Initials
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.nameWithInitials }}
+            </td>
           </ng-container>
 
           <ng-container matColumnDef="emailAddress">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
-            <td mat-cell *matCellDef="let element">{{ element.emailAddress }}</td>
+            <td mat-cell *matCellDef="let element">
+              {{ element.emailAddress }}
+            </td>
           </ng-container>
 
           <ng-container matColumnDef="telephone">
@@ -505,17 +806,25 @@
           </ng-container>
 
           <ng-container matColumnDef="subjectTeaching1">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Subject Teaching</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Subject Teaching
+            </th>
             <td mat-cell *matCellDef="let element">
               <mat-chip-set>
-                <mat-chip color="primary" selected>{{ element.subjectTeaching1 || 'N/A' }}</mat-chip>
+                <mat-chip color="primary" selected>{{
+                  element.subjectTeaching1 || "N/A"
+                }}</mat-chip>
               </mat-chip-set>
             </td>
           </ng-container>
 
           <ng-container matColumnDef="appointmentDateAsEpf">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Appointment Date</th>
-            <td mat-cell *matCellDef="let element">{{ element.appointmentDateAsEpf | date }}</td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Appointment Date
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.appointmentDateAsEpf | date }}
+            </td>
           </ng-container>
 
           <ng-container matColumnDef="nic">
@@ -527,10 +836,20 @@
             <th mat-header-cell *matHeaderCellDef>Actions</th>
             <td mat-cell *matCellDef="let element">
               <div class="action-buttons">
-                <button mat-icon-button color="primary" (click)="editData(element)" matTooltip="Edit">
+                <button
+                  mat-icon-button
+                  color="primary"
+                  (click)="editData(element)"
+                  matTooltip="Edit"
+                >
                   <mat-icon>edit</mat-icon>
                 </button>
-                <button mat-icon-button color="warn" (click)="deleteData(element)" matTooltip="Delete">
+                <button
+                  mat-icon-button
+                  color="warn"
+                  (click)="deleteData(element)"
+                  matTooltip="Delete"
+                >
                   <mat-icon>delete</mat-icon>
                 </button>
               </div>
@@ -538,14 +857,20 @@
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 
           <!-- No Data Row -->
           <tr class="mat-row" *matNoDataRow>
             <td class="mat-cell" [attr.colspan]="displayedColumns.length">
               <div class="no-data">
-                <mat-icon style="font-size: 48px; color: rgba(0,0,0,0.3);">school</mat-icon>
-                <p>No academic staff found matching filter "{{ dataSource.filter }}"</p>
+                <mat-icon style="font-size: 48px; color: rgba(0, 0, 0, 0.3)"
+                  >school</mat-icon
+                >
+                <p>
+                  No academic staff found matching filter "{{
+                    dataSource.filter
+                  }}"
+                </p>
               </div>
             </td>
           </tr>
@@ -553,7 +878,10 @@
       </div>
 
       <!-- Paginator -->
-      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page"></mat-paginator>
+      <mat-paginator
+        [pageSizeOptions]="[5, 10, 25, 100]"
+        aria-label="Select page"
+      ></mat-paginator>
     </mat-card-content>
   </mat-card>
 </div>
