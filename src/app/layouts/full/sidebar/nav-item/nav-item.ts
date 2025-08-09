@@ -12,6 +12,6 @@ export interface NavItem {
   route?: string;
   children?: NavItem[];
   ddType?: string;
-  auth?: number;
+  auth?: number[];
   isVisible: boolean;
 }

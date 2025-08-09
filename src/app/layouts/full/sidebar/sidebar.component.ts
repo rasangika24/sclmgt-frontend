@@ -36,10 +36,23 @@ export class SidebarComponent implements OnInit {
       }
 
       navItems.forEach((element) => {
-        if (authId.includes(element.auth!)) {
-          element.isVisible = true;
-        } else {
-          element.isVisible = false;
+        // if (authId.includes(element.auth!)) {
+        //   element.isVisible = true;
+        // } else {
+        //   element.isVisible = false;
+        // }
+
+        const authArray = element.auth;
+
+        if (authArray) {
+          for (let i = 0; i < authArray?.length; i++) {
+            if (authId.includes(authArray[i])) {
+              element.isVisible = true;
+              break;
+            } else {
+              element.isVisible = false;
+            }
+          }
         }
       });
     } else if (
@@ -57,10 +70,23 @@ export class SidebarComponent implements OnInit {
       }
 
       navItems.forEach((element) => {
-        if (privilegeArray.includes(element.auth!)) {
-          element.isVisible = true;
-        } else {
-          element.isVisible = false;
+        // if (privilegeArray.includes(element.auth!)) {
+        //   element.isVisible = true;
+        // } else {
+        //   element.isVisible = false;
+        // }
+
+        const authArray = element.auth;
+
+        if (authArray) {
+          for (let i = 0; i < authArray?.length; i++) {
+            if (privilegeArray.includes(authArray[i])) {
+              element.isVisible = true;
+              break;
+            } else {
+              element.isVisible = false;
+            }
+          }
         }
       });
     } else if (authId && authId.length === 0) {

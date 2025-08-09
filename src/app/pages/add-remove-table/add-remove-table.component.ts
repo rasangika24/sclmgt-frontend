@@ -164,9 +164,15 @@ export class AddRemoveTableComponent implements OnInit {
       addedData: addedData,
     };
 
-    this.commonDataService.saveData('post', url, body).then((response: any) => {
-      this.cacheService.refreshCache(this.httpService.getUserId()!);
-    });
+    this.commonDataService
+      .saveData('post', url, body)
+      .then((response: any) => {
+        this.cacheService.refreshCache(this.httpService.getUserId()!);
+        this._messageService.showSuccess('Data saved Successfully!');
+      })
+      .catch((error) => {
+        this._messageService.showError('Error while adding privileges');
+      });
 
     this.isDisableButton = true;
   }
