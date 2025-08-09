@@ -174,13 +174,13 @@ export const navItems: NavItem[] = [
     auth: [authenticationEnum.Applicant_And_Parent], // change this
     isVisible: true,
   },
-  {
-    displayName: 'Applicant and Parent',
-    iconName: 'layout-dashboard',
-    route: '/dashboard/applicant',
-    auth: [authenticationEnum.Applicant_And_Parent],
-    isVisible: false,
-  },
+  // {
+  //   displayName: 'Applicant and Parent',
+  //   iconName: 'layout-dashboard',
+  //   route: '/dashboard/applicant',
+  //   auth: [authenticationEnum.Applicant_And_Parent],
+  //   isVisible: false,
+  // },
 
   // {
   //   navCap: 'Users',
